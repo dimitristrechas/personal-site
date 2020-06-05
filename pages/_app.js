@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -6,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import "../styles/App.scss";
 
 // This default export is required in a new `pages/_app.js` file.
 export default function App({ Component, pageProps }) {
