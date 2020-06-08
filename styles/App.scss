@@ -1,1 +1,29 @@
+@import "~highlight.js/styles/github.css";
+
+/* roboto-slab-regular - latin */
+@font-face {
+  font-family: "Roboto Slab";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("./fonts/roboto-slab-v11-latin-regular.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("./fonts/roboto-slab-v11-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+$font-family-base: "Roboto Slab";
+
+// https://brandcolors.net/ - Reddit
+$primary: #5f99cf;
+$secondary: #cee3f8;
+
 @import "~bootstrap/scss/bootstrap";
+
+.navbar-brand {
+  font-size: 2rem;
+  padding: 0;
+}
+
+.navbar-collapse {
+  font-size: 2rem;
+}
