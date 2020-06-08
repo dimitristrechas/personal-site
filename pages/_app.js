@@ -10,13 +10,13 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Dimitris Trechas - Personal Site</title>
       </Head>
-      <Header />
-      <main role="main">
-        <Container>
+      <Container fluid="md">
+        <Header />
+        <main role="main">
           <Component {...pageProps} />
-        </Container>
-      </main>
-      {/* <Footer /> */}
+        </main>
+        {/* <Footer /> */}
+      </Container>
     </>
   );
 }

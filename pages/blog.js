@@ -32,9 +32,9 @@ const Home = ({ posts }) => {
 
   return (
     <>
-      <Form className="py-3">
-        <Form.Row>
-          <Col>
+      <Form>
+        <Form.Row className="py-3">
+          <Col lg="6">
             <Form.Control
               placeholder="Search posts..."
               onChange={handlePostSearch}
@@ -47,7 +47,7 @@ const Home = ({ posts }) => {
           <Row key={post.slug} className="py-3">
             <Col>
               <Link href="/blog/[slug]" as={"/blog/" + post.slug}>
-                <a className="h4">{post.title}</a>
+                <a className="h4 text-black">{post.title}</a>
               </Link>
               <div className="h6">{post.desc}</div>
             </Col>
