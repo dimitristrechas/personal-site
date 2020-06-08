@@ -1,6 +1,6 @@
 ---
 title: dimitristrechas - Bio
-description:  A small bio
+description: A small bio
 ---
 
 # Bio
