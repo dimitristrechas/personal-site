@@ -47,8 +47,9 @@ const Home = ({ posts }) => {
           <Row key={post.slug} className="py-3">
             <Col>
               <Link href="/blog/[slug]" as={"/blog/" + post.slug}>
-                <a>{post.title}</a>
+                <a className="h4">{post.title}</a>
               </Link>
+              <div className="h6">{post.desc}</div>
             </Col>
           </Row>
         );
@@ -67,6 +68,7 @@ export const getStaticProps = async () => {
     return {
       slug: filename.replace(".md", ""),
       title: parsedMarkdown.data.title,
+      desc: parsedMarkdown.data.description,
     };
   });
 

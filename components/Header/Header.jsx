@@ -12,10 +12,10 @@ const Header = () => {
         <Link href="/" as={"/"}>
           <Navbar.Brand
             href="/"
-            className="text-primary d-inline-flex align-items-center"
+            className="text-info d-inline-flex align-items-center"
           >
             <FaDev />
-            <span className="text-primary font-weight-normal mx-1">
+            <span className="text-info font-weight-normal mx-1">
               Dimitris Trechas
             </span>
           </Navbar.Brand>
