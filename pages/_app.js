@@ -9,6 +9,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>Dimitris Trechas - Personal Site</title>
+        <meta name="description" content="Dimitris Trechas - Personal Site" />
       </Head>
       <Container fluid="md">
         <Header />
