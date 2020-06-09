@@ -1,10 +1,17 @@
 ---
 title: Bio
-description:  A small bio
+description: A small bio
 ---
 
-# Bio
+## Contact me
 
-## A small bio
+For business enquiries feel free to email me at **dimitristrechas@gmail.com**.
 
-Yes this is a small bio
+---
+
+## Around the web
+
+Places you'll most likely find me.
+
+- [Linkedin](https://www.linkedin.com/in/dimitris-trechas-1956b7b1/)
+- [GitHub](https://github.com/dimitristrechas)

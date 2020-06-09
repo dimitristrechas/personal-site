@@ -11,7 +11,10 @@ const Contact = ({ htmlString, data }) => {
       <Head>
         <title>{data.title}</title>
       </Head>
-      <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+      <div
+        className="markdown-custom py-5"
+        dangerouslySetInnerHTML={{ __html: htmlString }}
+      />
     </>
   );
 };

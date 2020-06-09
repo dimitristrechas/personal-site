@@ -14,7 +14,7 @@ marked.setOptions({
   },
 });
 
-const Bio = ({ htmlString, data }) => {
+const About = ({ htmlString, data }) => {
   return (
     <>
       <Head>
@@ -22,7 +22,10 @@ const Bio = ({ htmlString, data }) => {
       </Head>
       <Row>
         <Col>
-          <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+          <div
+            className="markdown-custom py-5"
+            dangerouslySetInnerHTML={{ __html: htmlString }}
+          />
         </Col>
       </Row>
     </>
@@ -30,7 +33,9 @@ const Bio = ({ htmlString, data }) => {
 };
 
 export const getStaticProps = async () => {
-  const markdown = fs.readFileSync(path.join("sections", "bio.md")).toString();
+  const markdown = fs
+    .readFileSync(path.join("sections", "about.md"))
+    .toString();
   const parsedMarkdown = matter(markdown);
   const htmlString = marked(parsedMarkdown.content);
 
@@ -39,4 +44,4 @@ export const getStaticProps = async () => {
   };
 };
 
-export default Bio;
+export default About;

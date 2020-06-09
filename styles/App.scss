@@ -1,4 +1,4 @@
-@import "~highlight.js/styles/github.css";
+@import "~highlight.js/styles/monokai.css";
 
 /* roboto-slab-regular - latin */
 @font-face {
@@ -11,11 +11,35 @@
       url("./fonts/roboto-slab-v11-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
+/* roboto-regular - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"), local("Roboto-Regular"),
+    url("./fonts/roboto-v20-latin-regular.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("./fonts/roboto-v20-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
 $font-family-base: "Roboto Slab";
 
 // https://brandcolors.net/ - Reddit
 $primary: #5f99cf;
 $secondary: #cee3f8;
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #f5f5f5;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #b4b4b4;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -30,4 +54,51 @@ body {
 
 .navbar-collapse {
   font-size: 2rem;
+}
+
+.container-md {
+  max-width: 800px;
+}
+
+.post-card {
+  // max-width: 18rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f8f9fa !important;
+  }
+}
+
+.profile-card {
+  width: 18rem;
+
+  .profile-img {
+    margin: 0 auto;
+    width: 180px;
+    height: 180px;
+  }
+}
+
+.markdown-custom {
+  h1,
+  h2,
+  h3 {
+    margin-bottom: 1rem;
+    font-family: "Roboto Slab" !important;
+  }
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 0.75rem;
+    font-family: "Roboto Slab" !important;
+  }
+  p {
+    font-family: "Roboto" !important;
+  }
+  pre {
+    margin-bottom: 1.5rem;
+  }
+  li {
+    margin-bottom: 0.75rem;
+  }
 }

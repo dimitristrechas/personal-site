@@ -4,6 +4,7 @@ import Link from "next/link";
 import matter from "gray-matter";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
 
@@ -14,7 +15,7 @@ const Home = ({ posts }) => {
     const search = ev.target.value;
 
     if (search) {
-      const filteredPosts = postsList.filter((p) => {
+      const filteredPosts = posts.filter((p) => {
         return p.title.includes(search);
       });
 
@@ -33,23 +34,31 @@ const Home = ({ posts }) => {
   return (
     <>
       <Form>
-        <Form.Row className="py-3">
-          <Col lg="6">
+        <Form.Row className="py-5">
+          <Col lg="4">
             <Form.Control
+              className=""
               placeholder="Search posts..."
               onChange={handlePostSearch}
             />
+            <Form.Text className="text-muted pl-1">
+              {`${postsList.length} ${
+                postsList.length == 1 ? "post" : "posts"
+              } found`}
+            </Form.Text>
           </Col>
         </Form.Row>
       </Form>
-      {postsList.map((post) => {
+      {postsList.map((post, key) => {
         return (
-          <Row key={post.slug} className="py-3">
+          <Row key={post.slug}>
             <Col>
               <Link href="/blog/[slug]" as={"/blog/" + post.slug}>
-                <a className="h4 text-black">{post.title}</a>
+                <div className="border-bottom py-3 post-card">
+                  <div className="h4">{post.title}</div>
+                  <div className="h6 text-muted">{post.date}</div>
+                </div>
               </Link>
-              <div className="h6">{post.desc}</div>
             </Col>
           </Row>
         );
@@ -69,6 +78,7 @@ export const getStaticProps = async () => {
       slug: filename.replace(".md", ""),
       title: parsedMarkdown.data.title,
       desc: parsedMarkdown.data.description,
+      date: parsedMarkdown.data.date,
     };
   });
 

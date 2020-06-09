@@ -1,15 +1,16 @@
 ---
 title: My React Notes
 description: A small bio
+date: 9/6/2020
 ---
 
 # My React Notes
 
 ### How to extract logic to custom react hook
 
-```jsx
-// We start here: [https://reactjs.org/docs/hooks-custom.html](https://reactjs.org/docs/hooks-custom.html)
+We start here: [https://reactjs.org/docs/hooks-custom.html](https://reactjs.org/docs/hooks-custom.html)
 
+```jsx
 import { useState } from "react";
 
 const useExitTransition = () => {
@@ -29,14 +30,17 @@ const useExitTransition = () => {
 };
 
 export default useExitTransition;
+```
 
-// use as: const [exitTransition, onExit] = useExitTransition();
+```jsx
+// use as
+const [exitTransition, onExit] = useExitTransition();
 ```
 
 ### Props destructing in Component arguments
 
 ```jsx
-//Instead of:
+// Instead of:
 
 import React from "react";
 
@@ -45,7 +49,7 @@ const MyComponent = (props) => {
   return <div>Yes {name}</div>;
 };
 
-//we do:
+// We do:
 
 import React from "react";
 const MyComponent = ({ id, name, anotherProp, moreProps }) => {
@@ -58,14 +62,13 @@ const MyComponent = ({ id, name, anotherProp, moreProps }) => {
 ```jsx
 const [myObject, setMyObject] = useState(null);
 
-// if we set the init value to {} then the following code is executed:
+// If we set the init value to {} then the following code is executed:
 if (myObject) {  // do something}
 
-/*
+```
+
 we do this because there is no easy way to check if an object is empty
 check this: [https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object](https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object)
-*/
-```
 
 ### Destructing nested objects
 
@@ -82,6 +85,6 @@ const {
 } = user;
 
 console.log(degree); // Masters
-
-// [https://medium.com/@pyrolistical/destructuring-nested-objects-9dabdd01a3b8](https://medium.com/@pyrolistical/destructuring-nested-objects-9dabdd01a3b8)
 ```
+
+[https://medium.com/@pyrolistical/destructuring-nested-objects-9dabdd01a3b8](https://medium.com/@pyrolistical/destructuring-nested-objects-9dabdd01a3b8)

@@ -1,8 +1,9 @@
 ---
 title: A first blog post
 description: "A test blog post"
+date: 9/6/2020
 ---
 
-# Test@
+# Post prototype
 
-Hello World
+Hello World!

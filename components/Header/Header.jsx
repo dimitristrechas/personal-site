@@ -10,28 +10,22 @@ const Header = () => {
       <Link href="/" as={"/"}>
         <Navbar.Brand
           href="/"
-          className="text-info d-inline-flex align-items-center"
+          className="text-primary d-inline-flex align-items-center"
         >
           <FaDev />
-          <span className="text-info font-weight-normal mx-1">
+          <span className="text-primary font-weight-normal mx-1">
             Dimitris Trechas
           </span>
         </Navbar.Brand>
       </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="text-secondary" id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Link href="/" as={"/"}>
-            <Nav.Link href="/">Home</Nav.Link>
-          </Link>
+        <Nav className="ml-auto">
           <Link href="/blog" as={"/blog"}>
             <Nav.Link href="/blog">Blog</Nav.Link>
           </Link>
-          <Link href="/bio" as={"/bio"}>
-            <Nav.Link href="/bio">Bio</Nav.Link>
-          </Link>
-          <Link href="/portofolio" as={"/portofolio"}>
-            <Nav.Link href="/portofolio">Portofolio</Nav.Link>
+          <Link href="/about" as={"/about"}>
+            <Nav.Link href="/about">About</Nav.Link>
           </Link>
           <Link href="/contact" as={"/contact"}>
             <Nav.Link href="/contact">Contact</Nav.Link>
