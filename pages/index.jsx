@@ -37,7 +37,7 @@ const Home = ({ posts }) => {
           <Card.Img
             className="profile-img"
             variant="top"
-            src="/bomberman.png"
+            src="/bomberman.jpg"
           />
           <Card.Body>
             <Card.Title>Greetings visitor!</Card.Title>
