@@ -22,7 +22,8 @@
       url("./fonts/roboto-v20-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-$font-family-base: "Roboto Slab";
+$font-family-base: "Roboto Slab", -apple-system, system-ui, BlinkMacSystemFont,
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 
 // https://brandcolors.net/ - Reddit
 $primary: #5f99cf;
