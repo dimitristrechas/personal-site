@@ -72,17 +72,38 @@ const Home = ({ posts }) => {
 export const getStaticProps = async () => {
   const files = fs.readdirSync("posts");
 
-  const posts = files.map((filename) => {
-    const markdown = fs.readFileSync(path.join("posts", filename)).toString();
-    const parsedMarkdown = matter(markdown);
+  // const posts = files.map((fileName) => {
+  //   const markdown = fs.readFileSync(path.join("posts", fileName)).toString();
+  //   const parsedMarkdown = matter(markdown);
 
-    return {
-      slug: filename.replace(".md", ""),
-      title: parsedMarkdown.data.title,
-      desc: parsedMarkdown.data.description,
-      date: parsedMarkdown.data.date,
-    };
-  });
+  //   return {
+  //     slug: fileName.replace(".md", ""),
+  //     title: parsedMarkdown.data.title,
+  //     desc: parsedMarkdown.data.description,
+  //     date: parsedMarkdown.data.date,
+  //   };
+  // });
+
+  // get the last 5 posts
+  // https://stackoverflow.com/questions/30727864/how-to-read-a-file-from-directory-sorting-date-modified-in-node-js/40189439
+  const posts = files
+    .map(function (fileName) {
+      const markdown = fs.readFileSync(path.join("posts", fileName)).toString();
+      const parsedMarkdown = matter(markdown);
+
+      return {
+        slug: fileName.replace(".md", ""),
+        title: parsedMarkdown.data.title,
+        desc: parsedMarkdown.data.description,
+        date: parsedMarkdown.data.date,
+        time: fs.statSync(path.join("posts", fileName)).mtime.getTime(),
+      };
+    })
+    .sort(function (a, b) {
+      return a.time - b.time;
+    })
+    .slice(Math.max(files.length - 3, 0))
+    .reverse();
 
   return {
     props: {
