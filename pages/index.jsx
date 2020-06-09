@@ -38,6 +38,7 @@ const Home = ({ posts }) => {
             className="profile-img"
             variant="top"
             src="/bomberman.jpg"
+            alt="bomberman"
           />
           <Card.Body>
             <Card.Title>Greetings visitor!</Card.Title>
