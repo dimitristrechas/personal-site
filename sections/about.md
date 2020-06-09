@@ -6,13 +6,13 @@ date: 9/6/2020
 
 ## About me
 
-Hi, I'm Dimitris Trechas, a front end software developer. I like a lot of different things and this place aims to display some of them.
+I'm Dimitris Trechas, a front end software developer. When it comes to developement I like a lot of things and this website aims to display some of them.
 
 Download my **CV** as [pdf](https://drive.google.com/file/d/1zdO189ipE4JBo8KtjHln7rkCtkNyNUzS/view?usp=sharing) or [docx](https://docs.google.com/document/d/1-DEoD543b2qTUM2gCkSGUau7fhoMX**u3OB27Jqti9iI/edit?usp=sharing).
 
 ---
 
-## Projects
+## Work Projects
 
 A list of projects I was a part of or am actively developing.
 
@@ -39,3 +39,11 @@ Rewrote the entire frontend app (end user & admin panel), aiming for a cohesive,
 **FrAAgiLe**
 
 Developed the administration panel. Built using React, Redux, Redux-Saga, React-Router, Materialize-CSS.
+
+---
+
+## Personal Projects
+
+[**dimitristrechas.com**](https://dimitristrechas.netlify.app/)
+
+My personal site is a static site deployed with Netlify and build using Next.js & Bootstrap.

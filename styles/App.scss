@@ -1,4 +1,4 @@
-@import "~highlight.js/styles/monokai.css";
+@import "~highlight.js/styles/monokai-sublime.css";
 
 /* roboto-slab-regular - latin */
 @font-face {
@@ -77,6 +77,11 @@ body {
     width: 180px;
     height: 180px;
   }
+}
+
+.popular-posts {
+  flex: 1;
+  min-width: 250px;
 }
 
 .markdown-custom {

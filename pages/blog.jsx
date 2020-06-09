@@ -1,12 +1,11 @@
 import fs from "fs";
-import path from "path";
-import Link from "next/link";
 import matter from "gray-matter";
-import Row from "react-bootstrap/Row";
+import Link from "next/link";
+import path from "path";
+import { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import { useState, useEffect } from "react";
+import Row from "react-bootstrap/Row";
 
 const Home = ({ posts }) => {
   const [postsList, setPostsList] = useState([]);
