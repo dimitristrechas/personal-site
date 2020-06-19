@@ -23,7 +23,7 @@ const Header = () => {
       </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="text-secondary" id="basic-navbar-nav">
-        <Nav className="ml-2">
+        <Nav>
           <Link href="/blog" as={"/blog"}>
             <Nav.Link
               href="/blog"
