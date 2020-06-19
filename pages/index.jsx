@@ -50,7 +50,7 @@ const Home = ({ posts }) => {
         </Card>
       </Col>
       <Col xs={12} className="d-flex flex-wrap mb-5">
-        <div className="popular-posts">
+        <div className="popular-posts p-3">
           <h2>Latest Posts</h2>
           {postsList.map((post, key) => {
             return (
