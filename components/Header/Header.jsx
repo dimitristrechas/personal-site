@@ -16,14 +16,14 @@ const Header = () => {
           className="text-primary d-inline-flex align-items-center"
         >
           <FaDev />
-          <span className="text-primary font-weight-normal mx-1">
+          <span className="text-primary font-weight-normal">
             Dimitris Trechas
           </span>
         </Navbar.Brand>
       </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="text-secondary" id="basic-navbar-nav">
-        <Nav className="ml-auto">
+        <Nav className="ml-2">
           <Link href="/blog" as={"/blog"}>
             <Nav.Link
               href="/blog"
