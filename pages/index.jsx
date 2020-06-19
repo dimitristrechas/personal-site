@@ -31,7 +31,7 @@ const Home = ({ posts }) => {
   }, [posts]);
 
   return (
-    <Row className="py-5">
+    <Row className="py-4">
       <Col className="d-flex flex-wrap">
         <Card className="profile-card mb-2 mr-5 p-2 d-none d-sm-none d-md-flex">
           <Card.Img
