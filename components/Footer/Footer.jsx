@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <Navbar className="py-3" fixed="bottom" expand="lg">
+    <Navbar className="py-3" sticky="bottom" expand="lg">
       <Container className="justify-content-center">
         <Row>
           <Col>

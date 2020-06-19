@@ -50,6 +50,10 @@ body {
   line-height: 1;
 }
 
+.header-nav-toggle {
+  border: none !important;
+}
+
 .navbar-brand {
   font-size: 2rem;
   padding: 0;
@@ -73,9 +77,10 @@ body {
 }
 
 .profile-card {
-  width: 18rem;
+  // width: 18rem;
 
   .profile-img {
+    padding: 1rem;
     margin: 0 auto;
     width: 180px;
     height: 199px;

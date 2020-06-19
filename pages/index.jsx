@@ -32,8 +32,8 @@ const Home = ({ posts }) => {
 
   return (
     <Row className="py-4">
-      <Col className="d-flex flex-wrap">
-        <Card className="profile-card mb-2 mr-5 p-2 d-none d-sm-none d-md-flex">
+      <Col xs={12} className="d-flex flex-wrap justify-content-center mb-5">
+        <Card className="profile-card">
           <Card.Img
             className="profile-img"
             variant="top"
@@ -48,6 +48,8 @@ const Home = ({ posts }) => {
             </Card.Text>
           </Card.Body>
         </Card>
+      </Col>
+      <Col xs={12} className="d-flex flex-wrap mb-5">
         <div className="popular-posts">
           <h2>Latest Posts</h2>
           {postsList.map((post, key) => {
@@ -57,7 +59,13 @@ const Home = ({ posts }) => {
                 href="/blog/[slug]"
                 as={"/blog/" + post.slug}
               >
-                <div className="border-bottom py-3 post-card">
+                <div
+                  className={
+                    key === postsList.length - 1
+                      ? "py-3 post-card"
+                      : "border-bottom py-3 post-card"
+                  }
+                >
                   <div className="h4">{post.title}</div>
                   <div className="h6 text-muted">{post.date}</div>
                 </div>

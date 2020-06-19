@@ -16,14 +16,17 @@ const Header = () => {
           className="text-primary d-inline-flex align-items-center"
         >
           <FaDev />
-          <span className="text-primary font-weight-normal">
+          <span className="text-primary font-weight-normal mx-1">
             Dimitris Trechas
           </span>
         </Navbar.Brand>
       </Link>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Toggle
+        className="header-nav-toggle"
+        aria-controls="basic-navbar-nav"
+      />
       <Navbar.Collapse className="text-secondary" id="basic-navbar-nav">
-        <Nav>
+        <Nav className="ml-auto">
           <Link href="/blog" as={"/blog"}>
             <Nav.Link
               href="/blog"
@@ -43,7 +46,7 @@ const Header = () => {
           <Link href="/contact" as={"/contact"}>
             <Nav.Link
               href="/contact"
-              className={router.pathname == "/contact" ? "active" : ""}
+              className={router.pathname == "/contact" ? "active pr-0" : "pr-0"}
             >
               Contact
             </Nav.Link>
