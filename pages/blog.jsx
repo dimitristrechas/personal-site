@@ -69,16 +69,26 @@ const Home = ({ posts }) => {
 export const getStaticProps = async () => {
   const files = fs.readdirSync("posts");
 
-  const posts = files.map((filename) => {
-    const markdown = fs.readFileSync(path.join("posts", filename)).toString();
-    const parsedMarkdown = matter(markdown);
+  const posts = files
+    .map(function (fileName) {
+      const markdown = fs.readFileSync(path.join("posts", fileName)).toString();
+      const parsedMarkdown = matter(markdown);
 
-    return {
-      slug: filename.replace(".md", ""),
-      title: parsedMarkdown.data.title,
-      date: parsedMarkdown.data.date,
-    };
-  });
+      // month is 0-based, that's why we need dataParts[1] - 1
+      let fileDate = parsedMarkdown.data.date.split("/");
+      let dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
+
+      return {
+        slug: fileName.replace(".md", ""),
+        title: parsedMarkdown.data.title,
+        date: dateObject.toDateString(),
+        timestamp: dateObject.getTime(),
+      };
+    })
+    .sort(function (a, b) {
+      return a.timestamp - b.timestamp;
+    })
+    .reverse();
 
   return {
     props: {

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import NavbarBrand from "react-bootstrap/NavbarBrand";
 
 const Home = ({ posts }) => {
   const [postsList, setPostsList] = useState([]);
@@ -88,18 +89,24 @@ export const getStaticProps = async () => {
       const markdown = fs.readFileSync(path.join("posts", fileName)).toString();
       const parsedMarkdown = matter(markdown);
 
+      // month is 0-based, that's why we need dataParts[1] - 1
+      let fileDate = parsedMarkdown.data.date.split("/");
+      let dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
+
       return {
         slug: fileName.replace(".md", ""),
         title: parsedMarkdown.data.title,
-        date: parsedMarkdown.data.date,
-        time: fs.statSync(path.join("posts", fileName)).mtime.getTime(),
+        date: dateObject.toDateString(),
+        timestamp: dateObject.getTime(),
       };
     })
     .sort(function (a, b) {
-      return a.time - b.time;
+      return a.timestamp - b.timestamp;
     })
     .slice(Math.max(files.length - 3, 0))
     .reverse();
+
+  console.log("posts", posts);
 
   return {
     props: {
