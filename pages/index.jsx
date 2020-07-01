@@ -88,7 +88,6 @@ export const getStaticProps = async () => {
   //   return {
   //     slug: fileName.replace(".md", ""),
   //     title: parsedMarkdown.data.title,
-  //     desc: parsedMarkdown.data.description,
   //     date: parsedMarkdown.data.date,
   //   };
   // });
@@ -103,7 +102,6 @@ export const getStaticProps = async () => {
       return {
         slug: fileName.replace(".md", ""),
         title: parsedMarkdown.data.title,
-        desc: parsedMarkdown.data.description,
         date: parsedMarkdown.data.date,
         time: fs.statSync(path.join("posts", fileName)).mtime.getTime(),
       };

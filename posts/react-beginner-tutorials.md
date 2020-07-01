@@ -1,6 +1,5 @@
 ---
 title: React & Redux beginner tutorials
-description: A handpicked list
 date: 19/6/2020
 ---
 

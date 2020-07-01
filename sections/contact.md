@@ -1,11 +1,10 @@
 ---
 title: Bio
-description: A small bio
 ---
 
 ## Contact me
 
-For business enquiries feel free to email me at **dimitristrechas@gmail.com**.
+Feel free to email me at **dimitristrechas@gmail.com**.
 
 ---
 

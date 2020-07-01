@@ -76,7 +76,6 @@ export const getStaticProps = async () => {
     return {
       slug: filename.replace(".md", ""),
       title: parsedMarkdown.data.title,
-      desc: parsedMarkdown.data.description,
       date: parsedMarkdown.data.date,
     };
   });
