@@ -82,7 +82,7 @@ const Home = ({ posts }) => {
 export const getStaticProps = async () => {
   const files = fs.readdirSync("posts");
 
-  // get the last 5 posts
+  // get the last 3 posts
   // https://stackoverflow.com/questions/30727864/how-to-read-a-file-from-directory-sorting-date-modified-in-node-js/40189439
   const posts = files
     .map(function (fileName) {
@@ -105,8 +105,6 @@ export const getStaticProps = async () => {
     })
     .slice(Math.max(files.length - 3, 0))
     .reverse();
-
-  console.log("posts", posts);
 
   return {
     props: {
