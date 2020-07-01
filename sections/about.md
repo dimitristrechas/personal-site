@@ -5,9 +5,9 @@ date: 9/6/2020
 
 ## About me
 
-I'm Dimitris Trechas, a front end software engineer. <br/>I like a lot of dev things and this website aims to display some of them.
+I'm Dimitris Trechas, a frontend software engineer. <br/>I like a lot of dev things and this website aims to display some of them.
 
-You can view or download my **CV** as [pdf](https://drive.google.com/file/d/1zdO189ipE4JBo8KtjHln7rkCtkNyNUzS/view?usp=sharing) or [docx](https://docs.google.com/document/d/1-DEoD543b2qTUM2gCkSGUau7fhoMX_u3OB27Jqti9iI/edit?usp=sharing).
+You can download my **CV** as [pdf](/dimitristrechas-cv.pdf) or [docx](/dimitristrechas-cv.docx).
 
 ---
 
