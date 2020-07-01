@@ -12,5 +12,5 @@ Feel free to email me at **dimitristrechas@gmail.com**.
 
 Places you'll most likely find me.
 
-- [Linkedin](https://www.linkedin.com/in/dimitris-trechas-1956b7b1/)
+- [Linkedin](https://www.linkedin.com/in/dimitristrechas/)
 - [GitHub](https://github.com/dimitristrechas)
