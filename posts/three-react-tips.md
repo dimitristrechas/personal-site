@@ -1,5 +1,5 @@
 ---
-title: 3 tips for a better React experience
+title: Tips on destructing objects in javascript & React
 date: 3/7/2020
 ---
 
@@ -22,21 +22,6 @@ import React from "react";
 const MyComponent = ({ id, name, anotherProp, moreProps }) => {
   return <div>Yes {name}</div>;
 };
-```
-
-### A state object variable should be initialized with null (unless reasons)
-
-```javascript
-const [myObject, setMyObject] = useState(null);
-
-// if we set the init value to {} then the following code is executed:
-
-if (myObject) {
-  // do something
-}
-
-// I do this because there is no "pretty" way to check if an object is empty
-// https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
 ```
 
 ### Destructing nested objects
