@@ -7,7 +7,7 @@ date: 9/6/2020
 
 I'm Dimitris Trechas, a frontend software engineer. <br/>I like a lot of dev things and this website aims to display some of them.
 
-You can download my **CV** as [pdf](/dimitristrechas-cv.pdf) or [docx](/dimitristrechas-cv.docx).
+You can download my **CV** as [pdf](https://dimitristrechas-personal-site.s3.eu-central-1.amazonaws.com/dimitristrechas-cv.pdf) or [docx](https://dimitristrechas-personal-site.s3.eu-central-1.amazonaws.com/dimitristrechas-cv.docx).
 
 ---
 
