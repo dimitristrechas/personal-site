@@ -15,7 +15,7 @@ You can download my **CV** as [pdf](/dimitristrechas-cv.pdf) or [docx](/dimitris
 
 A list of projects I was a part of or am actively developing.
 
-- [**clickdelivery.gr**](https://www.clickdelivery.gr/)
+- **clickdelivery.gr**
 
 - [**efood.gr**](https://www.efood.gr/)
 

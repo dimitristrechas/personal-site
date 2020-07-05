@@ -15,7 +15,9 @@ const Header = () => {
           href="/"
           className="text-primary d-inline-flex align-items-center"
         >
-          <FaDev />
+          <div className="d-none d-sm-block">
+            <FaDev />
+          </div>
           <span className="text-primary font-weight-normal mx-1">
             Dimitris Trechas
           </span>
