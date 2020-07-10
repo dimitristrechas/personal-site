@@ -33,4 +33,6 @@ A list of projects I was a part of or am actively developing.
 
 ## Personal Projects
 
-- [**dimitristrechas.com**](https://www.dimitristrechas.com/) <br/>My personal site is a static site deployed with Netlify and build using Next.js & Bootstrap 4.
+- **dimitristrechas.com**
+
+My personal site is build using Next.js & Bootstrap 4 and deployed with Netlify.
