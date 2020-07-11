@@ -1,5 +1,5 @@
 ---
-title: Bio
+title: Dimitris Trechas - Contact
 ---
 
 ## Contact me

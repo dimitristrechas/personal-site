@@ -1,5 +1,5 @@
 ---
-title: dimitristrechas - Bio
+title: Dimitris Trechas - About me
 date: 9/6/2020
 ---
 

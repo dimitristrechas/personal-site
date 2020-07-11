@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { FaDev } from "react-icons/fa";
+import { FaLaptopCode } from "react-icons/fa";
 
 const Header = () => {
   const router = useRouter();
@@ -11,14 +11,11 @@ const Header = () => {
   return (
     <Navbar expand="lg" className="py-3 px-0">
       <Link href="/" as={"/"}>
-        <Navbar.Brand
-          href="/"
-          className="text-primary d-inline-flex align-items-center"
-        >
-          <div className="d-none d-sm-block">
-            <FaDev />
+        <Navbar.Brand href="/" className=" d-inline-flex align-items-center">
+          <div className="d-none d-sm-block text-primary mr-2">
+            <FaLaptopCode />
           </div>
-          <span className="text-primary font-weight-normal mx-1">
+          <span className="text-primary font-weight-normal">
             Dimitris Trechas
           </span>
         </Navbar.Brand>
