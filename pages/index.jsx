@@ -42,10 +42,10 @@ const Home = ({ posts }) => {
             alt="bomberman"
           />
           <Card.Body>
-            <Card.Title>Greetings visitor!</Card.Title>
+            <Card.Title>Greetings!</Card.Title>
             <Card.Text className="h6 text-muted">
               Have a look around if you are interested in JavaScript, React or
-              frontend development in general.
+              Frontend Development in general.
             </Card.Text>
           </Card.Body>
         </Card>
