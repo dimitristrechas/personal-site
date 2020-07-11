@@ -14,6 +14,7 @@ import React from "react";
 
 const MyComponent = (props) => {
   const { id, name, anotherProp, moreProps } = props;
+
   return <div>Yes {name}</div>;
 };
 
@@ -22,6 +23,7 @@ const MyComponent = (props) => {
 import React from "react";
 
 const MyComponent = ({ id, name, anotherProp, moreProps }) => {
+  
   return <div>Yes {name}</div>;
 };
 ```
