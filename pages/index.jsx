@@ -45,7 +45,7 @@ const Home = ({ posts }) => {
             <Card.Title>Greetings visitor!</Card.Title>
             <Card.Text className="h6 text-muted">
               Have a look around if you are interested in JavaScript, React or
-              front end development in general.
+              frontend development in general.
             </Card.Text>
           </Card.Body>
         </Card>
