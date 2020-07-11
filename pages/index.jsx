@@ -32,50 +32,62 @@ const Home = ({ posts }) => {
   }, [posts]);
 
   return (
-    <Row className="py-4">
-      <Col xs={12} className="d-flex flex-wrap justify-content-center mb-5">
-        <Card className="profile-card">
-          <Card.Img
-            className="profile-img"
-            variant="top"
-            src="/bomberman.jpg"
-            alt="bomberman"
-          />
-          <Card.Body>
-            <Card.Title>Greetings!</Card.Title>
-            <Card.Text className="h6 text-muted">
-              Have a look around if you are interested in JavaScript, React or
-              Frontend Development in general.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>
-      <Col xs={12} className="d-flex flex-wrap mb-5">
-        <div className="popular-posts">
-          <h2>Latest Posts</h2>
-          {postsList.map((post, key) => {
-            return (
-              <Link
-                key={post.slug}
-                href="/blog/[slug]"
-                as={"/blog/" + post.slug}
-              >
-                <div
-                  className={
-                    key === postsList.length - 1
-                      ? "py-3 post-card"
-                      : "border-bottom py-3 post-card"
-                  }
-                >
-                  <div className="h4">{post.title}</div>
-                  <div className="h6 text-muted">{post.date}</div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </Col>
-    </Row>
+    <>
+      <section>
+        <Row className="py-5">
+          <Col
+            xs={12}
+            md={6}
+            className="d-flex flex-wrap justify-content-center"
+          >
+            <Card className="profile-card">
+              <Card.Img
+                className="profile-img"
+                variant="top"
+                src="/bomberman.jpg"
+                alt="bomberman"
+              />
+              <Card.Body>
+                <Card.Title>Greetings!</Card.Title>
+                <Card.Text className="h6 text-muted">
+                  Have a look around if you are interested in JavaScript, React
+                  or Frontend Development in general.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </section>
+      <section>
+        <Row className="py-5">
+          <Col xs={12} className="d-flex flex-wrap mb-5">
+            <div className="popular-posts">
+              <h2>Latest Posts</h2>
+              {postsList.map((post, key) => {
+                return (
+                  <Link
+                    key={post.slug}
+                    href="/blog/[slug]"
+                    as={"/blog/" + post.slug}
+                  >
+                    <div
+                      className={
+                        key === postsList.length - 1
+                          ? "py-3 post-card"
+                          : "border-bottom py-3 post-card"
+                      }
+                    >
+                      <div className="h4">{post.title}</div>
+                      <div className="h6 text-muted">{post.date}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </Col>
+        </Row>
+      </section>
+    </>
   );
 };
 

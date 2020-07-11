@@ -33,8 +33,11 @@ const Home = ({ posts }) => {
   return (
     <>
       <Form>
-        <Form.Row className="py-5">
-          <Col lg="4">
+        <Form.Row className="pt-5 pb-4">
+          <Col sm={12}>
+            <h2>My Blog</h2>
+          </Col>
+          <Col sm={12} md={6}>
             <Form.Control
               className=""
               placeholder="Search posts..."
@@ -42,7 +45,7 @@ const Home = ({ posts }) => {
             />
             <Form.Text className="text-muted pl-1">
               {`${postsList.length} ${
-                postsList.length == 1 ? "post" : "posts"
+                postsList.length === 1 ? "post" : "posts"
               } found`}
             </Form.Text>
           </Col>
