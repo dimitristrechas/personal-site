@@ -8,8 +8,11 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>dimitristrechas</title>
-        <meta name="description" content="Dimitris Trechas - Personal Site" />
+        <title>dimitristrechas | personal site</title>
+        <meta
+          name="description"
+          content="Dimitris Trechas, Frontend Engineer - Personal Site"
+        />
       </Head>
       <Container fluid="md">
         <Header />

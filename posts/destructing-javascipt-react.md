@@ -1,9 +1,9 @@
 ---
-title: Tips on destructing objects in javascript & React
+title: Tips on destructing objects in JavaScript & React
 date: 3/7/2020
 ---
 
-## Tips on destructing objects in javascript & React
+## Tips on destructing objects in JavaScript & React
 
 ### Props destructing in React Component
 
