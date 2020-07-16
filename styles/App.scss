@@ -29,34 +29,13 @@ $font-family-base: "Roboto Slab", -apple-system, system-ui, BlinkMacSystemFont,
 $primary: #5f99cf;
 $secondary: #cee3f8;
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background-color: #f5f5f5;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #b4b4b4;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-track {
-  background-color: #f5f5f5;
-}
-
 @import "~bootstrap/scss/bootstrap";
 
 body {
   line-height: 1;
 }
 
-.app-container {
-  display: grid;
-  height: 100vh;
-  grid-template-rows: auto 1fr auto;
-}
-
-.header-nav-toggle {
-  border: none !important;
-}
+// overide react bootstrap
 
 .navbar-brand {
   font-size: 2rem;
@@ -71,8 +50,24 @@ body {
   max-width: 800px;
 }
 
+// custom
+
+.app-container {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
+.header-nav-toggle {
+  border: none !important;
+}
+
+.popular-posts {
+  flex: 1;
+  min-width: 250px;
+}
+
 .post-card {
-  // max-width: 18rem;
   cursor: pointer;
 
   &:hover {
@@ -81,8 +76,6 @@ body {
 }
 
 .profile-card {
-  // width: 18rem;
-
   .profile-img {
     padding: 1rem;
     margin: 0 auto;
@@ -91,9 +84,8 @@ body {
   }
 }
 
-.popular-posts {
-  flex: 1;
-  min-width: 250px;
+.footer {
+  font-size: 0.875rem;
 }
 
 .markdown-custom {

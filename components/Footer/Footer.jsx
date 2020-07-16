@@ -10,7 +10,7 @@ const Footer = () => {
     <Navbar className="py-3" sticky="bottom" expand="lg">
       <Container className="justify-content-center">
         <Row>
-          <Col>{`Copyright © 2020 Dimitris Trechas`}</Col>
+          <Col className="footer">{`Copyright © 2020 Dimitris Trechas`}</Col>
         </Row>
       </Container>
     </Navbar>
