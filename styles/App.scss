@@ -48,6 +48,12 @@ body {
   line-height: 1;
 }
 
+.app-container {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
 .header-nav-toggle {
   border: none !important;
 }

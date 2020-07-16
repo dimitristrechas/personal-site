@@ -3,7 +3,14 @@ title: React & Redux beginner tutorials
 date: 19/6/2020
 ---
 
-## React & Redux beginner tutorials
+## Official Documentation
+
+Always, always read the official documentation first.
+
+- [React](https://reactjs.org/docs/getting-started.html)
+- [Redux (updated!)](https://redux.js.org/tutorials/essentials/part-1-overview-concepts)
+
+## Beginner tutorials from nice dev people
 
 This is a handpicked list of tutorials I have personally studied and come back to this day.
 

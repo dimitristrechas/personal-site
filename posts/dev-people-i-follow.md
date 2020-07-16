@@ -11,3 +11,4 @@ A short list of dev people I follow and learn from
 - [Robin Wieruch](https://www.robinwieruch.de/)
 - [Dan Abramov](https://overreacted.io/)
 - [Kent C. Dodds](https://kentcdodds.com/)
+- [Dave Ceddia](https://daveceddia.com/)
