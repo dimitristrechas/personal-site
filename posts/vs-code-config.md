@@ -15,7 +15,6 @@ date: 11/7/2020
 - Monokai Pro
 - npm Intellisense
 - Path Intellisense
-- Project Manager
 - Prettier - Code formatter
 - Todo+
 - Version Lens
@@ -29,6 +28,7 @@ date: 11/7/2020
   // Editor
   "git.ignoreMissingGitWarning": true,
   "editor.fontFamily": "Hack, Fira Code",
+  "editor.fontLigatures": false,
   "editor.showFoldingControls": "always",
   "editor.fontSize": 12,
   "editor.tabSize": 2,
@@ -41,14 +41,14 @@ date: 11/7/2020
   "window.title": "${folderName}${separator}${activeFolderShort}${separator}${activeEditorShort}$",
   "window.zoomLevel": 0,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "Monokai",
+  "workbench.colorTheme": "Monokai Classic",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "workbench.activityBar.visible": true,
   "explorer.confirmDelete": false,
   "window.restoreWindows": "all",
   "workbench.iconTheme": "vscode-icons",
-  "files.associations": { ".blade.php": "html" },
+  "files.associations": { ".blade.php": "html", "*.sass": "scss" },
   // Emmet
   "emmet.includeLanguages": {
     "blade": "html"
@@ -68,6 +68,15 @@ date: 11/7/2020
   },
   "prettier.disableLanguages": ["php"],
   "prettier.singleQuote": false,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   // Git lens
   "gitlens.hovers.enabled": false,
   "gitlens.views.lineHistory.enabled": false,
@@ -79,17 +88,10 @@ date: 11/7/2020
   // todo
   "todo.timekeeping.created.enabled": true,
   "todo.statistics.project.enabled": false,
+  // unsorted
   "javascript.updateImportsOnFileMove.enabled": "always",
   "explorer.confirmDragAndDrop": false,
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "diffEditor.ignoreTrimWhitespace": false,
   "vsicons.dontShowNewVersionMessage": true,
   "versionlens.suggestions.showOnStartup": true
 }
