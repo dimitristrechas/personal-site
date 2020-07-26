@@ -1,6 +1,7 @@
 ---
 title: Dev people I follow
 date: 1/7/2020
+tags: Other
 ---
 
 ## Dev people I follow

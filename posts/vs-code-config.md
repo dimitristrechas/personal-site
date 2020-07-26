@@ -1,6 +1,7 @@
 ---
 title: My Visual Studio Code Configuration
 date: 11/7/2020
+tags: Other
 ---
 
 ## My Visual Studio Code Configuration

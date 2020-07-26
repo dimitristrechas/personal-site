@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
+import { getTagColor } from "../utils/helpers";
 
 const Home = ({ posts }) => {
   const [postsList, setPostsList] = useState([]);
@@ -59,6 +61,22 @@ const Home = ({ posts }) => {
                 <div className="border-bottom py-3 post-card">
                   <div className="h4">{post.title}</div>
                   <div className="h6 text-muted">{post.date}</div>
+                  <div className="h6">
+                    {post.tags.map((tag) => {
+                      return (
+                        <Button
+                          type="button"
+                          key={tag}
+                          variant={getTagColor(tag)}
+                          size="sm"
+                          className="mr-1"
+                          disabled
+                        >
+                          {tag}
+                        </Button>
+                      );
+                    })}
+                  </div>
                 </div>
               </Link>
             </Col>
@@ -81,11 +99,14 @@ export const getStaticProps = async () => {
       let fileDate = parsedMarkdown.data.date.split("/");
       let dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
 
+      let tags = parsedMarkdown.data.tags.split(",").map((tag) => tag.trim());
+
       return {
         slug: fileName.replace(".md", ""),
         title: parsedMarkdown.data.title,
         date: dateObject.toDateString(),
         timestamp: dateObject.getTime(),
+        tags: tags,
       };
     })
     .sort(function (a, b) {

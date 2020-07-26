@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import NavbarBrand from "react-bootstrap/NavbarBrand";
+import Button from "react-bootstrap/Button";
+import { getTagColor } from "../utils/helpers";
 
 const Home = ({ posts }) => {
   const [postsList, setPostsList] = useState([]);
@@ -50,8 +51,11 @@ const Home = ({ posts }) => {
               <Card.Body>
                 <Card.Title>Greetings!</Card.Title>
                 <Card.Text className="h6 text-muted">
-                  Have a look around if you are interested in JavaScript, React
-                  or Frontend Development in general.
+                  Read my blog if you are interested in JavaScript, React or
+                  Frontend Development in general.
+                </Card.Text>
+                <Card.Text className="h6 text-muted">
+                  You can also learn more about me or contact me directly.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -79,6 +83,22 @@ const Home = ({ posts }) => {
                     >
                       <div className="h4">{post.title}</div>
                       <div className="h6 text-muted">{post.date}</div>
+                      <div className="h6">
+                        {post.tags.map((tag) => {
+                          return (
+                            <Button
+                              type="button"
+                              key={tag}
+                              variant={getTagColor(tag)}
+                              size="sm"
+                              className="mr-1"
+                              disabled
+                            >
+                              {tag}
+                            </Button>
+                          );
+                        })}
+                      </div>
                     </div>
                   </Link>
                 );
@@ -105,11 +125,14 @@ export const getStaticProps = async () => {
       let fileDate = parsedMarkdown.data.date.split("/");
       let dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
 
+      let tags = parsedMarkdown.data.tags.split(",").map((tag) => tag.trim());
+
       return {
         slug: fileName.replace(".md", ""),
         title: parsedMarkdown.data.title,
         date: dateObject.toDateString(),
         timestamp: dateObject.getTime(),
+        tags: tags,
       };
     })
     .sort(function (a, b) {

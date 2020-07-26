@@ -1,6 +1,7 @@
 ---
 title: Tips on destructing objects in JavaScript & React
 date: 3/7/2020
+tags: JavaScript, React
 ---
 
 ## Tips on destructing objects in JavaScript & React

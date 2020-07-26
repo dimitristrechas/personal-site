@@ -1,6 +1,7 @@
 ---
 title: React & Redux beginner tutorials
 date: 19/6/2020
+tags: React
 ---
 
 ## Official Documentation
