@@ -36,3 +36,7 @@ A list of projects I was a part of or am actively developing.
 - **dimitristrechas.com**
 
 My personal site is build using Next.js & Bootstrap 4 and deployed with Netlify.
+
+-  [**whole-lotta-react-styling**](https://dimitristrechas.github.io/whole-lotta-react-styling/)
+
+A pet project to aggregate different approaches to React styling and serve as boilerplate code.
