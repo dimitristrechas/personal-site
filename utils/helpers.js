@@ -1,4 +1,4 @@
-import { TAG_REACT, TAG_JAVASCRIPT, TAG_OTHER } from "./constants";
+import { TAG_REACT, TAG_JAVASCRIPT, TAG_OTHER, TAG_CSS } from "./constants";
 
 export const getTagColor = (tag) => {
   switch (tag) {
@@ -6,6 +6,8 @@ export const getTagColor = (tag) => {
       return "primary";
     case TAG_JAVASCRIPT:
       return "success";
+    case TAG_CSS:
+      return "info";
     case TAG_OTHER:
       return "dark";
     default:
