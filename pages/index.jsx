@@ -49,7 +49,7 @@ const Home = ({ posts }) => {
                 alt="bomberman"
               />
               <Card.Body>
-                <Card.Title>Greetings!</Card.Title>
+                <Card.Title>Greetings friend!</Card.Title>
                 <Card.Text className="h6 text-muted">
                   Read my blog if you are interested in JavaScript, React or
                   Frontend Development in general.

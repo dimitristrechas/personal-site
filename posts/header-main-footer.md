@@ -1,12 +1,12 @@
 ---
-title: Header.Main.Footer
+title: A basic Header/Main/Footer Web page layout
 date: 13/8/2020
 tags: css
 ---
 
-## Header.Main.Footer
+## A basic Header/Main/Footer Web page layout
 
-A basic header/main/footer layout that works!
+The following gists showcase a basic web page layout with a fixed height header, a footer that stays on the bottom regardless of the main content height.
 
 ### Using css grid
 
