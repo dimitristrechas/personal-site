@@ -8,31 +8,31 @@ tags: Other
 
 These are some core React libraries I use on a daily basis!
 
-### State machines
+#### State machines
 
 - [Redux](https://redux.js.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [React Redux](https://react-redux.js.org/)
 
-### Data fetching
+#### Data fetching
 
 - [React Query](https://react-query.tanstack.com/)
 
-### UI
+#### UI
 
 - [Material UI](https://material-ui.com/)
 - [React Icons](https://github.com/react-icons/react-icons)
 - [Emotion](https://emotion.sh/docs/introduction)
 
-### Forms
+#### Forms
 
 - [react-hook-form](https://react-hook-form.com/)
 
-### Routing
+#### Routing
 
 - [React Router](https://reactrouter.com/web/guides/quick-start)
 
-### Data presentation
+#### Data presentation
 
 - [React Table](https://github.com/tannerlinsley/react-table)
 - [React Modal](http://reactcommunity.org/react-modal/)
