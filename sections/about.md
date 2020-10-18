@@ -31,6 +31,8 @@ A list of projects I was a part of or am actively developing.
 
 - **Prolepsis**
 
+- [**Sephora.gr**](https://www.sephora.gr/)
+
 ---
 
 ## Personal Projects

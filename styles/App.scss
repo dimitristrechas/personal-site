@@ -76,11 +76,13 @@ body {
 }
 
 .profile-card {
+  flex-direction: row;
+
   .profile-img {
-    padding: 1rem;
+    padding: 1.25rem;
     margin: 0 auto;
     width: 180px;
-    height: 199px;
+    height: 200px;
   }
 }
 

@@ -36,12 +36,8 @@ const Home = ({ posts }) => {
     <>
       <section>
         <Row className="py-5">
-          <Col
-            xs={12}
-            md={6}
-            className="d-flex flex-wrap justify-content-center"
-          >
-            <Card className="profile-card">
+          <Col xs={12} className="d-flex flex-wrap justify-content-center">
+            <Card className="profile-card w-100">
               <Card.Img
                 className="profile-img"
                 variant="top"
