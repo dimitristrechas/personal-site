@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import "../styles/app.scss";
+import "../styles/App.scss";
 
 export default function App({ Component, pageProps }) {
   return (
