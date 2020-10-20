@@ -1,12 +1,10 @@
-import React from "react";
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
-import Head from "next/head";
-import marked from "marked";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import hljs from "highlight.js";
+import marked from "marked";
+import Head from "next/head";
+import path from "path";
+import React from "react";
 
 marked.setOptions({
   highlight: function (code, lang) {
@@ -20,14 +18,14 @@ const About = ({ htmlString, data }) => {
       <Head>
         <title>{data.title}</title>
       </Head>
-      <Row>
-        <Col>
+      <div className="row">
+        <div className="col">
           <div
             className="markdown-custom py-5"
             dangerouslySetInnerHTML={{ __html: htmlString }}
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   );
 };

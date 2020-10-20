@@ -29,7 +29,7 @@ $font-family-base: "Roboto Slab", -apple-system, system-ui, BlinkMacSystemFont,
 $primary: #5f99cf;
 $secondary: #cee3f8;
 
-@import "~bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 body {
   line-height: 1;
@@ -46,20 +46,12 @@ body {
   font-size: 2rem;
 }
 
-.container-md {
-  max-width: 800px;
-}
-
 // custom
 
 .app-container {
   display: grid;
   height: 100vh;
   grid-template-rows: auto 1fr auto;
-}
-
-.header-nav-toggle {
-  border: none !important;
 }
 
 .popular-posts {

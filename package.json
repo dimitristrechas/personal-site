@@ -10,7 +10,7 @@
     "deploy": "next build && next export"
   },
   "dependencies": {
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^5.0.0-alpha2",
     "gray-matter": "^4.0.2",
     "highlight.js": "^10.3.1",
     "marked": "^1.2.0",
