@@ -31,11 +31,7 @@ $secondary: #cee3f8;
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-body {
-  line-height: 1;
-}
-
-// overide react bootstrap
+// overide bootstrap
 
 .navbar-brand {
   font-size: 2rem;
@@ -46,9 +42,14 @@ body {
   font-size: 2rem;
 }
 
+.nav-link.active {
+  text-decoration: underline;
+}
+
 // custom
 
 .app-container {
+  max-width: 800px;
   display: grid;
   height: 100vh;
   grid-template-rows: auto 1fr auto;

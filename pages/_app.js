@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import "../styles/App.scss";
+import "../styles/app.scss";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
           content="Dimitris Trechas, Frontend Engineer. Personal Site."
         />
       </Head>
-      <div fluid="md" className="container app-container">
+      <div className="container app-container">
         <Header />
         <main role="main">
           <Component {...pageProps} />

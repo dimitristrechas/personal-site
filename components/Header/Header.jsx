@@ -9,13 +9,13 @@ const Header = () => {
   return (
     <header>
       <nav className="navbar navbar-expand-lg py-3 px-0">
-        <div class="container-fluid">
+        <div className="container-fluid px-0">
           <Link href="/" as={"/"}>
             <a className="navbar-brand d-inline-flex align-items-center">
-              <div className="d-none d-sm-block text-primary mr-2">
+              <div className="d-none d-sm-block text-brand mr-2">
                 <FaLaptopCode />
               </div>
-              <span className="text-primary font-weight-normal">
+              <span className="text-brand font-weight-normal">
                 Dimitris Trechas
               </span>
             </a>
@@ -29,16 +29,16 @@ const Header = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="basic-navbar-nav">
-            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
                 <Link href="/blog" as={"/blog"}>
                   <a
                     href="/blog"
                     className={
-                      "nav-link text-secondary " +
+                      "nav-link text-muted " +
                       (router.pathname == "/blog" ? "active" : "")
                     }
                   >
@@ -46,12 +46,12 @@ const Header = () => {
                   </a>
                 </Link>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link href="/about" as={"/about"}>
                   <a
                     href="/about"
                     className={
-                      "nav-link text-secondary " +
+                      "nav-link text-muted " +
                       (router.pathname == "/about" ? "active" : "")
                     }
                   >
@@ -59,12 +59,12 @@ const Header = () => {
                   </a>
                 </Link>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link href="/contact" as={"/contact"}>
                   <a
                     href="/contact"
                     className={
-                      "nav-link text-secondary " +
+                      "nav-link text-muted " +
                       (router.pathname == "/contact" ? "active pr-0" : "pr-0")
                     }
                   >

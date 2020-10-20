@@ -3,10 +3,6 @@ import matter from "gray-matter";
 import Link from "next/link";
 import path from "path";
 import { useEffect, useState } from "react";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
 import { getTagColor } from "../utils/helpers";
 
 const Home = ({ posts }) => {
@@ -34,29 +30,29 @@ const Home = ({ posts }) => {
 
   return (
     <>
-      <Form>
-        <Form.Row className="pt-5 pb-4">
-          <Col sm={12}>
+      <form>
+        <div className="row pt-5 pb-4">
+          <div className="col-12">
             <h2>My Blog</h2>
-          </Col>
-          <Col sm={12} md={6}>
-            <Form.Control
-              className=""
+          </div>
+          <div className="col-12 col-md-6">
+            <input
+              className="form-control mb-2"
               placeholder="Search posts..."
               onChange={handlePostSearch}
             />
-            <Form.Text className="text-muted pl-1">
+            <small className="form-text text-muted pl-1">
               {`${postsList.length} ${
                 postsList.length === 1 ? "post" : "posts"
               } found`}
-            </Form.Text>
-          </Col>
-        </Form.Row>
-      </Form>
+            </small>
+          </div>
+        </div>
+      </form>
       {postsList.map((post, key) => {
         return (
-          <Row key={post.slug}>
-            <Col>
+          <div className="row" key={post.slug}>
+            <div className="col-12">
               <Link href="/blog/[slug]" as={"/blog/" + post.slug}>
                 <div className="border-bottom py-3 post-card">
                   <div className="h4">{post.title}</div>
@@ -64,23 +60,21 @@ const Home = ({ posts }) => {
                   <div className="h6">
                     {post.tags.map((tag) => {
                       return (
-                        <Button
+                        <button
                           type="button"
                           key={tag}
-                          variant={getTagColor(tag)}
-                          size="sm"
-                          className="mr-1"
+                          className={`btn btn-sm mr-1 btn-${getTagColor(tag)}`}
                           disabled
                         >
                           {tag}
-                        </Button>
+                        </button>
                       );
                     })}
                   </div>
                 </div>
               </Link>
-            </Col>
-          </Row>
+            </div>
+          </div>
         );
       })}
     </>

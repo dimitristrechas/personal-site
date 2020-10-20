@@ -3,28 +3,10 @@ import matter from "gray-matter";
 import Link from "next/link";
 import path from "path";
 import { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
 import { getTagColor } from "../utils/helpers";
 
 const Home = ({ posts }) => {
   const [postsList, setPostsList] = useState([]);
-
-  const handlePostSearch = (ev) => {
-    const search = ev.target.value;
-
-    if (search) {
-      const filteredPosts = posts.filter((p) => {
-        return p.title.includes(search);
-      });
-
-      setPostsList(filteredPosts);
-    } else {
-      setPostsList(posts);
-    }
-  };
 
   useEffect(() => {
     if (posts.length) {
@@ -35,32 +17,29 @@ const Home = ({ posts }) => {
   return (
     <>
       <section>
-        <Row className="py-5">
-          <Col xs={12} className="d-flex flex-wrap justify-content-center">
-            <Card className="profile-card w-100">
-              <Card.Img
-                className="profile-img"
-                variant="top"
+        <div className="row py-5">
+          <div className="col-12 d-flex flex-wrap justify-content-center">
+            <div className="card profile-card w-100">
+              <img
+                className="card-img-top profile-img"
                 src="/bomberman.jpg"
                 alt="bomberman"
               />
-              <Card.Body>
-                <Card.Title>Greetings friend!</Card.Title>
-                <Card.Text className="h6 text-muted">
+              <div className="card-body">
+                <h4 className="card-title">Greetings friend!</h4>
+                <p className="card-text text-muted">
                   Read my blog if you are interested in JavaScript, React or
-                  Frontend Development in general.
-                </Card.Text>
-                <Card.Text className="h6 text-muted">
-                  You can also learn more about me or contact me directly.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+                  Frontend Development in general. <br></br>You can also learn
+                  more about me or contact me directly.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       <section>
-        <Row className="py-5">
-          <Col xs={12} className="d-flex flex-wrap mb-5">
+        <div className="row py-5">
+          <div className="col-12 d-flex flex-wrap mb-5">
             <div className="popular-posts">
               <h2>Latest Posts</h2>
               {postsList.map((post, key) => {
@@ -82,16 +61,16 @@ const Home = ({ posts }) => {
                       <div className="h6">
                         {post.tags.map((tag) => {
                           return (
-                            <Button
+                            <button
                               type="button"
                               key={tag}
-                              variant={getTagColor(tag)}
-                              size="sm"
-                              className="mr-1"
+                              className={`btn btn-sm mr-1 btn-${getTagColor(
+                                tag
+                              )}`}
                               disabled
                             >
                               {tag}
-                            </Button>
+                            </button>
                           );
                         })}
                       </div>
@@ -100,8 +79,8 @@ const Home = ({ posts }) => {
                 );
               })}
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </section>
     </>
   );
