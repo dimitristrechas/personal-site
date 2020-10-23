@@ -1,9 +1,10 @@
+import type { AppProps /*, AppContext */ } from "next/app";
 import Head from "next/head";
-import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import Header from "../components/Header/Header";
 import "../styles/App.scss";
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>

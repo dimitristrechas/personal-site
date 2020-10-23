@@ -4,8 +4,19 @@ import Link from "next/link";
 import path from "path";
 import { useEffect, useState } from "react";
 import { getTagColor } from "../utils/helpers";
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 
-const Home = ({ posts }) => {
+type Post = {
+  slug: string;
+  title: any;
+  date: string;
+  timestamp: number;
+  tags: any;
+};
+
+type HomeProps = { posts: Post[] };
+
+const Home = ({ posts }: HomeProps) => {
   const [postsList, setPostsList] = useState([]);
 
   useEffect(() => {
@@ -86,12 +97,12 @@ const Home = ({ posts }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const files = fs.readdirSync("posts");
 
   // get the last 3 posts
   // https://stackoverflow.com/questions/30727864/how-to-read-a-file-from-directory-sorting-date-modified-in-node-js/40189439
-  const posts = files
+  const posts: Post[] = files
     .map(function (fileName) {
       const markdown = fs.readFileSync(path.join("posts", fileName)).toString();
       const parsedMarkdown = matter(markdown);
@@ -99,8 +110,9 @@ export const getStaticProps = async () => {
       // month is 0-based, that's why we need dataParts[1] - 1
       let fileDate = parsedMarkdown.data.date.split("/");
       let dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
-
-      let tags = parsedMarkdown.data.tags.split(",").map((tag) => tag.trim());
+      let tags = parsedMarkdown.data.tags
+        .split(",")
+        .map((tag: string) => tag.trim());
 
       return {
         slug: fileName.replace(".md", ""),
