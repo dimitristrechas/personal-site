@@ -17,7 +17,7 @@ type Post = {
 type HomeProps = { posts: Post[] };
 
 const Home = ({ posts }: HomeProps) => {
-  const [postsList, setPostsList] = useState([]);
+  const [postsList, setPostsList] = useState([] as Post[]);
 
   useEffect(() => {
     if (posts.length) {
