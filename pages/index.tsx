@@ -1,10 +1,10 @@
 import fs from "fs";
 import matter from "gray-matter";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import path from "path";
 import { useEffect, useState } from "react";
 import { getTagColor } from "../utils/helpers";
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 
 type Post = {
   slug: string;
