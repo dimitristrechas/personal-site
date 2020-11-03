@@ -29,9 +29,7 @@ renderer.code = (code, language) => {
   // Highlight only if the language is valid.
   // highlight.js escapes HTML in the code, but we need to escape by ourselves
   // when we don't use it.
-  const highlighted = validLang
-    ? highlightjs.highlight(language, code).value
-    : escapeForHTML(code);
+  const highlighted = validLang ? highlightjs.highlight(language, code).value : escapeForHTML(code);
 
   // Render the highlighted code with `hljs` class.
   return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
@@ -46,10 +44,7 @@ const Post = ({ htmlString, data }) => {
       <Head>
         <title>{data.title}</title>
       </Head>
-      <div
-        className="markdown-custom py-5"
-        dangerouslySetInnerHTML={{ __html: htmlString }}
-      />
+      <div className="markdown-custom py-5" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="text-right py-1">
         <Link href="/blog" as={"/blog"}>
           <a>back to blog list</a>
@@ -59,7 +54,7 @@ const Post = ({ htmlString, data }) => {
   );
 };
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = async (): Promise<unknown> => {
   const files = fs.readdirSync("posts");
 
   const paths = files.map((filename) => ({

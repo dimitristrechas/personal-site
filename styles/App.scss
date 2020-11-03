@@ -1,12 +1,15 @@
-@import "~highlight.js/styles/monokai-sublime.css";
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
+
+@import "../node_modules//highlight.js/styles/monokai-sublime.css";
 
 /* roboto-slab-regular - latin */
 @font-face {
   font-family: "Roboto Slab";
   font-style: normal;
   font-weight: 400;
-  src: local(""),
-    url("./fonts/roboto-slab-v11-latin-regular.woff2") format("woff2"),
+  src: local(""), url("./fonts/roboto-slab-v11-latin-regular.woff2") format("woff2"),
     url("./fonts/roboto-slab-v11-latin-regular.woff") format("woff");
   font-display: swap;
 }
@@ -16,14 +19,13 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: local("Roboto"), local("Roboto-Regular"),
-    url("./fonts/roboto-v20-latin-regular.woff2") format("woff2"),
+  src: local("Roboto"), local("Roboto-Regular"), url("./fonts/roboto-v20-latin-regular.woff2") format("woff2"),
     url("./fonts/roboto-v20-latin-regular.woff") format("woff");
   font-display: swap;
 }
 
-$font-family-base: "Roboto Slab", -apple-system, system-ui, BlinkMacSystemFont,
-  "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-base: "Roboto Slab", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+  Arial, sans-serif !default;
 
 // https://brandcolors.net/ - Reddit
 $primary: #5f99cf;

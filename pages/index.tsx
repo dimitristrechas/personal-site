@@ -3,7 +3,7 @@ import matter from "gray-matter";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import path from "path";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import { getTagColor } from "../utils/helpers";
 
 type Post = {
@@ -31,17 +31,12 @@ const Home = ({ posts }: HomeProps) => {
         <div className="row py-5">
           <div className="col-12 d-flex flex-wrap justify-content-center">
             <div className="card profile-card w-100">
-              <img
-                className="card-img-top profile-img"
-                src="/bomberman.jpg"
-                alt="bomberman"
-              />
+              <img className="card-img-top profile-img" src="/bomberman.jpg" alt="bomberman" />
               <div className="card-body">
                 <h4 className="card-title">Greetings friend!</h4>
                 <p className="card-text text-muted">
-                  Read my blog if you are interested in JavaScript, React or
-                  Frontend Development in general. <br></br>You can also learn
-                  more about me or contact me directly.
+                  Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
+                  You can also learn more about me or contact me directly.
                 </p>
               </div>
             </div>
@@ -55,18 +50,8 @@ const Home = ({ posts }: HomeProps) => {
               <h2>Latest Posts</h2>
               {postsList.map((post, key) => {
                 return (
-                  <Link
-                    key={post.slug}
-                    href="/blog/[slug]"
-                    as={"/blog/" + post.slug}
-                  >
-                    <div
-                      className={
-                        key === postsList.length - 1
-                          ? "py-3 post-card"
-                          : "border-bottom py-3 post-card"
-                      }
-                    >
+                  <Link key={post.slug} href="/blog/[slug]" as={"/blog/" + post.slug}>
+                    <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>
                       <div className="h4">{post.title}</div>
                       <div className="h6 text-muted">{post.date}</div>
                       <div className="h6">
@@ -75,9 +60,7 @@ const Home = ({ posts }: HomeProps) => {
                             <button
                               type="button"
                               key={tag}
-                              className={`btn btn-sm mr-1 btn-${getTagColor(
-                                tag
-                              )}`}
+                              className={`btn btn-sm mr-1 btn-${getTagColor(tag)}`}
                               disabled
                             >
                               {tag}
@@ -108,11 +91,9 @@ export const getStaticProps: GetStaticProps = async () => {
       const parsedMarkdown = matter(markdown);
 
       // month is 0-based, that's why we need dataParts[1] - 1
-      let fileDate = parsedMarkdown.data.date.split("/");
-      let dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
-      let tags = parsedMarkdown.data.tags
-        .split(",")
-        .map((tag: string) => tag.trim());
+      const fileDate = parsedMarkdown.data.date.split("/");
+      const dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
+      const tags = parsedMarkdown.data.tags.split(",").map((tag: string) => tag.trim());
 
       return {
         slug: fileName.replace(".md", ""),
