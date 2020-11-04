@@ -12,6 +12,7 @@
     "type-coverage": "type-coverage"
   },
   "dependencies": {
+    "@popperjs/core": "^2.5.4",
     "bootstrap": "^5.0.0-alpha2",
     "gray-matter": "^4.0.2",
     "highlight.js": "^10.3.2",
@@ -22,8 +23,8 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-icons": "^3.11.0",
-    "tailwindcss": "^1.9.6",
-    "sass": "^1.28.0"
+    "sass": "^1.28.0",
+    "tailwindcss": "^1.9.6"
   },
   "devDependencies": {
     "@types/node": "^14.14.6",
