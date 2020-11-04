@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { FC } from "react";
 import { FaLaptopCode } from "react-icons/fa";
 
-const Header = () => {
+const Header: FC = () => {
   const router = useRouter();
 
   return (
@@ -15,9 +15,7 @@ const Header = () => {
               <div className="d-none d-sm-block text-brand mr-2">
                 <FaLaptopCode />
               </div>
-              <span className="text-brand font-weight-normal">
-                Dimitris Trechas
-              </span>
+              <span className="text-brand font-weight-normal">Dimitris Trechas</span>
             </a>
           </Link>
           <button
@@ -35,26 +33,14 @@ const Header = () => {
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link href="/blog" as={"/blog"}>
-                  <a
-                    href="/blog"
-                    className={
-                      "nav-link text-muted " +
-                      (router.pathname == "/blog" ? "active" : "")
-                    }
-                  >
+                  <a href="/blog" className={"nav-link text-muted " + (router.pathname == "/blog" ? "active" : "")}>
                     Blog
                   </a>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link href="/about" as={"/about"}>
-                  <a
-                    href="/about"
-                    className={
-                      "nav-link text-muted " +
-                      (router.pathname == "/about" ? "active" : "")
-                    }
-                  >
+                  <a href="/about" className={"nav-link text-muted " + (router.pathname == "/about" ? "active" : "")}>
                     About
                   </a>
                 </Link>
@@ -63,10 +49,7 @@ const Header = () => {
                 <Link href="/contact" as={"/contact"}>
                   <a
                     href="/contact"
-                    className={
-                      "nav-link text-muted " +
-                      (router.pathname == "/contact" ? "active pr-0" : "pr-0")
-                    }
+                    className={"nav-link text-muted " + (router.pathname == "/contact" ? "active pr-0" : "pr-0")}
                   >
                     Contact
                   </a>

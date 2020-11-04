@@ -1,12 +1,23 @@
 import fs from "fs";
 import matter from "gray-matter";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import path from "path";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { getTagColor } from "../utils/helpers";
 
-const Home = ({ posts }) => {
-  const [postsList, setPostsList] = useState([]);
+type Post = {
+  slug: string;
+  title: string;
+  date: string;
+  timestamp: number;
+  tags: string[];
+};
+
+type HomeProps = { posts: Post[] };
+
+const Blog: FC<HomeProps> = ({ posts }: HomeProps) => {
+  const [postsList, setPostsList] = useState([] as Post[]);
 
   const handlePostSearch = (ev) => {
     const search = ev.target.value;
@@ -36,20 +47,14 @@ const Home = ({ posts }) => {
             <h2>My Blog</h2>
           </div>
           <div className="col-12 col-md-6">
-            <input
-              className="form-control mb-2"
-              placeholder="Search posts..."
-              onChange={handlePostSearch}
-            />
+            <input className="form-control mb-2" placeholder="Search posts..." onChange={handlePostSearch} />
             <small className="form-text text-muted pl-1">
-              {`${postsList.length} ${
-                postsList.length === 1 ? "post" : "posts"
-              } found`}
+              {`${postsList.length} ${postsList.length === 1 ? "post" : "posts"} found`}
             </small>
           </div>
         </div>
       </form>
-      {postsList.map((post, key) => {
+      {postsList.map((post) => {
         return (
           <div className="row" key={post.slug}>
             <div className="col-12">
@@ -60,12 +65,7 @@ const Home = ({ posts }) => {
                   <div className="h6">
                     {post.tags.map((tag) => {
                       return (
-                        <button
-                          type="button"
-                          key={tag}
-                          className={`btn btn-sm mr-1 btn-${getTagColor(tag)}`}
-                          disabled
-                        >
+                        <button type="button" key={tag} className={`btn btn-sm mr-1 btn-${getTagColor(tag)}`} disabled>
                           {tag}
                         </button>
                       );
@@ -81,7 +81,7 @@ const Home = ({ posts }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const files = fs.readdirSync("posts");
 
   const posts = files
@@ -90,10 +90,10 @@ export const getStaticProps = async () => {
       const parsedMarkdown = matter(markdown);
 
       // month is 0-based, that's why we need dataParts[1] - 1
-      let fileDate = parsedMarkdown.data.date.split("/");
-      let dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
+      const fileDate = parsedMarkdown.data.date.split("/");
+      const dateObject = new Date(+fileDate[2], fileDate[1] - 1, +fileDate[0]);
 
-      let tags = parsedMarkdown.data.tags.split(",").map((tag) => tag.trim());
+      const tags = parsedMarkdown.data.tags.split(",").map((tag) => tag.trim());
 
       return {
         slug: fileName.replace(".md", ""),
@@ -115,4 +115,4 @@ export const getStaticProps = async () => {
   };
 };
 
-export default Home;
+export default Blog;

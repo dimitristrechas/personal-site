@@ -3,20 +3,20 @@ import matter from "gray-matter";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import path from "path";
-import { useEffect, useState, FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { getTagColor } from "../utils/helpers";
 
 type Post = {
   slug: string;
-  title: any;
+  title: string;
   date: string;
   timestamp: number;
-  tags: any;
+  tags: string[];
 };
 
 type HomeProps = { posts: Post[] };
 
-const Home = ({ posts }: HomeProps) => {
+const Home: FC<HomeProps> = ({ posts }: HomeProps) => {
   const [postsList, setPostsList] = useState([] as Post[]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Home = ({ posts }: HomeProps) => {
   return (
     <>
       <section>
-        <div className="row py-5">
+        <div className="row py-3">
           <div className="col-12 d-flex flex-wrap justify-content-center">
             <div className="card profile-card w-100">
               <img className="card-img-top profile-img" src="/bomberman.jpg" alt="bomberman" />
@@ -40,6 +40,15 @@ const Home = ({ posts }: HomeProps) => {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="row">
+          <div className="col-12 text-center">
+            <span>
+              Now in <strong>Typescript!</strong>
+            </span>
           </div>
         </div>
       </section>
