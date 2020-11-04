@@ -33,7 +33,7 @@ $secondary: #cee3f8;
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-// overide bootstrap
+// overide bootstrap classes
 
 .navbar-brand {
   font-size: 2rem;
@@ -74,10 +74,8 @@ $secondary: #cee3f8;
   flex-direction: row;
 
   .profile-img {
-    padding: 1.25rem;
-    margin: 0 auto;
-    width: 180px;
-    height: 200px;
+    padding: 1rem;
+    width: 160px;
   }
 }
 
