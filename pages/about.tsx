@@ -13,14 +13,7 @@ marked.setOptions({
   },
 });
 
-type AboutData = { title: string };
-
-type AboutProps = {
-  htmlString: string;
-  data: AboutData;
-};
-
-const About: FC<AboutProps> = ({ htmlString, data }: AboutProps) => {
+const About: FC<PageProps> = ({ htmlString, data }: PageProps) => {
   return (
     <>
       <Head>

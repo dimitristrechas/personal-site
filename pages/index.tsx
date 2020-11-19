@@ -4,6 +4,7 @@ import Link from "next/link";
 import path from "path";
 import { FC, useEffect, useState } from "react";
 import { getPostObjFromMarkdown, getTagColor } from "../utils/helpers";
+import { FaRegLightbulb } from "react-icons/fa";
 
 const Home: FC<PostProps> = ({ posts }: PostProps) => {
   const [postsList, setPostsList] = useState([] as Post[]);
@@ -22,10 +23,9 @@ const Home: FC<PostProps> = ({ posts }: PostProps) => {
             <div className="card profile-card w-100 rounded">
               <img className="card-img-top profile-img" src="/bomberman.jpg" alt="bomberman" />
               <div className="card-body">
-                <h4 className="card-title">Greetings friend!</h4>
+                <h4 className="card-title fs-5">Greetings!</h4>
                 <p className="card-text text-muted">
-                  Read my blog (now in <strong>Typescript!</strong>) if you are interested in JavaScript, React or
-                  Frontend Development in general. <br></br>
+                  Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
                   You can also learn more about me, the projects I work on or contact me directly.
                 </p>
               </div>
@@ -34,7 +34,15 @@ const Home: FC<PostProps> = ({ posts }: PostProps) => {
         </div>
       </section>
       <section>
-        <div className="row py-5">
+        <div className="row py-3">
+          <div className="col-12 d-flex justify-content-center align-items-center">
+            <FaRegLightbulb size="2rem" className="text-warning" />
+            <span className="fs-4 ml-2">Refactored to TypeScript!</span>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="row py-4">
           <div className="col-12 d-flex flex-wrap mb-5">
             <div className="popular-posts">
               <h2>Latest Posts</h2>

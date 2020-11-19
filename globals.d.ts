@@ -7,3 +7,10 @@ type Post = {
 };
 
 type PostProps = { posts: Post[] };
+
+type PageData = { title: string };
+
+type PageProps = {
+  htmlString: string;
+  data: PageData;
+};
