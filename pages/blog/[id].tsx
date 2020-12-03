@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params: { id } })
   };
 };
 
-const Post: FC<PageProps> = ({ htmlString, post }: PageProps) => {
+const Post: FC<BlogProps> = ({ htmlString, post }: BlogProps) => {
   return (
     <>
       <Head>

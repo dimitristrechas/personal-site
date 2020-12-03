@@ -14,5 +14,10 @@ type PageData = { title: string };
 
 type PageProps = {
   htmlString: string;
+  post: PageData;
+};
+
+type BlogProps = {
+  htmlString: string;
   post: Post;
 };
