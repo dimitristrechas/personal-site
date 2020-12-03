@@ -1,9 +1,11 @@
 type Post = {
-  slug: string;
   title: string;
-  date: string;
-  timestamp: number;
-  tags: string[];
+  content: string;
+  description: string;
+  published_at: string;
+  createdAt: string;
+  tag: string;
+  _id: string;
 };
 
 type PostProps = { posts: Post[] };
@@ -12,5 +14,5 @@ type PageData = { title: string };
 
 type PageProps = {
   htmlString: string;
-  data: PageData;
+  post: Post;
 };

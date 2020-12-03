@@ -1,12 +1,10 @@
-import fs from "fs";
 import matter from "gray-matter";
-import Head from "next/head";
-import path from "path";
-import React from "react";
-import Link from "next/link";
-
-import marked, { Renderer } from "marked";
 import highlightjs from "highlight.js";
+import marked, { Renderer } from "marked";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import Link from "next/link";
+import React, { FC } from "react";
 
 const escapeMap = {
   "&": "&amp;",
@@ -20,7 +18,6 @@ function escapeForHTML(input) {
   return input.replace(/([&<>'"])/g, (char) => escapeMap[char]);
 }
 
-// Create your custom renderer.
 const renderer = new Renderer();
 renderer.code = (code, language) => {
   // Check whether the given language is valid for highlight.js.
@@ -35,14 +32,25 @@ renderer.code = (code, language) => {
   return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
 };
 
-// Set the renderer to marked.
 marked.setOptions({ renderer });
 
-const Post = ({ htmlString, data }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params: { id } }) => {
+  const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts/" + id);
+
+  const post: Post = await res.json();
+  const parsedMarkdown = matter(post.content);
+  const htmlString = marked(parsedMarkdown.content);
+
+  return {
+    props: { htmlString, post },
+  };
+};
+
+const Post: FC<PageProps> = ({ htmlString, post }: PageProps) => {
   return (
     <>
       <Head>
-        <title>{data.title}</title>
+        <title>{post.title}</title>
       </Head>
       <div className="markdown-custom py-5" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="text-right py-1">
@@ -52,31 +60,6 @@ const Post = ({ htmlString, data }) => {
       </div>
     </>
   );
-};
-
-export const getStaticPaths = async (): Promise<unknown> => {
-  const files = fs.readdirSync("posts");
-
-  const paths = files.map((filename) => ({
-    params: {
-      slug: filename.replace(".md", ""),
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params: { slug } }) => {
-  const markdown = fs.readFileSync(path.join("posts", slug + ".md")).toString();
-  const parsedMarkdown = matter(markdown);
-  const htmlString = marked(parsedMarkdown.content);
-
-  return {
-    props: { htmlString, data: parsedMarkdown.data },
-  };
 };
 
 export default Post;

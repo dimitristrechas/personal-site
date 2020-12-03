@@ -1,10 +1,20 @@
-import fs from "fs";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
-import path from "path";
 import { FC, useEffect, useState } from "react";
-import { getPostObjFromMarkdown, getTagColor } from "../utils/helpers";
 import { FaRegLightbulb } from "react-icons/fa";
+import { getTagColor } from "../utils/helpers";
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts?_sort=published_at:DESC&_limit=3");
+
+  const posts: Post[] = await res.json();
+
+  return {
+    props: {
+      posts,
+    },
+  };
+};
 
 const Home: FC<PostProps> = ({ posts }: PostProps) => {
   const [postsList, setPostsList] = useState([] as Post[]);
@@ -35,9 +45,9 @@ const Home: FC<PostProps> = ({ posts }: PostProps) => {
       </section>
       <section>
         <div className="row py-3">
-          <div className="col-12 d-flex justify-content-center align-items-center">
-            <FaRegLightbulb size="2rem" className="text-warning" />
-            <span className="fs-4 ml-2">Refactored to TypeScript!</span>
+          <div className="col-12 d-flex justify-content-center align-items-center pb-1">
+            <FaRegLightbulb size="1.5rem" className="text-warning" />
+            <span className="fs-4 ml-2">Refactored to TypeScript & Strapi backend!</span>
           </div>
         </div>
       </section>
@@ -48,23 +58,14 @@ const Home: FC<PostProps> = ({ posts }: PostProps) => {
               <h2>Latest Posts</h2>
               {postsList.map((post, key) => {
                 return (
-                  <Link key={post.slug} href="/blog/[slug]" as={"/blog/" + post.slug}>
+                  <Link key={post._id} href="/blog/[id]" as={"/blog/" + post._id}>
                     <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>
                       <div className="h4">{post.title}</div>
-                      <div className="h6 text-muted">{post.date}</div>
+                      <div className="h6 text-muted">{new Date(post.published_at).toLocaleString("en-US")}</div>
                       <div className="h6">
-                        {post.tags.map((tag) => {
-                          return (
-                            <button
-                              type="button"
-                              key={tag}
-                              className={`btn btn-sm mr-1 btn-${getTagColor(tag)}`}
-                              disabled
-                            >
-                              {tag}
-                            </button>
-                          );
-                        })}
+                        <button type="button" className={`btn btn-sm mr-1 btn-${getTagColor(post.tag)}`} disabled>
+                          {post.tag}
+                        </button>
                       </div>
                     </div>
                   </Link>
@@ -76,31 +77,6 @@ const Home: FC<PostProps> = ({ posts }: PostProps) => {
       </section>
     </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const files = fs.readdirSync("posts");
-
-  // get the last 3 posts
-  // https://stackoverflow.com/questions/30727864/how-to-read-a-file-from-directory-sorting-date-modified-in-node-js/40189439
-  const posts: Post[] = files
-    .map(function (fileName) {
-      const markdown = fs.readFileSync(path.join("posts", fileName)).toString();
-      const post = getPostObjFromMarkdown(fileName, markdown);
-
-      return post;
-    })
-    .sort(function (a, b) {
-      return a.timestamp - b.timestamp;
-    })
-    .slice(Math.max(files.length - 3, 0))
-    .reverse();
-
-  return {
-    props: {
-      posts,
-    },
-  };
 };
 
 export default Home;

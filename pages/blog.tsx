@@ -1,9 +1,19 @@
-import fs from "fs";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
-import path from "path";
 import { FC, useEffect, useState } from "react";
-import { getPostObjFromMarkdown, getTagColor, normalizeText } from "../utils/helpers";
+import { getTagColor, normalizeText } from "../utils/helpers";
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts?_sort=published_at:DESC");
+
+  const posts: Post[] = await res.json();
+
+  return {
+    props: {
+      posts,
+    },
+  };
+};
 
 const Blog: FC<PostProps> = ({ posts }: PostProps) => {
   const [postsList, setPostsList] = useState([] as Post[]);
@@ -50,25 +60,16 @@ const Blog: FC<PostProps> = ({ posts }: PostProps) => {
       <section>
         {postsList.map((post, key) => {
           return (
-            <div className="row" key={post.slug}>
+            <div className="row" key={post._id}>
               <div className="col-12">
-                <Link href="/blog/[slug]" as={"/blog/" + post.slug}>
+                <Link key={post._id} href="/blog/[id]" as={"/blog/" + post._id}>
                   <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>
                     <div className="h4">{post.title}</div>
-                    <div className="h6 text-muted">{post.date}</div>
+                    <div className="h6 text-muted">{new Date(post.published_at).toLocaleString("en-US")}</div>
                     <div className="h6">
-                      {post.tags.map((tag) => {
-                        return (
-                          <button
-                            type="button"
-                            key={tag}
-                            className={`btn btn-sm mr-1 btn-${getTagColor(tag)}`}
-                            disabled
-                          >
-                            {tag}
-                          </button>
-                        );
-                      })}
+                      <button type="button" className={`btn btn-sm mr-1 btn-${getTagColor(post.tag)}`} disabled>
+                        {post.tag}
+                      </button>
                     </div>
                   </div>
                 </Link>
@@ -79,28 +80,6 @@ const Blog: FC<PostProps> = ({ posts }: PostProps) => {
       </section>
     </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const files = fs.readdirSync("posts");
-
-  const posts = files
-    .map(function (fileName) {
-      const markdown = fs.readFileSync(path.join("posts", fileName)).toString();
-      const post = getPostObjFromMarkdown(fileName, markdown);
-
-      return post;
-    })
-    .sort(function (a, b) {
-      return a.timestamp - b.timestamp;
-    })
-    .reverse();
-
-  return {
-    props: {
-      posts,
-    },
-  };
 };
 
 export default Blog;
