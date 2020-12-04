@@ -11,6 +11,7 @@
     "deploy": "next build && next export",
     "type-coverage": "type-coverage"
   },
+  "author": "Dimitris Trechas <dimitristrechas@gmail.com> (https://www.dimitristrechas.com)",
   "dependencies": {
     "@popperjs/core": "^2.5.4",
     "bootstrap": "^5.0.0-alpha2",
