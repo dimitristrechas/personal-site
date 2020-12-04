@@ -35,7 +35,7 @@ renderer.code = (code, language) => {
 marked.setOptions({ renderer });
 
 export const getStaticPaths = async (): Promise<unknown> => {
-  const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts/");
+  const res = await fetch(`${process.env.API_ENDPOINT}/posts/`);
   const posts = await res.json();
 
   // Get the paths we want to pre-render based on posts
