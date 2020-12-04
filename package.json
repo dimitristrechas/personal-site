@@ -6,9 +6,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "export": "next export",
-    "deploy": "next build && next export",
     "type-coverage": "type-coverage"
   },
   "author": "Dimitris Trechas <dimitristrechas@gmail.com> (https://www.dimitristrechas.com)",
