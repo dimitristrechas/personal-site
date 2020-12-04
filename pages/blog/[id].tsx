@@ -1,7 +1,7 @@
 import matter from "gray-matter";
 import highlightjs from "highlight.js";
 import marked, { Renderer } from "marked";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React, { FC } from "react";
@@ -34,7 +34,7 @@ renderer.code = (code, language) => {
 
 marked.setOptions({ renderer });
 
-export const getServerSideProps: GetServerSideProps = async ({ params: { id } }) => {
+export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts/" + id);
 
   const post: Post = await res.json();

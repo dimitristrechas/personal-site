@@ -1,9 +1,9 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { getTagColor, normalizeText } from "../utils/helpers";
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts?_sort=published_at:DESC");
 
   const posts: Post[] = await res.json();
