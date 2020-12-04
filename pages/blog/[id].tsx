@@ -34,6 +34,20 @@ renderer.code = (code, language) => {
 
 marked.setOptions({ renderer });
 
+export const getStaticPaths = async (): Promise<unknown> => {
+  const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts/");
+  const posts = await res.json();
+
+  // Get the paths we want to pre-render based on posts
+  const paths = posts.map((post) => ({
+    params: { id: post.id },
+  }));
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false };
+};
+
 export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts/" + id);
 
