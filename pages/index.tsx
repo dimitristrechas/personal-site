@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { FaRegLightbulb } from "react-icons/fa";
+import { API_ENDPOINT } from "../utils/constants";
 import { getTagColor } from "../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -24,6 +25,8 @@ const Home: FC<PostProps> = ({ posts }: PostProps) => {
       setPostsList(posts);
     }
   }, [posts]);
+
+  console.log("API_ENDPOINT", API_ENDPOINT);
 
   return (
     <>
