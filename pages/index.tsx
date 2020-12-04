@@ -26,7 +26,7 @@ const Home: FC<PostProps> = ({ posts }: PostProps) => {
     }
   }, [posts]);
 
-  console.log("API_ENDPOINT", API_ENDPOINT);
+  console.log("API_ENDPOINT", process.env.API_ENDPOINT);
 
   return (
     <>
