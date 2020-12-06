@@ -71,7 +71,10 @@ $secondary: #cee3f8;
 
   .profile-img {
     padding: 1rem;
-    width: 160px;
+    // max-width: 256px;
+    max-height: 284px;
+    width: auto;
+    height: auto;
   }
 }
 
