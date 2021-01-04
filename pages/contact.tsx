@@ -5,7 +5,12 @@ import matter from "gray-matter";
 import Head from "next/head";
 import marked from "marked";
 
-const Contact: FC<PageProps> = ({ htmlString, data }: PageProps) => {
+type InputProps = {
+  htmlString: string;
+  data: PageData;
+};
+
+const Contact: FC<InputProps> = ({ htmlString, data }: InputProps) => {
   return (
     <>
       <Head>

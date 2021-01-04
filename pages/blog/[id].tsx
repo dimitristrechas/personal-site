@@ -60,7 +60,12 @@ export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
   };
 };
 
-const Post: FC<BlogProps> = ({ htmlString, post }: BlogProps) => {
+type InputProps = {
+  htmlString: string;
+  post: Post;
+};
+
+const Post: FC<InputProps> = ({ htmlString, post }: InputProps) => {
   return (
     <>
       <Head>

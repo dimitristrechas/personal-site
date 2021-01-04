@@ -16,7 +16,10 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Home: FC<PostProps> = ({ posts }: PostProps) => {
+type InputProps = { posts: Post[] };
+
+const Home: FC<InputProps> = ({ posts }: InputProps) => {
+  console.log("posts", posts);
   const [postsList, setPostsList] = useState([] as Post[]);
 
   useEffect(() => {

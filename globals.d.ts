@@ -8,16 +8,4 @@ type Post = {
   _id: string;
 };
 
-type PostProps = { posts: Post[] };
-
 type PageData = { title: string };
-
-type PageProps = {
-  htmlString: string;
-  data: PageData;
-};
-
-type BlogProps = {
-  htmlString: string;
-  post: Post;
-};

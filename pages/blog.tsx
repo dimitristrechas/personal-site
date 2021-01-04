@@ -15,7 +15,9 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Blog: FC<PostProps> = ({ posts }: PostProps) => {
+type InputProps = { posts: Post[] };
+
+const Blog: FC<InputProps> = ({ posts }: InputProps) => {
   const [postsList, setPostsList] = useState([] as Post[]);
 
   const handlePostSearch = (ev) => {

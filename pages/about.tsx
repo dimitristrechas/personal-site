@@ -13,7 +13,12 @@ marked.setOptions({
   },
 });
 
-const About: FC<PageProps> = ({ htmlString, data }: PageProps) => {
+type InputProps = {
+  htmlString: string;
+  data: PageData;
+};
+
+const About: FC<InputProps> = ({ htmlString, data }: InputProps) => {
   return (
     <>
       <Head>
