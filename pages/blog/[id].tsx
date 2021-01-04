@@ -49,7 +49,7 @@ export const getStaticPaths = async (): Promise<unknown> => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
-  const res = await fetch("https://dimitristrechas-strapi.herokuapp.com/posts/" + id);
+  const res = await fetch(`${process.env.API_ENDPOINT}/posts/${id}`);
 
   const post: Post = await res.json();
   const parsedMarkdown = matter(post.content);

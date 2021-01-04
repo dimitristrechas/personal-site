@@ -2,7 +2,6 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { FaRegLightbulb } from "react-icons/fa";
-import { getTagColor } from "../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC&_limit=3`);

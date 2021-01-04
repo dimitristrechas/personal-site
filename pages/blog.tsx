@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
-import { getTagColor, normalizeText } from "../utils/helpers";
+import { normalizeText } from "../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC`);
