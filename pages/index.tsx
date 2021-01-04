@@ -66,9 +66,21 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
                       <div className="h4">{post.title}</div>
                       <div className="h6 text-muted">{new Date(post.published_at).toLocaleString("en-US")}</div>
                       <div className="h6">
-                        <button type="button" className={`btn btn-sm mr-1 btn-${getTagColor(post.tag)}`} disabled>
-                          {post.tag}
-                        </button>
+                        {post.tags?.length > 0
+                          ? post.tags.map((tag) => {
+                              return (
+                                <button
+                                  key={tag.id}
+                                  type="button"
+                                  className="btn btn-sm me-2 text-white"
+                                  style={{ backgroundColor: tag.color }}
+                                  disabled
+                                >
+                                  {tag.title}
+                                </button>
+                              );
+                            })
+                          : null}
                       </div>
                     </div>
                   </Link>
