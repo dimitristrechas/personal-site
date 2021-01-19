@@ -14,25 +14,25 @@ marked.setOptions({
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(`${process.env.API_ENDPOINT}/about`);
 
-  const about: About = await res.json();
-  const parsedMarkdown = matter(about.content);
+  const aboutData: AboutPage = await res.json();
+  const parsedMarkdown = matter(aboutData.content);
   const htmlString = marked(parsedMarkdown.content);
 
   return {
-    props: { htmlString, about },
+    props: { htmlString, aboutData },
   };
 };
 
 type InputProps = {
   htmlString: string;
-  about: About;
+  aboutData: AboutPage;
 };
 
-const About: FC<InputProps> = ({ htmlString, about }: InputProps) => {
+const About: FC<InputProps> = ({ htmlString, aboutData }: InputProps) => {
   return (
     <>
       <Head>
-        <title>{about.title}</title>
+        <title>{aboutData.title}</title>
       </Head>
       <div className="row">
         <div className="col">

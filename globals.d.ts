@@ -18,13 +18,13 @@ type Tag = {
 
 type PageData = { title: string };
 
-type Contact = {
+type ContactPage = {
   id: string;
   content: string;
   title: string;
 };
 
-type About = {
+type AboutPage = {
   id: string;
   content: string;
   title: string;

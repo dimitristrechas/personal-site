@@ -7,25 +7,25 @@ import React, { FC } from "react";
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(`${process.env.API_ENDPOINT}/contact`);
 
-  const contact: Contact = await res.json();
-  const parsedMarkdown = matter(contact.content);
+  const contactData: ContactPage = await res.json();
+  const parsedMarkdown = matter(contactData.content);
   const htmlString = marked(parsedMarkdown.content);
 
   return {
-    props: { htmlString, contact },
+    props: { htmlString, contactData },
   };
 };
 
 type InputProps = {
   htmlString: string;
-  contact: Contact;
+  contactData: ContactPage;
 };
 
-const Contact: FC<InputProps> = ({ htmlString, contact }: InputProps) => {
+const Contact: FC<InputProps> = ({ htmlString, contactData }: InputProps) => {
   return (
     <>
       <Head>
-        <title>{contact.title}</title>
+        <title>{contactData.title}</title>
       </Head>
       <div className="markdown-custom py-5" dangerouslySetInnerHTML={{ __html: htmlString }} />
     </>
