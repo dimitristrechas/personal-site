@@ -1,11 +1,10 @@
-import fs from "fs";
 import matter from "gray-matter";
 import hljs from "highlight.js";
 import marked from "marked";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import path from "path";
 import React, { FC } from "react";
+import { FaVolumeUp } from "react-icons/fa";
 
 marked.setOptions({
   highlight: function (code, lang) {
@@ -13,16 +12,29 @@ marked.setOptions({
   },
 });
 
-type InputProps = {
-  htmlString: string;
-  data: PageData;
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(`${process.env.API_ENDPOINT}/about`);
+
+  const about: About = await res.json();
+  const parsedMarkdown = matter(about.content);
+  const htmlString = marked(parsedMarkdown.content);
+
+  return {
+    props: { htmlString, about },
+  };
 };
 
-const About: FC<InputProps> = ({ htmlString, data }: InputProps) => {
+type InputProps = {
+  htmlString: string;
+  about: About;
+};
+
+const About: FC<InputProps> = ({ htmlString, about }: InputProps) => {
+  console.log("about", about);
   return (
     <>
       <Head>
-        <title>{data.title}</title>
+        <title>{about.title}</title>
       </Head>
       <div className="row">
         <div className="col">
@@ -31,16 +43,6 @@ const About: FC<InputProps> = ({ htmlString, data }: InputProps) => {
       </div>
     </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const markdown = fs.readFileSync(path.join("sections", "about.md")).toString();
-  const parsedMarkdown = matter(markdown);
-  const htmlString = marked(parsedMarkdown.content);
-
-  return {
-    props: { htmlString, data: parsedMarkdown.data },
-  };
 };
 
 export default About;

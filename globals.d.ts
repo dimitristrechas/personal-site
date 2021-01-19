@@ -7,6 +7,7 @@ type Post = {
   tag: string;
   _id: string;
   tags: Tag[];
+  slug: string;
 };
 
 type Tag = {
@@ -16,3 +17,15 @@ type Tag = {
 };
 
 type PageData = { title: string };
+
+type Contact = {
+  id: string;
+  content: string;
+  title: string;
+};
+
+type About = {
+  id: string;
+  content: string;
+  title: string;
+};
