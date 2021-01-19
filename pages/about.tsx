@@ -29,7 +29,6 @@ type InputProps = {
 };
 
 const About: FC<InputProps> = ({ htmlString, about }: InputProps) => {
-  console.log("about", about);
   return (
     <>
       <Head>
