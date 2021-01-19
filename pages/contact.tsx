@@ -1,5 +1,6 @@
 import matter from "gray-matter";
 import marked from "marked";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import React, { FC } from "react";
 

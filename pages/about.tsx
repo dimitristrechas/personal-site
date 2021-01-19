@@ -4,7 +4,6 @@ import marked from "marked";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import React, { FC } from "react";
-import { FaVolumeUp } from "react-icons/fa";
 
 marked.setOptions({
   highlight: function (code, lang) {
