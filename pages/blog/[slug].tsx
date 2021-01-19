@@ -73,7 +73,7 @@ const Post: FC<InputProps> = ({ htmlString, post }: InputProps) => {
         <title>{post.title}</title>
         <meta property="og:title" content={`Dimitris Trechas`} />
         <meta property="og:description" content={post.title} />
-        <meta property="og:image" content="/bomberman.jpg" />
+        <meta property="og:image" content="https://dimitristrechas.com/bomberman.jpg" />
         <meta property="og:url" content={`https://dimitristrechas.com/blog/${post.slug}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
