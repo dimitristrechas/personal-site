@@ -59,7 +59,7 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
               <h2>Latest Posts</h2>
               {postsList.map((post, key) => {
                 return (
-                  <Link key={post._id} href="/blog/[id]" as={"/blog/" + post._id}>
+                  <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
                     <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>
                       <div className="h4">{post.title}</div>
                       <div className="h6 text-muted">{new Date(post.published_at).toLocaleString("en-US")}</div>

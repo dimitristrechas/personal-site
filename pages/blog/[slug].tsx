@@ -39,8 +39,8 @@ export const getStaticPaths = async (): Promise<unknown> => {
   const posts = await res.json();
 
   // Get the paths we want to pre-render based on posts
-  const paths = posts.map((post) => ({
-    params: { id: post.id },
+  const paths = posts.map((post: Post) => ({
+    params: { slug: post.slug },
   }));
 
   // We'll pre-render only these paths at build time.
@@ -48,10 +48,11 @@ export const getStaticPaths = async (): Promise<unknown> => {
   return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
-  const res = await fetch(`${process.env.API_ENDPOINT}/posts/${id}`);
+export const getStaticProps: GetStaticProps = async ({ params: { slug } }) => {
+  const res = await fetch(`${process.env.API_ENDPOINT}/posts/?slug=${slug}`);
+  const data = await res.json();
+  const post: Post = data ? data[0] : null;
 
-  const post: Post = await res.json();
   const parsedMarkdown = matter(post.content);
   const htmlString = marked(parsedMarkdown.content);
 

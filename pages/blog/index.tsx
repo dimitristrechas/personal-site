@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
-import { normalizeText } from "../utils/helpers";
+import { normalizeText } from "../../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC`);
@@ -64,7 +64,7 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
           return (
             <div className="row" key={post._id}>
               <div className="col-12">
-                <Link key={post._id} href="/blog/[id]" as={"/blog/" + post._id}>
+                <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
                   <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>
                     <div className="h4">{post.title}</div>
                     <div className="h6 text-muted">{new Date(post.published_at).toLocaleString("en-US")}</div>
