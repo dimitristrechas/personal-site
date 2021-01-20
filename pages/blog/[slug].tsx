@@ -72,10 +72,16 @@ const Post: FC<InputProps> = ({ htmlString, post }: InputProps) => {
       <Head>
         <title>{post.title}</title>
         <meta property="og:title" content={`Dimitris Trechas`} />
-        <meta property="og:description" content={post.title} />
-        <meta property="og:image" content="https://dimitristrechas.com/bomberman.jpg" />
-        <meta property="og:url" content={`https://dimitristrechas.com/blog/${post.slug}`} />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:description" content={post.title}></meta>
+        <meta data-react-helmet="true" property="og:type" content="article"></meta>
+        <meta
+          property="og:image"
+          name="image"
+          itemProp="image"
+          content="https://dimitristrechas.com/bomberman.jpg"
+        ></meta>
+        <meta property="og:url" content={`https://dimitristrechas.com/blog/${post.slug}`}></meta>
+        <meta name="twitter:card" content="summary_large_image"></meta>
       </Head>
       <div className="markdown-custom py-5" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="text-right py-1">
