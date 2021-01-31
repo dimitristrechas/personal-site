@@ -6,7 +6,7 @@ import Head from "next/head";
 import Link from "next/link";
 import React, { FC } from "react";
 
-const escapeMap = {
+const escapeMap: { [symbol: string]: string } = {
   "&": "&amp;",
   "<": "&lt;",
   ">": "&gt;",
@@ -14,7 +14,7 @@ const escapeMap = {
   "'": "&#39;",
 };
 
-function escapeForHTML(input) {
+function escapeForHTML(input: string) {
   return input.replace(/([&<>'"])/g, (char) => escapeMap[char]);
 }
 
