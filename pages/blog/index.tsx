@@ -20,7 +20,7 @@ type InputProps = { posts: Post[] };
 const Blog: FC<InputProps> = ({ posts }: InputProps) => {
   const [postsList, setPostsList] = useState([] as Post[]);
 
-  const handlePostSearch = (ev) => {
+  const handlePostSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const search = normalizeText(ev.target.value);
 
     if (search) {
