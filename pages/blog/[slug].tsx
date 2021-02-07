@@ -86,7 +86,11 @@ const Post: FC<InputProps> = ({ htmlString, post }: InputProps) => {
         <meta property="og:url" content={`https://dimitristrechas.com/blog/${post.slug}`}></meta>
         <meta name="twitter:card" content="summary_large_image"></meta>
       </Head>
-      <div className="markdown-custom py-5" dangerouslySetInnerHTML={{ __html: htmlString }} />
+      <div
+        className="markdown-custom py-5"
+        style={{ maxWidth: "800px" }}
+        dangerouslySetInnerHTML={{ __html: htmlString }}
+      />
       <div className="text-right py-1">
         <Link href="/blog" as={"/blog"}>
           <a>back to blog list</a>

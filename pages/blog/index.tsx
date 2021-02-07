@@ -46,7 +46,7 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
     <>
       <section>
         <form>
-          <div className="row pt-5 pb-4">
+          <div className="row m-0 pt-5 pb-4">
             <div className="col-12">
               <h2>My Blog</h2>
             </div>
@@ -62,7 +62,7 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
       <section>
         {postsList.map((post, key) => {
           return (
-            <div className="row" key={post._id}>
+            <div className="row m-0" key={post._id}>
               <div className="col-12">
                 <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
                   <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>

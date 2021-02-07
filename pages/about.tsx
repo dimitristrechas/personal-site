@@ -34,7 +34,7 @@ const About: FC<InputProps> = ({ htmlString, aboutData }: InputProps) => {
       <Head>
         <title>{aboutData.title}</title>
       </Head>
-      <div className="row">
+      <div className="row m-0">
         <div className="col">
           <div className="markdown-custom py-5" dangerouslySetInnerHTML={{ __html: htmlString }} />
         </div>

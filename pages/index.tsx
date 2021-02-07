@@ -1,7 +1,6 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
-import { FaRegLightbulb } from "react-icons/fa";
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC&_limit=3`);
@@ -29,31 +28,21 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
   return (
     <>
       <section>
-        <div className="row py-3">
-          <div className="col-12 d-flex flex-wrap justify-content-center">
-            <div className="card profile-card w-100 rounded">
-              <img className="card-img-top profile-img" src="/bomberman.jpg" alt="bomberman" />
-              <div className="card-body">
-                <h4 className="card-title fs-5">Greetings!</h4>
-                <p className="card-text text-muted">
-                  Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
-                  You can also learn more about me, the projects I work on or contact me directly.
-                </p>
-              </div>
+        <div className="row m-0 py-3">
+          <div className="col-12 d-flex align-items-center justify-content-center rounded-3 py-3 px-3 profile-card">
+            <img className="profile-img" src="/bomberman.png" alt="bomberman" />
+            <div>
+              <h4 className="card-title fs-4">Greetings!</h4>
+              <p className="card-text text-muted">
+                Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
+                You can also learn more about me, the projects I work on or contact me directly.
+              </p>
             </div>
           </div>
         </div>
       </section>
       <section>
-        <div className="row py-3">
-          <div className="col-12 d-flex justify-content-center align-items-center pb-1">
-            <FaRegLightbulb size="1.5rem" className="text-warning" />
-            <span className="fs-4 ml-2">Refactored to TypeScript & Strapi backend!</span>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div className="row py-4">
+        <div className="row m-0 py-4">
           <div className="col-12 d-flex flex-wrap mb-5">
             <div className="popular-posts">
               <h2>Latest Posts</h2>
