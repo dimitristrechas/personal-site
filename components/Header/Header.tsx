@@ -23,7 +23,7 @@ const Header: FC = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div className="navbar-nav">
               <Link href="/blog" as={"/blog"}>
                 <a href="/blog" className={"nav-link text-muted " + (router.pathname == "/blog" ? "active" : "")}>
