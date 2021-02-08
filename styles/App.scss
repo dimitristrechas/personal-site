@@ -67,13 +67,13 @@ $secondary: #cee3f8;
 }
 
 .profile-card {
-  background-color: rgb(255 226 226);
-
   .profile-img {
     height: auto;
-    width: 140px;
-    margin-right: 10px;
-    // border-radius: 50%;
+    width: 150px;
+    margin-right: 20px;
+    border-radius: 50%;
+    background-color: rgb(255 226 226);
+    padding: 0.5rem;
   }
 }
 
