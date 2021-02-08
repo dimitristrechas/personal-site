@@ -32,7 +32,7 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
           <div className="col-12 d-flex align-items-center justify-content-center rounded-3 py-3 px-3 profile-card">
             <img className="profile-img" src="/bomberman.png" alt="bomberman" />
             <div>
-              <h4 className="card-title fs-4">Greetings!</h4>
+              <h4 className="card-title fs-4">Welcome friend!</h4>
               <p className="card-text text-muted">
                 Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
                 You can also learn more about me, the projects I work on or contact me directly.
