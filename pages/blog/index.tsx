@@ -45,49 +45,47 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
   return (
     <>
       <section>
-        <form>
-          <div className="row m-0 pt-5 pb-4">
-            <div className="col-12">
-              <h2>My Blog</h2>
-            </div>
-            <div className="col-12 col-md-6">
-              <input className="form-control mb-2" placeholder="Search posts..." onChange={handlePostSearch} />
-              <small className="form-text text-muted pl-1">
-                {`${postsList.length} ${postsList.length === 1 ? "post" : "posts"} found`}
-              </small>
-            </div>
+        <form className="mb-8">
+          <h2 className="mb-2 text-3xl">My Blog</h2>
+          <div className="flex flex-col">
+            <input
+              className="max-w-sm mb-1 border-2 rounded border-gray-300 p-1"
+              placeholder="Search posts..."
+              onChange={handlePostSearch}
+            />
+            <small className="">{`${postsList.length} ${postsList.length === 1 ? "post" : "posts"} found`}</small>
           </div>
         </form>
       </section>
       <section>
         {postsList.map((post, key) => {
           return (
-            <div className="row m-0" key={post._id}>
-              <div className="col-12">
-                <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
-                  <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>
-                    <div className="h4">{post.title}</div>
-                    <div className="h6 text-muted">{new Date(post.published_at).toLocaleString("en-US")}</div>
-                    <div className="h6">
-                      {post.tags?.length > 0
-                        ? post.tags.map((tag) => {
-                            return (
-                              <button
-                                key={tag.id}
-                                type="button"
-                                className="btn btn-sm me-2 text-white"
-                                style={{ backgroundColor: tag.color }}
-                                disabled
-                              >
-                                {tag.title}
-                              </button>
-                            );
-                          })
-                        : null}
-                    </div>
+            <div className="" key={post._id}>
+              <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
+                <div
+                  className={key === postsList.length - 1 ? "my-3 cursor-pointer" : "border-b-2 my-3 cursor-pointer"}
+                >
+                  <div className="text-xl">{post.title}</div>
+                  <div className="">{new Date(post.published_at).toLocaleString("en-US")}</div>
+                  <div className="mt-2">
+                    {post.tags?.length > 0
+                      ? post.tags.map((tag) => {
+                          return (
+                            <button
+                              key={tag.id}
+                              type="button"
+                              className="py-1 px-2 text-white rounded"
+                              style={{ backgroundColor: tag.color }}
+                              disabled
+                            >
+                              {tag.title}
+                            </button>
+                          );
+                        })
+                      : null}
                   </div>
-                </Link>
-              </div>
+                </div>
+              </Link>
             </div>
           );
         })}

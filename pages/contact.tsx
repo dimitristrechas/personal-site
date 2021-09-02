@@ -27,7 +27,7 @@ const Contact: FC<InputProps> = ({ htmlString, contactData }: InputProps) => {
       <Head>
         <title>{contactData.title}</title>
       </Head>
-      <div className="markdown-custom py-5" dangerouslySetInnerHTML={{ __html: htmlString }} />
+      <article className="prose" dangerouslySetInnerHTML={{ __html: htmlString }} />
     </>
   );
 };

@@ -28,53 +28,49 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
   return (
     <>
       <section>
-        <div className="row m-0 py-3">
-          <div className="col-12 d-flex align-items-center justify-content-center rounded-3 py-3 px-3 profile-card">
-            <img className="profile-img" src="/bomberman.png" alt="bomberman" />
-            <div>
-              <h4 className="card-title fs-4">Welcome friend!</h4>
-              <p className="card-text text-muted">
-                Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
-                You can also learn more about me, the projects I work on or contact me directly.
-              </p>
-            </div>
+        <div className="mb-8 flex items-center">
+          <img className="rounded-full p-2 bg-red-200 h-32 lg:h-40" src="/bomberman.png" alt="bomberman" />
+          <div className="ml-4">
+            <h4 className="text-2xl mb-2">Welcome friend!</h4>
+            <p>
+              Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
+              You can also learn more about me, the projects I work on or contact me directly.
+            </p>
           </div>
         </div>
       </section>
       <section>
-        <div className="row m-0 py-4">
-          <div className="col-12 d-flex flex-wrap mb-5">
-            <div className="popular-posts">
-              <h2>Latest Posts</h2>
-              {postsList.map((post, key) => {
-                return (
-                  <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
-                    <div className={key === postsList.length - 1 ? "py-3 post-card" : "border-bottom py-3 post-card"}>
-                      <div className="h4">{post.title}</div>
-                      <div className="h6 text-muted">{new Date(post.published_at).toLocaleString("en-US")}</div>
-                      <div className="h6">
-                        {post.tags?.length > 0
-                          ? post.tags.map((tag) => {
-                              return (
-                                <button
-                                  key={tag.id}
-                                  type="button"
-                                  className="btn btn-sm me-2 text-white"
-                                  style={{ backgroundColor: tag.color }}
-                                  disabled
-                                >
-                                  {tag.title}
-                                </button>
-                              );
-                            })
-                          : null}
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
+        <div className="">
+          <h2 className="mb-2 text-3xl">Latest Posts</h2>
+          {postsList.map((post, key) => {
+            return (
+              <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
+                <div
+                  className={key === postsList.length - 1 ? "my-3 cursor-pointer" : "border-b-2 my-3 cursor-pointer"}
+                >
+                  <div className="text-xl">{post.title}</div>
+                  <div className="">{new Date(post.published_at).toLocaleString("en-US")}</div>
+                  <div className="mt-2">
+                    {post.tags?.length > 0
+                      ? post.tags.map((tag) => {
+                          return (
+                            <button
+                              key={tag.id}
+                              type="button"
+                              className="py-1 px-2 text-white rounded"
+                              style={{ backgroundColor: tag.color }}
+                              disabled
+                            >
+                              {tag.title}
+                            </button>
+                          );
+                        })
+                      : null}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </>

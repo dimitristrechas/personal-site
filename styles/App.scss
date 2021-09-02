@@ -1,14 +1,5 @@
-@import "../node_modules//highlight.js/styles/monokai-sublime.css";
-
-/* roboto-slab-regular - latin */
-@font-face {
-  font-family: "Roboto Slab";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""), url("./fonts/roboto-slab-v11-latin-regular.woff2") format("woff2"),
-    url("./fonts/roboto-slab-v11-latin-regular.woff") format("woff");
-  font-display: swap;
-}
+@tailwind base;
+@tailwind components;
 
 /* roboto-regular - latin */
 @font-face {
@@ -20,87 +11,4 @@
   font-display: swap;
 }
 
-$font-family-base: "Roboto Slab", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-  Arial, sans-serif !default;
-
-// https://brandcolors.net/ - Reddit
-$primary: #5f99cf;
-$secondary: #cee3f8;
-
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
-
-// overide bootstrap classes
-
-.navbar-brand {
-  font-size: 2rem;
-  padding: 0;
-}
-
-.navbar-collapse {
-  font-size: 2rem;
-}
-
-.nav-link.active {
-  text-decoration: underline;
-}
-
-// custom
-
-.app-container {
-  max-width: 800px;
-  display: grid;
-  height: 100vh;
-  grid-template-rows: auto 1fr auto;
-}
-
-.popular-posts {
-  flex: 1;
-  min-width: 250px;
-}
-
-.post-card {
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f8f9fa !important;
-  }
-}
-
-.profile-card {
-  .profile-img {
-    height: auto;
-    width: 150px;
-    margin-right: 20px;
-    border-radius: 50%;
-    background-color: rgb(255 226 226);
-    padding: 0.5rem;
-  }
-}
-
-.footer {
-  font-size: 0.875rem;
-}
-
-.markdown-custom {
-  h1,
-  h2,
-  h3 {
-    margin-bottom: 1rem;
-    font-family: "Roboto Slab" !important;
-  }
-  h4,
-  h5,
-  h6 {
-    margin-bottom: 0.75rem;
-    font-family: "Roboto Slab" !important;
-  }
-  p {
-    font-family: "Roboto" !important;
-  }
-  pre {
-    margin-bottom: 1.5rem;
-  }
-  li {
-    margin-bottom: 0.75rem;
-  }
-}
+@tailwind utilities;
