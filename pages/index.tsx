@@ -46,7 +46,9 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
             return (
               <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
                 <div
-                  className={key === postsList.length - 1 ? "my-3 cursor-pointer" : "border-b-2 my-3 cursor-pointer"}
+                  className={
+                    key === postsList.length - 1 ? "my-3 pb-2 cursor-pointer" : "border-b-2 my-3 pb-2 cursor-pointer"
+                  }
                 >
                   <div className="text-xl">{post.title}</div>
                   <div className="">{new Date(post.published_at).toLocaleString("en-US")}</div>
@@ -57,7 +59,7 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
                             <button
                               key={tag.id}
                               type="button"
-                              className="py-1 px-2 text-white rounded"
+                              className="py-1 px-2 mr-2 text-white rounded"
                               style={{ backgroundColor: tag.color }}
                               disabled
                             >

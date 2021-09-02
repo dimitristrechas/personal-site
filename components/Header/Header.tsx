@@ -9,7 +9,7 @@ const Header: FC = () => {
     <header>
       <nav className="m-4 mb-8 flex items-end">
         <Link href="/" as={"/"}>
-          <a className="text-2xl">Dimitris Trechas</a>
+          <a className="text-2xl text-blue-500">Dimitris Trechas</a>
         </Link>
         <div className="ml-auto text-lg">
           <Link href="/blog" as={"/blog"}>
