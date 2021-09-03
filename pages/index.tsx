@@ -29,7 +29,7 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
     <>
       <section>
         <div className="mb-10 flex items-center">
-          <img className="rounded-full p-2 bg-red-200 h-32 lg:h-40" src="/bomberman.jpg" alt="bomberman" />
+          <img className="rounded-full p-2 bg-red-200 h-32 lg:h-40" src="/bomberman.png" alt="bomberman" />
           <div className="ml-4">
             <h4 className="text-2xl text-gray-800 mb-2">Welcome friend!</h4>
             <p>
