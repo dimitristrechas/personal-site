@@ -28,10 +28,10 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
   return (
     <>
       <section>
-        <div className="mb-8 flex items-center">
-          <img className="rounded-full p-2 bg-red-200 h-32 lg:h-40" src="/bomberman.png" alt="bomberman" />
+        <div className="mb-10 flex items-center">
+          <img className="rounded-full p-2 bg-red-200 h-32 lg:h-40" src="/bomberman.jpg" alt="bomberman" />
           <div className="ml-4">
-            <h4 className="text-2xl mb-2">Welcome friend!</h4>
+            <h4 className="text-2xl text-gray-800 mb-2">Welcome friend!</h4>
             <p>
               Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
               You can also learn more about me, the projects I work on or contact me directly.
@@ -41,17 +41,13 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
       </section>
       <section>
         <div className="">
-          <h2 className="mb-2 text-3xl">Latest Posts</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Latest Posts</h2>
           {postsList.map((post, key) => {
             return (
               <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
-                <div
-                  className={
-                    key === postsList.length - 1 ? "my-3 pb-2 cursor-pointer" : "border-b-2 my-3 pb-2 cursor-pointer"
-                  }
-                >
-                  <div className="text-xl">{post.title}</div>
-                  <div className="">{new Date(post.published_at).toLocaleString("en-US")}</div>
+                <div className={`${key === postsList.length - 1 ? "" : "border-b-2"} py-4 cursor-pointer`}>
+                  <div className="text-xl text-gray-800">{post.title}</div>
+                  <div className="text-sm">{new Date(post.published_at).toLocaleString("en-US")}</div>
                   <div className="mt-2">
                     {post.tags?.length > 0
                       ? post.tags.map((tag) => {

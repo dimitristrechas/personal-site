@@ -45,12 +45,12 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
   return (
     <>
       <section>
-        <form className="mb-8">
-          <h2 className="mb-2 text-3xl">My Blog</h2>
+        <form className="">
+          <h2 className="mb-8 text-2xl font-bold text-gray-800">Blogposts</h2>
           <div className="flex flex-col">
             <input
               className="max-w-sm mb-1 border-2 rounded border-gray-300 p-1"
-              placeholder="Search posts..."
+              placeholder="Search..."
               onChange={handlePostSearch}
             />
             <small className="">{`${postsList.length} ${postsList.length === 1 ? "post" : "posts"} found`}</small>
@@ -62,16 +62,13 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
           return (
             <div className="" key={post._id}>
               <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
-                <div
-                  className={
-                    key === postsList.length - 1 ? "my-3 pb-2 cursor-pointer" : "border-b-2 my-3 pb-2 cursor-pointer"
-                  }
-                >
-                  <div className="text-xl">{post.title}</div>
+                <div className={`${key === postsList.length - 1 ? "" : "border-b-2"} py-4 cursor-pointer`}>
+                  <div className="text-xl text-gray-800">{post.title}</div>
                   <div className="">{new Date(post.published_at).toLocaleString("en-US")}</div>
                   <div className="mt-2">
                     {post.tags?.length > 0
                       ? post.tags.map((tag) => {
+                          console.log(`tag`, tag);
                           return (
                             <button
                               key={tag.id}

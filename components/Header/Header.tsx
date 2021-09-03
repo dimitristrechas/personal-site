@@ -13,17 +13,20 @@ const Header: FC = () => {
         </Link>
         <div className="ml-auto text-lg">
           <Link href="/blog" as={"/blog"}>
-            <a href="/blog" className={`ml-2 sm:ml-4 ${router.pathname == "/blog" ? "underline" : ""}`}>
+            <a href="/blog" className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/blog" ? "underline" : ""}`}>
               Blog
             </a>
           </Link>
           <Link href="/about" as={"/about"}>
-            <a href="/about" className={`ml-2 sm:ml-4 ${router.pathname == "/about" ? "underline" : ""}`}>
+            <a href="/about" className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/about" ? "underline" : ""}`}>
               About
             </a>
           </Link>
           <Link href="/contact" as={"/contact"}>
-            <a href="/contact" className={`ml-2 sm:ml-4 ${router.pathname == "/contact" ? "underline" : ""}`}>
+            <a
+              href="/contact"
+              className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/contact" ? "underline" : ""}`}
+            >
               Contact
             </a>
           </Link>
