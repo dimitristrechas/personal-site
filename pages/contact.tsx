@@ -32,14 +32,4 @@ const Contact: FC<InputProps> = ({ htmlString, contactData }: InputProps) => {
   );
 };
 
-// export const getStaticProps = async () => {
-//   const markdown = fs.readFileSync(path.join("sections", "contact.md")).toString();
-//   const parsedMarkdown = matter(markdown);
-//   const htmlString = marked(parsedMarkdown.content);
-
-//   return {
-//     props: { htmlString, data: parsedMarkdown.data },
-//   };
-// };
-
 export default Contact;

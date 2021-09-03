@@ -1,4 +1,5 @@
 import { GetStaticProps } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { normalizeText } from "../../utils/helpers";
@@ -44,6 +45,9 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
 
   return (
     <>
+      <Head>
+        <title>Dimitris Trechas - Blog</title>
+      </Head>
       <section>
         <form className="">
           <h2 className="mb-8 text-2xl font-bold text-gray-800">Blogposts</h2>
