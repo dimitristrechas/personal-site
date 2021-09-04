@@ -1,22 +1,40 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
+import matter from "gray-matter";
+import marked from "marked";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC&_limit=3`);
+  const postsResponse = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC&_limit=3`);
+  const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`);
+  const aboutResponse = await fetch(`${process.env.API_ENDPOINT}/about`);
 
-  const posts: Post[] = await res.json();
+  const posts: Post[] = await postsResponse.json();
+
+  const contactData: ContactPage = await contactResponse.json();
+  const contactParsedMarkdown = matter(contactData.content);
+  const contactHtmlString = marked(contactParsedMarkdown.content);
+
+  const aboutData: AboutPage = await aboutResponse.json();
+  const aboutParsedMarkdown = matter(aboutData.content);
+  const aboutHtmlString = marked(aboutParsedMarkdown.content);
 
   return {
     props: {
       posts,
+      contact: { contactHtmlString, contactData },
+      about: { aboutHtmlString, aboutData },
     },
   };
 };
 
-type InputProps = { posts: Post[] };
+type InputProps = {
+  posts: Post[];
+  contact: { contactHtmlString: string; contactData: ContactPage };
+  about: { aboutHtmlString: string; aboutData: AboutPage };
+};
 
-const Home: FC<InputProps> = ({ posts }: InputProps) => {
+const Home: FC<InputProps> = ({ posts, contact, about }: InputProps) => {
   const [postsList, setPostsList] = useState([] as Post[]);
 
   useEffect(() => {
@@ -28,7 +46,7 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
   return (
     <>
       <section>
-        <div className="mb-10 flex items-center">
+        <div className="mb-20 flex items-center">
           <img className="rounded-full p-2 bg-red-200 h-32 lg:h-40" src="/bomberman.png" alt="bomberman" />
           <div className="ml-4">
             <h4 className="text-2xl text-gray-800 mb-2">Welcome friend!</h4>
@@ -40,7 +58,7 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
         </div>
       </section>
       <section>
-        <div className="">
+        <div className="mb-20">
           <h2 className="text-2xl font-bold text-gray-800">Latest Posts</h2>
           {postsList.map((post, key) => {
             return (
@@ -70,6 +88,16 @@ const Home: FC<InputProps> = ({ posts }: InputProps) => {
             );
           })}
         </div>
+      </section>
+      <section>
+        <article id="about" className="prose mb-20 pt-4" dangerouslySetInnerHTML={{ __html: about.aboutHtmlString }} />
+      </section>
+      <section>
+        <article
+          id="contact"
+          className="prose mb-20 pt-4"
+          dangerouslySetInnerHTML={{ __html: contact.contactHtmlString }}
+        />
       </section>
     </>
   );

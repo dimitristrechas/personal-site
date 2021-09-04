@@ -7,7 +7,7 @@ const Header: FC = () => {
 
   return (
     <header>
-      <nav className="m-4 mb-8 flex items-end">
+      <nav className="m-4 mb-16 flex items-end">
         <Link href="/" as={"/"}>
           <a className="text-2xl text-blue-500">dimitristrechas</a>
         </Link>
@@ -17,14 +17,14 @@ const Header: FC = () => {
               Blog
             </a>
           </Link>
-          <Link href="/about" as={"/about"}>
-            <a href="/about" className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/about" ? "underline" : ""}`}>
+          <Link href="/#about" as={"/#about"}>
+            <a href="#about" className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/about" ? "underline" : ""}`}>
               About
             </a>
           </Link>
-          <Link href="/contact" as={"/contact"}>
+          <Link href="/#contact" as={"/#contact"}>
             <a
-              href="/contact"
+              href="#contact"
               className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/contact" ? "underline" : ""}`}
             >
               Contact

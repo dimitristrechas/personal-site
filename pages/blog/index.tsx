@@ -72,7 +72,6 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
                   <div className="mt-2">
                     {post.tags?.length > 0
                       ? post.tags.map((tag) => {
-                          console.log(`tag`, tag);
                           return (
                             <button
                               key={tag.id}
