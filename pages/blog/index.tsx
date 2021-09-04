@@ -1,7 +1,8 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
+import PostCard from "../../components/Post/PostCard";
 import { normalizeText } from "../../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -62,33 +63,11 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
         </form>
       </section>
       <section>
-        {postsList.map((post, key) => {
+        {postsList.map((post, idx) => {
           return (
-            <div className="" key={post._id}>
-              <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
-                <div className={`${key === postsList.length - 1 ? "" : "border-b-2"} py-4 cursor-pointer`}>
-                  <div className="text-xl text-gray-800">{post.title}</div>
-                  <div className="">{new Date(post.published_at).toLocaleString("en-US")}</div>
-                  <div className="mt-2">
-                    {post.tags?.length > 0
-                      ? post.tags.map((tag) => {
-                          return (
-                            <button
-                              key={tag.id}
-                              type="button"
-                              className="py-1 px-2 mr-2 text-white rounded"
-                              style={{ backgroundColor: tag.color }}
-                              disabled
-                            >
-                              {tag.title}
-                            </button>
-                          );
-                        })
-                      : null}
-                  </div>
-                </div>
-              </Link>
-            </div>
+            <Fragment key={post._id}>
+              <PostCard post={post} isLastPost={idx === postsList.length - 1} />
+            </Fragment>
           );
         })}
       </section>

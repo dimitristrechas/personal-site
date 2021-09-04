@@ -1,8 +1,9 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import matter from "gray-matter";
 import marked from "marked";
+import PostCard from "../components/Post/PostCard";
 
 export const getStaticProps: GetStaticProps = async () => {
   const postsResponse = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC&_limit=3`);
@@ -60,31 +61,11 @@ const Home: FC<InputProps> = ({ posts, contact, about }: InputProps) => {
       <section>
         <div className="mb-20">
           <h2 className="text-2xl font-bold text-gray-800">Latest Posts</h2>
-          {postsList.map((post, key) => {
+          {postsList.map((post, idx) => {
             return (
-              <Link key={post._id} href="/blog/[slug]" as={"/blog/" + post.slug}>
-                <div className={`${key === postsList.length - 1 ? "" : "border-b-2"} py-4 cursor-pointer`}>
-                  <div className="text-xl text-gray-800">{post.title}</div>
-                  <div className="text-sm">{new Date(post.published_at).toLocaleString("en-US")}</div>
-                  <div className="mt-2">
-                    {post.tags?.length > 0
-                      ? post.tags.map((tag) => {
-                          return (
-                            <button
-                              key={tag.id}
-                              type="button"
-                              className="py-1 px-2 mr-2 text-white rounded"
-                              style={{ backgroundColor: tag.color }}
-                              disabled
-                            >
-                              {tag.title}
-                            </button>
-                          );
-                        })
-                      : null}
-                  </div>
-                </div>
-              </Link>
+              <Fragment key={post._id}>
+                <PostCard post={post} isLastPost={idx === postsList.length - 1} />
+              </Fragment>
             );
           })}
         </div>
