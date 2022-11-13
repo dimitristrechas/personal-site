@@ -6,6 +6,7 @@ import marked from "marked";
 import PostCard from "../components/Post/PostCard";
 
 export const getStaticProps: GetStaticProps = async () => {
+  console.log("process.env.API_ENDPOINT", process.env.API_ENDPOINT);
   const postsResponse = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC&_limit=3`);
   const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`);
   const aboutResponse = await fetch(`${process.env.API_ENDPOINT}/about`);
@@ -13,6 +14,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const posts: Post[] = await postsResponse.json();
 
   const contactData: ContactPage = await contactResponse.json();
+  console.log("contactData", contactData);
   const contactParsedMarkdown = matter(contactData.content);
   const contactHtmlString = marked(contactParsedMarkdown.content);
 
