@@ -8,7 +8,7 @@ import { normalizeText } from "../../utils/helpers";
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC`);
 
-  const posts: Post[] = await res.json();
+  const posts: Post[] = await res.json().then((data) => data.data);
 
   return {
     props: {
@@ -27,7 +27,7 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
 
     if (search) {
       const filteredPosts = posts.filter((p) => {
-        const postTitleNormalized = normalizeText(p.title);
+        const postTitleNormalized = normalizeText(p.attributes.title);
 
         return postTitleNormalized.includes(search);
       });
@@ -65,7 +65,7 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
       <section>
         {postsList.map((post, idx) => {
           return (
-            <Fragment key={post._id}>
+            <Fragment key={post.id}>
               <PostCard post={post} isLastPost={idx === postsList.length - 1} />
             </Fragment>
           );

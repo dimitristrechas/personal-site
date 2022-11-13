@@ -2,23 +2,25 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { FC, Fragment, useEffect, useState } from "react";
 import matter from "gray-matter";
-import marked from "marked";
+import { marked } from "marked";
 import PostCard from "../components/Post/PostCard";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postsResponse = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC&_limit=3`);
+  const postsResponse = await fetch(`${process.env.API_ENDPOINT}/posts?populate=%2A&_sort=published_at:DESC&_limit=3`);
   const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`);
   const aboutResponse = await fetch(`${process.env.API_ENDPOINT}/about`);
 
-  const posts: Post[] = await postsResponse.json();
+  const posts: Post[] = await postsResponse.json().then((data) => {
+    return data.data;
+  });
 
   const contactData: ContactPage = await contactResponse.json();
-  const contactParsedMarkdown = matter(contactData.content);
-  const contactHtmlString = marked(contactParsedMarkdown.content);
+  const contactParsedMarkdown = matter(contactData.data.attributes.content);
+  const contactHtmlString = marked.parse(contactParsedMarkdown.content);
 
   const aboutData: AboutPage = await aboutResponse.json();
-  const aboutParsedMarkdown = matter(aboutData.content);
-  const aboutHtmlString = marked(aboutParsedMarkdown.content);
+  const aboutParsedMarkdown = matter(aboutData.data.attributes.content);
+  const aboutHtmlString = marked.parse(aboutParsedMarkdown.content);
 
   return {
     props: {
@@ -63,7 +65,7 @@ const Home: FC<InputProps> = ({ posts, contact, about }: InputProps) => {
           <h2 className="text-2xl font-bold text-gray-800">Latest Posts</h2>
           {postsList.map((post, idx) => {
             return (
-              <Fragment key={post._id}>
+              <Fragment key={post.id}>
                 <PostCard post={post} isLastPost={idx === postsList.length - 1} />
               </Fragment>
             );

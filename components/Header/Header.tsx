@@ -8,27 +8,24 @@ const Header: FC = () => {
   return (
     <header>
       <nav className="m-4 mb-16 flex items-end">
-        <Link href="/" as={"/"}>
-          <a className="text-2xl text-blue-500">dimitristrechas</a>
+        <Link href="/" className="text-2xl text-blue-500">
+          dimitristrechas
         </Link>
         <div className="ml-auto text-lg">
-          <Link href="/blog" as={"/blog"}>
-            <a href="/blog" className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/blog" ? "underline" : ""}`}>
-              Blog
-            </a>
+          <Link href="/blog" className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/blog" ? "underline" : ""}`}>
+            Blog
           </Link>
-          <Link href="/#about" as={"/#about"}>
-            <a href="#about" className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/about" ? "underline" : ""}`}>
-              About
-            </a>
+          <Link
+            href="/#about"
+            className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/about" ? "underline" : ""}`}
+          >
+            About
           </Link>
-          <Link href="/#contact" as={"/#contact"}>
-            <a
-              href="#contact"
-              className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/contact" ? "underline" : ""}`}
-            >
-              Contact
-            </a>
+          <Link
+            href="/#contact"
+            className={`text-gray-800 ml-2 sm:ml-4 ${router.pathname == "/contact" ? "underline" : ""}`}
+          >
+            Contact
           </Link>
         </div>
       </nav>
