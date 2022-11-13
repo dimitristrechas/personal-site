@@ -1,31 +1,44 @@
 type Post = {
-  title: string;
-  content: string;
-  description: string;
-  published_at: string;
-  createdAt: string;
-  tag: string;
-  _id: string;
-  tags: Tag[];
-  slug: string;
+  id: string;
+  attributes: {
+    title: string;
+    content: string;
+    description: string;
+    publishedAt: string;
+    createdAt: string;
+    tags: {
+      data: Tag[];
+    };
+    slug: string;
+  };
 };
 
 type Tag = {
-  title: string;
-  color: string;
   id: string;
+  attributes: {
+    title: string;
+    color: string;
+  };
 };
 
 type PageData = { title: string };
 
 type ContactPage = {
-  id: string;
-  content: string;
-  title: string;
+  data: {
+    id: string;
+    attributes: {
+      content: string;
+      title: string;
+    };
+  };
 };
 
 type AboutPage = {
-  id: string;
-  content: string;
-  title: string;
+  data: {
+    id: string;
+    attributes: {
+      content: string;
+      title: string;
+    };
+  };
 };
