@@ -32,7 +32,7 @@ export const getStaticPaths = async (): Promise<unknown> => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params: { slug } }) => {
-  const res = await fetch(`${process.env.API_ENDPOINT}/posts/?slug=${slug}`);
+  const res = await fetch(`${process.env.API_ENDPOINT}/posts/?filters[slug][$eq]=${slug}`);
   const data = await res.json().then((data) => data.data);
 
   const post: Post = data ? data[0] : null;
