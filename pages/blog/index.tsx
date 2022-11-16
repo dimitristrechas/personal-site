@@ -6,7 +6,7 @@ import PostCard from "../../components/Post/PostCard";
 import { normalizeText } from "../../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${process.env.API_ENDPOINT}/posts?_sort=published_at:DESC`);
+  const res = await fetch(`${process.env.API_ENDPOINT}/posts?sort[1]=updatedAt%3Adesc`);
 
   const posts: Post[] = await res.json().then((data) => data.data);
 
