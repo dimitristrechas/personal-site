@@ -11,7 +11,7 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
     <Link key={post.id} href={"/blog/" + post.attributes.slug}>
       <div className={`${isLastPost ? "" : "border-b-2"} py-4 cursor-pointer`}>
         <div className="text-xl text-gray-800">{post.attributes.title}</div>
-        <div className="text-sm">{new Date(post.attributes.publishedAt).toLocaleString("el-GR")}</div>
+        <div className="text-sm">{new Date(post.attributes.updatedAt).toLocaleString("el-GR")}</div>
         <div className="mt-2">
           {post.attributes.tags?.data.length > 0
             ? post.attributes.tags.data.map((tag) => {

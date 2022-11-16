@@ -5,6 +5,7 @@ type Post = {
     content: string;
     description: string;
     publishedAt: string;
+    updatedAt: string;
     createdAt: string;
     tags: {
       data: Tag[];

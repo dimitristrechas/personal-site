@@ -6,7 +6,9 @@ import { marked } from "marked";
 import PostCard from "../components/Post/PostCard";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postsResponse = await fetch(`${process.env.API_ENDPOINT}/posts?populate=%2A&_sort=published_at:DESC&_limit=3`);
+  const postsResponse = await fetch(
+    `${process.env.API_ENDPOINT}/posts?populate=%2A&pagination[limit]=3&sort[1]=updatedAt%3Adesc`
+  );
   const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`);
   const aboutResponse = await fetch(`${process.env.API_ENDPOINT}/about`);
 
