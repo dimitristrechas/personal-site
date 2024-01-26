@@ -5,6 +5,12 @@ import Head from "next/head";
 import Link from "next/link";
 import React, { FC } from "react";
 
+import { ParsedUrlQuery } from "querystring";
+
+interface Params extends ParsedUrlQuery {
+  id: string;
+}
+
 const escapeMap: { [symbol: string]: string } = {
   "&": "&amp;",
   "<": "&lt;",
@@ -31,7 +37,8 @@ export const getStaticPaths = async (): Promise<unknown> => {
   return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params: { slug } }) => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { slug } = context.params as Params;
   const res = await fetch(`${process.env.API_ENDPOINT}/posts/?filters[slug][$eq]=${slug}`);
   const data = await res.json().then((data) => data.data);
 
