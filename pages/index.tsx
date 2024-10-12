@@ -17,11 +17,11 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   const contactData: ContactPage = await contactResponse.json();
-  const contactParsedMarkdown = matter(contactData.data.attributes.content);
+  const contactParsedMarkdown = matter(contactData.data);
   const contactHtmlString = marked.parse(contactParsedMarkdown.content);
 
   const aboutData: AboutPage = await aboutResponse.json();
-  const aboutParsedMarkdown = matter(aboutData.data.attributes.content);
+  const aboutParsedMarkdown = matter(aboutData.data);
   const aboutHtmlString = marked.parse(aboutParsedMarkdown.content);
 
   return {
@@ -52,12 +52,18 @@ const Home: FC<InputProps> = ({ posts, contact, about }: InputProps) => {
     <>
       <section>
         <div className="mb-20 flex items-center">
-          <img className="rounded-full p-2 bg-red-200 h-32 lg:h-40" src="/bomberman.png" alt="bomberman" />
+          <img
+            className="rounded-full p-2 bg-red-200 h-32 lg:h-40"
+            src="/bomberman.png"
+            alt="bomberman"
+          />
           <div className="ml-4">
             <h4 className="text-2xl text-gray-800 mb-2">Welcome friend!</h4>
             <p>
-              Read my blog if you are interested in JavaScript, React or Frontend Development in general. <br></br>
-              You can also learn more about me, the projects I work on or contact me directly.
+              Read my blog if you are interested in JavaScript, React or
+              Frontend Development in general. <br></br>
+              You can also learn more about me, the projects I work on or
+              contact me directly.
             </p>
           </div>
         </div>
@@ -68,14 +74,21 @@ const Home: FC<InputProps> = ({ posts, contact, about }: InputProps) => {
           {postsList.map((post, idx) => {
             return (
               <Fragment key={post.id}>
-                <PostCard post={post} isLastPost={idx === postsList.length - 1} />
+                <PostCard
+                  post={post}
+                  isLastPost={idx === postsList.length - 1}
+                />
               </Fragment>
             );
           })}
         </div>
       </section>
       <section>
-        <article id="about" className="prose mb-20 pt-4" dangerouslySetInnerHTML={{ __html: about.aboutHtmlString }} />
+        <article
+          id="about"
+          className="prose mb-20 pt-4"
+          dangerouslySetInnerHTML={{ __html: about.aboutHtmlString }}
+        />
       </section>
       <section>
         <article

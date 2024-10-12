@@ -6,7 +6,9 @@ import PostCard from "../../components/Post/PostCard";
 import { normalizeText } from "../../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${process.env.API_ENDPOINT}/posts?sort[1]=updatedAt%3Adesc`);
+  const res = await fetch(
+    `${process.env.API_ENDPOINT}/posts?sort[1]=updatedAt%3Adesc`
+  );
 
   const posts: Post[] = await res.json().then((data) => data.data);
 
@@ -27,7 +29,7 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
 
     if (search) {
       const filteredPosts = posts.filter((p) => {
-        const postTitleNormalized = normalizeText(p.attributes.title);
+        const postTitleNormalized = normalizeText(p.title);
 
         return postTitleNormalized.includes(search);
       });
@@ -58,7 +60,9 @@ const Blog: FC<InputProps> = ({ posts }: InputProps) => {
               placeholder="Search..."
               onChange={handlePostSearch}
             />
-            <small className="">{`${postsList.length} ${postsList.length === 1 ? "post" : "posts"} found`}</small>
+            <small className="">{`${postsList.length} ${
+              postsList.length === 1 ? "post" : "posts"
+            } found`}</small>
           </div>
         </form>
       </section>
