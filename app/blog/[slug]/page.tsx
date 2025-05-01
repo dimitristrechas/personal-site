@@ -20,7 +20,8 @@ async function getPostData(slug: string) {
   return { htmlString, post };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const { htmlString } = await getPostData(params.slug);
 
   return (
