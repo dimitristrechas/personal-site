@@ -1,7 +1,8 @@
 import { Metadata } from "next";
+import { ReactNode } from "react";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
-import "../styles/globals.scss";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Dimitris Trechas",
@@ -10,11 +11,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className="max-w-2xl mx-auto grid grid-rows-layout h-screen font-sans">
+      <body className="max-w-2xl mx-auto grid grid-rows-[auto_1fr_auto] h-screen">
         <Header />
         <main role="main" className="m-4">
           {children}

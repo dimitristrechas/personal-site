@@ -1,4 +1,3 @@
-// app/components/ClientComponent.tsx
 "use client";
 
 import { Fragment, useEffect, useState } from "react";

@@ -10,9 +10,7 @@ async function getPosts() {
     `${process.env.API_ENDPOINT}/posts?sort[1]=updatedAt%3Adesc`
   );
 
-  const posts: Post[] = await res.json().then((data) => data.data);
-
-  return posts;
+  return await res.json().then((data) => data.data);
 }
 
 export default async function Page() {
