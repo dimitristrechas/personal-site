@@ -41,7 +41,7 @@ const Home: FC = async () => {
             width={128}
             height={128}
           />
-          <div className="ml-4">
+          <div className="ml-4 lg:ml-6">
             <h4 className="text-2xl text-gray-800 mb-2">Welcome friend!</h4>
             <p>
               Read my blog if you are interested in JavaScript, React, or
@@ -56,9 +56,7 @@ const Home: FC = async () => {
         <div className="mb-20">
           <h2 className="text-2xl font-bold text-gray-800">Latest Posts</h2>
           {posts.map((post: Post, idx: number) => (
-            <Fragment key={post.id}>
-              <PostCard post={post} isLastPost={idx === posts.length - 1} />
-            </Fragment>
+            <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
           ))}
         </div>
       </section>

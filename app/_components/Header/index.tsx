@@ -10,7 +10,7 @@ const Header: FC = () => {
   return (
     <header>
       <nav className="m-4 mb-16 flex items-end">
-        <Link href="/" className="text-2xl text-blue-600">
+        <Link href="/" className="text-2xl text-slate-600">
           dimitristrechas
         </Link>
         <div className="ml-auto text-lg">
