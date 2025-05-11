@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="max-w-2xl mx-auto grid grid-rows-[auto_1fr_auto] h-screen">
         <Header />
-        <main role="main" className="m-4">
+        <main role="main" className="m-2 md:m-0">
           {children}
         </main>
         <Footer />

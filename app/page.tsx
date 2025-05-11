@@ -20,6 +20,10 @@ async function fetchData() {
   const aboutParsedMarkdown = matter(aboutData.data);
   const aboutHtmlString = marked.parse(aboutParsedMarkdown.content);
 
+  console.log('aboutData', aboutData);
+  console.log('contactData', contactData);
+
+
   return {
     posts,
     contact: { contactHtmlString, contactData },
@@ -32,8 +36,8 @@ const Home: FC = async () => {
 
   return (
     <>
-      <section>
-        <div className="mb-20 flex items-center">
+      <section id="welcome" className="mb-16">
+        <div className="flex items-center">
           <Image
             className="rounded-full p-2 bg-red-200"
             src="/bomberman.png"
@@ -42,7 +46,7 @@ const Home: FC = async () => {
             height={128}
           />
           <div className="ml-4 lg:ml-6">
-            <h4 className="text-2xl text-gray-800 mb-2">Welcome friend!</h4>
+            <span className="text-2xl text-gray-800 mb-2">Welcome friend!</span>
             <p>
               Read my blog if you are interested in JavaScript, React, or
               Frontend Development in general. <br />
@@ -52,25 +56,23 @@ const Home: FC = async () => {
           </div>
         </div>
       </section>
-      <section>
-        <div className="mb-20">
-          <h2 className="text-2xl font-bold text-gray-800">Latest Posts</h2>
-          {posts.map((post: Post, idx: number) => (
-            <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
-          ))}
-        </div>
+      <section id="blog" className="mb-16">
+        <h2 className="text-2xl font-bold text-gray-800">Latest Posts</h2>
+        {posts.map((post: Post, idx: number) => (
+          <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
+        ))}
       </section>
-      <section>
-        <article
-          id="about"
-          className="prose mb-20 pt-4"
+      <section id="about" className="mb-16">
+        <h2 className="text-2xl font-bold text-gray-800">{about.aboutData.data.title}</h2>
+        <p
+          className="prose pt-4"
           dangerouslySetInnerHTML={{ __html: about.aboutHtmlString }}
         />
       </section>
-      <section>
-        <article
-          id="contact"
-          className="prose mb-20 pt-4"
+      <section id="contact" className="mb-16">
+        <h2 className="text-2xl font-bold text-gray-800">{contact.contactData.data.title}</h2>
+        <p
+          className="prose pt-4"
           dangerouslySetInnerHTML={{ __html: contact.contactHtmlString }}
         />
       </section>
