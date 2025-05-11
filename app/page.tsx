@@ -36,24 +36,22 @@ const Home: FC = async () => {
 
   return (
     <>
-      <section id="welcome" className="mb-16">
-        <div className="flex items-center">
-          <Image
-            className="rounded-full p-2 bg-red-200"
-            src="/bomberman.png"
-            alt="bomberman"
-            width={128}
-            height={128}
-          />
-          <div className="ml-4 lg:ml-6">
-            <span className="text-2xl text-gray-800 mb-2">Welcome friend!</span>
-            <p>
-              Read my blog if you are interested in JavaScript, React, or
-              Frontend Development in general. <br />
-              You can also learn more about me, the projects I work on, or
-              contact me directly.
-            </p>
-          </div>
+      <section id="welcome" className="flex items-center mb-16">
+        <Image
+          className="rounded-full p-2 bg-red-200"
+          src="/bomberman.png"
+          alt="bomberman"
+          width={128}
+          height={128}
+        />
+        <div className="ml-4 lg:ml-6">
+          <h1 className="text-2xl text-gray-800 mb-2">Welcome friend!</h1>
+          <p>
+            Read my blog if you are interested in JavaScript, React, or
+            Frontend Development in general. <br />
+            You can also learn more about me, the projects I work on, or
+            contact me directly.
+          </p>
         </div>
       </section>
       <section id="blog" className="mb-16">

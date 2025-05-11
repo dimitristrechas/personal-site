@@ -10,9 +10,9 @@ const Header: FC = () => {
   return (
     <header className="mx-2 md:mx-0 mt-2 mb-16">
       <nav className="flex items-end">
-        <h1><Link href="/" className="text-2xl text-slate-600">
+        <Link href="/" className="text-2xl text-slate-600">
           dimitristrechas
-        </Link></h1>
+        </Link>
         <div className="ml-auto text-lg">
           <Link
             href="/blog"
