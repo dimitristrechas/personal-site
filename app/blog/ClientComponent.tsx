@@ -37,7 +37,7 @@ export default function ClientComponent({ posts }: Props) {
     <>
       <section>
         <form className="">
-          <h2 className="mb-8 text-2xl font-bold text-gray-800">Blogposts</h2>
+          <h1 className="mb-8 text-2xl font-bold text-gray-800">Blogposts</h1>
           <div className="flex flex-col">
             <input
               className="max-w-sm mb-1 border-2 rounded border-gray-300 p-1"
