@@ -7,6 +7,8 @@ type InputProps = {
 };
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
+  console.log('post', post);
+
   return (
     <Link key={post.id} href={"/blog/" + post.slug}>
       <div className={`${isLastPost ? "" : "border-b-1"} py-4 cursor-pointer`}>

@@ -53,9 +53,7 @@ export default function ClientComponent({ posts }: Props) {
       <section>
         {postsList.map((post, idx) => {
           return (
-            <Fragment key={post.id}>
-              <PostCard post={post} isLastPost={idx === postsList.length - 1} />
-            </Fragment>
+            <PostCard key={post.id} post={post} isLastPost={idx === postsList.length - 1} />
           );
         })}
       </section>
