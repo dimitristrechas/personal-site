@@ -9,7 +9,7 @@ type InputProps = {
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   return (
     <Link key={post.id} href={"/blog/" + post.slug}>
-      <div className={`${isLastPost ? "" : "border-b-2"} py-4 cursor-pointer`}>
+      <div className={`${isLastPost ? "" : "border-b-1"} py-4 cursor-pointer`}>
         <div className="text-xl text-gray-800">{post.title}</div>
         <div className="text-sm">
           {new Date(post.updatedAt).toLocaleString("el-GR")}
