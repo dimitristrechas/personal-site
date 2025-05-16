@@ -22,7 +22,7 @@ const Home: FC = async () => {
         <Image
           className="rounded-full p-2 bg-red-200"
           src="/bomberman.png"
-          alt="bomberman"
+          alt="bomberman - the alterego of the author"
           width={128}
           height={128}
         />
