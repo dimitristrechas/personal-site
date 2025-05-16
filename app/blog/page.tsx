@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 async function getPosts() {
   const res = await fetch(
-    `${process.env.API_ENDPOINT}/posts?populate=%2A&sort[1]=updatedAt%3Adesc`
+    `${process.env.API_ENDPOINT}/posts?populate=%2A&sort[1]=updatedAt%3Adesc`,
   );
 
   return await res.json().then((data) => data.data);

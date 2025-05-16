@@ -4,7 +4,7 @@ import Link from "next/link";
 
 async function getPostData(slug: string) {
   const res = await fetch(
-    `${process.env.API_ENDPOINT}/posts/?filters[slug][$eq]=${slug}`
+    `${process.env.API_ENDPOINT}/posts/?filters[slug][$eq]=${slug}`,
   );
   const data = await res.json();
 
@@ -20,7 +20,9 @@ async function getPostData(slug: string) {
   return { htmlString, post };
 }
 
-export default async function Page(props: { params: Promise<{ slug: string }> }) {
+export default async function Page(props: {
+  params: Promise<{ slug: string }>;
+}) {
   const params = await props.params;
   const { htmlString } = await getPostData(params.slug);
 

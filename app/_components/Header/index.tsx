@@ -23,7 +23,7 @@ const Header: FC = () => {
             Blog
           </Link>
           <Link
-            href="/#about"
+            href="/about"
             className={`text-gray-800 ml-2 sm:ml-4 ${
               pathname == "/about" ? "underline" : ""
             }`}
@@ -31,7 +31,7 @@ const Header: FC = () => {
             About
           </Link>
           <Link
-            href="/#contact"
+            href="/contact"
             className={`text-gray-800 ml-2 sm:ml-4 ${
               pathname == "/contact" ? "underline" : ""
             }`}

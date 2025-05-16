@@ -8,11 +8,7 @@ export const metadata: Metadata = {
   title: "Dimitris Trechas",
   description: "Dimitris Trechas, Frontend Engineer. Personal Site.",
 };
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="max-w-2xl mx-auto grid grid-rows-[auto_1fr_auto] h-screen">
