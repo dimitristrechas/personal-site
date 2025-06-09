@@ -8,7 +8,7 @@ type InputProps = {
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   return (
-    <Link key={post.id} href={"/blog/" + post.slug}>
+    <Link key={post.id} href={`/blog/${post.slug}`} prefetch={true}>
       <div className={`${isLastPost ? "" : "border-b-1"} py-4 cursor-pointer`}>
         <div className="text-xl text-gray-800">{post.title}</div>
         <div className="text-sm">
@@ -18,15 +18,13 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
           {post.tags?.length > 0
             ? post.tags.map((tag) => {
                 return (
-                  <button
+                  <span
                     key={tag.id}
-                    type="button"
                     className="text-sm py-1 px-2 mr-2 text-white rounded"
                     style={{ backgroundColor: tag.color }}
-                    disabled
                   >
                     {tag.title}
-                  </button>
+                  </span>
                 );
               })
             : null}
