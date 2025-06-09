@@ -20,11 +20,12 @@ const Home: FC = async () => {
     <>
       <section id="welcome" className="flex items-center mb-16">
         <Image
-          className="rounded-full p-2 bg-red-200"
-          src="/bomberman.png"
-          alt="bomberman - the alterego of the author"
+          className="rounded-full p-0.25 bg-red-200 object-cover"
+          src="/headshot-compressed.jpg"
+          alt="a headshot of the author"
           width={128}
           height={128}
+          style={{ width: "128px", height: "128px" }}
         />
         <div className="ml-4 lg:ml-6">
           <span className="text-2xl text-gray-800 mb-2">Welcome friend!</span>
