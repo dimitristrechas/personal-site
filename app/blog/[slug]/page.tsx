@@ -29,10 +29,10 @@ export default async function Page(props: {
   return (
     <>
       <article
-        className="prose py-5"
+        className="prose max-w-none"
         dangerouslySetInnerHTML={{ __html: htmlString }}
       />
-      <div className="text-right py-1">
+      <div className="text-right mt-4 mb-2">
         <Link href="/blog">back to blog list</Link>
       </div>
     </>

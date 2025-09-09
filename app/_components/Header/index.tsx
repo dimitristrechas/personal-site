@@ -8,7 +8,7 @@ const Header: FC = () => {
   const pathname = usePathname();
 
   return (
-    <header className="mx-2 md:mx-0 mt-2 mb-16">
+    <header className="mx-2 md:mx-0 mt-2 mb-4 md:mb-8">
       <nav className="flex items-end">
         <Link href="/" className="text-2xl text-slate-600">
           dimitristrechas
