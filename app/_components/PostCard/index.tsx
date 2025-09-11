@@ -3,7 +3,7 @@ import Link from "next/link";
 
 type InputProps = {
   post: Post;
-  isLastPost: Boolean;
+  isLastPost: boolean;
 };
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
