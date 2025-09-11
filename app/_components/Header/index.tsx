@@ -10,8 +10,8 @@ const Header: FC = () => {
   return (
     <header className="mx-2 md:mx-0 mt-2 mb-4 md:mb-8">
       <nav className="flex items-end">
-        <Link href="/" className="text-2xl text-slate-600">
-          dimitristrechas
+        <Link href="/" className="text-xl text-slate-600">
+          Dimitris Trechas
         </Link>
         <div className="ml-auto text-lg">
           <Link
@@ -20,7 +20,7 @@ const Header: FC = () => {
               pathname == "/blog" ? "underline" : ""
             }`}
           >
-            Blog
+            blog
           </Link>
           <Link
             href="/about"
@@ -28,7 +28,7 @@ const Header: FC = () => {
               pathname == "/about" ? "underline" : ""
             }`}
           >
-            About
+            about
           </Link>
           <Link
             href="/contact"
@@ -36,7 +36,7 @@ const Header: FC = () => {
               pathname == "/contact" ? "underline" : ""
             }`}
           >
-            Contact
+            contact
           </Link>
         </div>
       </nav>
