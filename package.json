@@ -20,7 +20,7 @@
     "@tailwindcss/postcss": "^4.1.13",
     "gray-matter": "^4.0.3",
     "marked": "^16.2.1",
-    "next": "15.5.7",
+    "next": "15.5.9",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
