@@ -12,30 +12,30 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix"
+    "lint": "biome check . && eslint .",
+    "lint:fix": "biome check --write . && eslint --fix .",
+    "format": "biome format --write .",
+    "outdated": "npx npm-check-updates"
   },
   "dependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/postcss": "^4.1.18",
     "gray-matter": "^4.0.3",
-    "marked": "^16.2.1",
-    "next": "15.5.9",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "marked": "^17.0.1",
+    "next": "16.1.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.13",
-    "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^24.3.1",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
+    "@biomejs/biome": "^2.3.10",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "eslint": "^9",
-    "eslint-config-next": "15.5.3",
-    "eslint-config-prettier": "^10.1.8",
+    "eslint-config-next": "16.1.1",
     "postcss": "^8.5.6",
-    "prettier": "3.6.2",
-    "tailwindcss": "^4.1.13",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5"
   },
   "engines": {

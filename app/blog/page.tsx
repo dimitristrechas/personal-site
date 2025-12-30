@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import ClientComponent from "./ClientComponent";
 
 export const metadata: Metadata = {

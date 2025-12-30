@@ -1,6 +1,6 @@
-import { FC } from "react";
-import PostCard from "./_components/PostCard";
 import Image from "next/image";
+import type { FC } from "react";
+import PostCard from "./_components/PostCard";
 
 async function fetchData() {
   const postsResponse = await fetch(
@@ -18,9 +18,9 @@ const Home: FC = async () => {
 
   return (
     <>
-      <section id="welcome" className="flex items-center mb-16">
+      <section id="welcome" className="mb-16 flex items-center">
         <Image
-          className="rounded-full p-0.25 bg-red-200 object-cover"
+          className="rounded-full bg-red-200 object-cover p-0.25"
           src="/headshot-compressed.jpg"
           alt="a headshot of the author"
           width={128}
@@ -28,7 +28,7 @@ const Home: FC = async () => {
           style={{ width: "128px", height: "128px" }}
         />
         <div className="ml-4 lg:ml-6">
-          <span className="text-2xl text-gray-800 mb-2">Welcome friend!</span>
+          <span className="mb-2 text-2xl text-gray-800">Welcome friend!</span>
           <p>
             Read my blog if you are interested in JavaScript, React, or Frontend
             Development in general. <br />
@@ -38,7 +38,7 @@ const Home: FC = async () => {
         </div>
       </section>
       <section id="blog" className="mb-16">
-        <h1 className="text-2xl font-bold text-gray-800">Latest Posts</h1>
+        <h1 className="font-bold text-2xl text-gray-800">Latest Posts</h1>
         {posts.map((post: Post, idx: number) => (
           <PostCard
             key={post.id}

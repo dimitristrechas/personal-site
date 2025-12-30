@@ -32,7 +32,7 @@ export default async function Page(props: {
         className="prose max-w-none"
         dangerouslySetInnerHTML={{ __html: htmlString }}
       />
-      <div className="text-right mt-6 mb-4">
+      <div className="mt-6 mb-4 text-right">
         <Link href="/blog">back to blog list</Link>
       </div>
     </>

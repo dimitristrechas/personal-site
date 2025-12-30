@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import PostCard from "@/app/_components/PostCard";
 import { normalizeText } from "@/utils/helpers";
 
@@ -9,57 +9,44 @@ type Props = {
 };
 
 export default function ClientComponent({ posts }: Props) {
-  const [postsList, setPostsList] = useState([] as Post[]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const handlePostSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const search = normalizeText(ev.target.value);
+  const displayedPosts = useMemo(() => {
+    if (!searchQuery) return posts;
+    const normalizedQuery = normalizeText(searchQuery);
+    return posts.filter((p) =>
+      normalizeText(p.title).includes(normalizedQuery),
+    );
+  }, [posts, searchQuery]);
 
-    if (search) {
-      const filteredPosts = posts.filter((p) => {
-        const postTitleNormalized = normalizeText(p.title);
-
-        return postTitleNormalized.includes(search);
-      });
-
-      setPostsList(filteredPosts);
-    } else {
-      setPostsList(posts);
-    }
-  };
-
-  useEffect(() => {
-    if (posts.length) {
-      setPostsList(posts);
-    }
-  }, [posts]);
+  const resultsText = `#{displayedPosts.length} ${displayedPosts.length === 1 ? "post" : "posts"} found`;
 
   return (
     <>
+      <search>
+        <h1 className="mb-8 font-bold text-2xl text-gray-800">Blogposts</h1>
+        <div className="flex flex-col">
+          <label htmlFor="post-search" className="sr-only">
+            Search posts
+          </label>
+          <input
+            id="post-search"
+            className="mb-1 max-w-sm rounded border-2 border-gray-300 p-1"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <small>{resultsText}</small>
+        </div>
+      </search>
       <section>
-        <form className="">
-          <h1 className="mb-8 text-2xl font-bold text-gray-800">Blogposts</h1>
-          <div className="flex flex-col">
-            <input
-              className="max-w-sm mb-1 border-2 rounded border-gray-300 p-1"
-              placeholder="Search..."
-              onChange={handlePostSearch}
-            />
-            <small className="">{`${postsList.length} ${
-              postsList.length === 1 ? "post" : "posts"
-            } found`}</small>
-          </div>
-        </form>
-      </section>
-      <section>
-        {postsList.map((post, idx) => {
-          return (
-            <PostCard
-              key={post.id}
-              post={post}
-              isLastPost={idx === postsList.length - 1}
-            />
-          );
-        })}
+        {displayedPosts.map((post, idx) => (
+          <PostCard
+            key={post.id}
+            post={post}
+            isLastPost={idx === displayedPosts.length - 1}
+          />
+        ))}
       </section>
     </>
   );

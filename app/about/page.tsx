@@ -1,6 +1,6 @@
 import matter from "gray-matter";
 import { marked } from "marked";
-import { FC } from "react";
+import type { FC } from "react";
 
 async function fetchAboutData() {
   const aboutResponse = await fetch(`${process.env.API_ENDPOINT}/about`);
@@ -18,7 +18,7 @@ const Page: FC = async () => {
 
   return (
     <section id="about" className="mb-16">
-      <h1 className="text-2xl font-bold text-gray-800">
+      <h1 className="font-bold text-2xl text-gray-800">
         {about.aboutData.data.title}
       </h1>
       <p

@@ -1,23 +1,22 @@
-import { Metadata } from "next";
-import { ReactNode } from "react";
+import type { Metadata } from "next";
 import Script from "next/script";
-import Header from "./_components/Header";
+import type { ReactNode } from "react";
 import Footer from "./_components/Footer";
-import "./globals.css";
+import Header from "./_components/Header";
+import "./global.css";
 
 export const metadata: Metadata = {
   title: "Dimitris Trechas",
-  description: "Dimitris Trechas, Frontend Engineer. Personal Site.",
+  description:
+    "Personal website of Dimitris Trechas, a Software Engineer from Greece.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="max-w-2xl mx-auto flex flex-col h-screen">
+      <body className="mx-auto flex h-screen max-w-2xl flex-col">
         <Header />
-        <main role="main" className="m-2 md:m-0 flex-grow">
-          {children}
-        </main>
+        <main className="m-2 flex-grow md:m-0">{children}</main>
         <Footer />
       </body>
       {process.env.NODE_ENV === "production" && (

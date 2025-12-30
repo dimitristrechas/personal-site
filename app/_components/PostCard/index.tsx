@@ -1,5 +1,5 @@
-import React, { FC } from "react";
 import Link from "next/link";
+import type { FC } from "react";
 
 type InputProps = {
   post: Post;
@@ -9,8 +9,8 @@ type InputProps = {
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   return (
     <Link key={post.id} href={`/blog/${post.slug}`} prefetch={true}>
-      <div className={`${isLastPost ? "" : "border-b-1"} py-4 cursor-pointer`}>
-        <div className="text-xl text-gray-800 mb-1">{post.title}</div>
+      <div className={`${isLastPost ? "" : "border-b-1"} cursor-pointer py-4`}>
+        <div className="mb-1 text-gray-800 text-xl">{post.title}</div>
         <div className="text-sm">
           {new Intl.DateTimeFormat(
             Intl.DateTimeFormat().resolvedOptions().locale,
@@ -27,7 +27,7 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
                 return (
                   <span
                     key={tag.id}
-                    className="text-sm py-1 px-2 mr-2 text-white rounded"
+                    className="mr-2 rounded px-2 py-1 text-sm text-white"
                     style={{ backgroundColor: tag.color }}
                   >
                     {tag.title}

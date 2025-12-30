@@ -1,6 +1,6 @@
-import { FC } from "react";
 import matter from "gray-matter";
 import { marked } from "marked";
+import type { FC } from "react";
 
 async function fetchContactData() {
   const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`);
@@ -18,7 +18,7 @@ const Contact: FC = async () => {
 
   return (
     <section id="contact" className="mb-16">
-      <h1 className="text-2xl font-bold text-gray-800">
+      <h1 className="font-bold text-2xl text-gray-800">
         {contact.contactData.data.title}
       </h1>
       <p

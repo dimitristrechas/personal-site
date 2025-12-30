@@ -11,8 +11,9 @@ Next.js 15 personal site/blog. TypeScript, React 19, Tailwind CSS 4. Fetches blo
 - `npm run dev` - dev server with Turbopack
 - `npm run build` - production build
 - `npm start` - run production build
-- `npm run lint` - ESLint check
-- `npm run lint:fix` - auto-fix linting issues
+- `npm run lint` - Biome check + ESLint (Next.js rules)
+- `npm run lint:fix` - auto-fix all issues
+- `npm run format` - format with Biome
 
 ## Setup
 
@@ -56,4 +57,5 @@ Global types in `globals.d.ts`: `Post`, `Tag`, `PageData`, `ContactPage`, `About
 ## Requirements
 
 - Node >= 22.0.0
-- ESLint config extends Next.js core-web-vitals + TypeScript + Prettier
+- Biome for linting + formatting
+- ESLint for Next.js-specific rules (next/core-web-vitals, next/typescript)
