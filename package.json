@@ -1,7 +1,7 @@
 {
   "name": "personal-site",
-  "version": "2.1.1",
-  "private": true,
+  "version": "2.2.0",
+  "private": false,
   "description": "Personal website of Dimitris Trechas",
   "author": {
     "name": "Dimitris Trechas <dimitristrechas@gmail.com> (https://www.dimitristrechas.com)"
@@ -34,6 +34,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "lefthook": "^2.0.13",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
     "typescript": "^5"

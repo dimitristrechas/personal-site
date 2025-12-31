@@ -1,0 +1,13 @@
+pre-commit:
+  parallel: true
+  commands:
+    biome-lint:
+      glob: "*.{ts,tsx,js,mjs,json}"
+      run: npx @biomejs/biome check --no-errors-on-unmatched {staged_files}
+    biome-format:
+      glob: "*.{ts,tsx,js,mjs,json}"
+      run: npx @biomejs/biome format --no-errors-on-unmatched {staged_files}
+    eslint:
+      glob: "*.{ts,tsx,js,mjs}"
+      run: npx eslint {staged_files}
+
