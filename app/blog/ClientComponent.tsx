@@ -19,7 +19,7 @@ export default function ClientComponent({ posts }: Props) {
     );
   }, [posts, searchQuery]);
 
-  const resultsText = `#{displayedPosts.length} ${displayedPosts.length === 1 ? "post" : "posts"} found`;
+  const resultsText = `${displayedPosts.length} ${displayedPosts.length === 1 ? "post" : "posts"} found`;
 
   return (
     <>
