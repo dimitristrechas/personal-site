@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Validate commit messages
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            commits=$(git log --format=%H origin/${{ github.base_ref }}..${{ github.sha }})
+          else
+            commits=$(git log --format=%H ${{ github.event.before }}..${{ github.sha }})
+          fi
+
+          pattern="^(feat|fix|docs|style|refactor|test|ci|chore|revert|agents)(\(.+\))?: .{1,}"
+
+          for commit in $commits; do
+            msg=$(git log --format=%B -n 1 $commit | head -n 1)
+            if ! echo "$msg" | grep -qE "$pattern"; then
+              if ! echo "$msg" | grep -qE "^Merge "; then
+                echo "❌ Invalid commit message in $commit:"
+                echo "   $msg"
+                echo ""
+                echo "Must follow Conventional Commits format:"
+                echo "   type(scope)?: description"
+                echo "   Types: feat, fix, docs, style, refactor, test, ci, chore, revert, agents"
+                exit 1
+              fi
+            fi
+          done
