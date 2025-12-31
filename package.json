@@ -15,6 +15,7 @@
     "lint": "biome check . && eslint .",
     "lint:fix": "biome check --write . && eslint --fix .",
     "format": "biome format --write .",
+    "format:check": "biome format --error-on-warnings .",
     "outdated": "npx npm-check-updates"
   },
   "dependencies": {
