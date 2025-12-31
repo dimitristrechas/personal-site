@@ -1,3 +1,21 @@
+commit-msg:
+  commands:
+    conventional-commit:
+      run: |
+        commit_msg=$(cat {1})
+        pattern="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .{1,}"
+        if ! echo "$commit_msg" | grep -qE "$pattern"; then
+          if ! echo "$commit_msg" | grep -qE "^Merge "; then
+            echo "❌ Commit message must follow Conventional Commits format:"
+            echo "   type(scope)?: description"
+            echo ""
+            echo "   Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+            echo "   Example: feat: add new feature"
+            echo "   Example: fix(api): resolve bug"
+            exit 1
+          fi
+        fi
+
 pre-commit:
   parallel: true
   commands:
