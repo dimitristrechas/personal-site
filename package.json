@@ -13,6 +13,7 @@
     "build": "next build",
     "start": "next start",
     "outdated": "npx npm-check-updates",
+    "lint": "eslint .",
     "biome:check": "biome check .",
     "biome:check:fix": "biome check --write .",
     "biome:format": "biome format --write .",
