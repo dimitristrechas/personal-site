@@ -30,21 +30,15 @@ const Home: FC = async () => {
         <div className="ml-4 lg:ml-6">
           <span className="mb-2 text-2xl text-gray-800">Welcome friend!</span>
           <p>
-            Read my blog if you are interested in JavaScript, React, or Frontend
-            Development in general. <br />
-            You can also learn more about me, the projects I work on, or contact
-            me directly.
+            Read my blog if you are interested in JavaScript, React, or Frontend Development in general. <br />
+            You can also learn more about me, the projects I work on, or contact me directly.
           </p>
         </div>
       </section>
       <section id="blog" className="mb-16">
         <h1 className="font-bold text-2xl text-gray-800">Latest Posts</h1>
         {posts.map((post: Post, idx: number) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            isLastPost={idx === posts.length - 1}
-          />
+          <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
         ))}
       </section>
     </>

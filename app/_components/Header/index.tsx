@@ -14,28 +14,13 @@ const Header: FC = () => {
           Dimitris Trechas
         </Link>
         <div className="ml-auto text-lg">
-          <Link
-            href="/blog"
-            className={`ml-2 text-gray-800 sm:ml-4 ${
-              pathname === "/blog" ? "underline" : ""
-            }`}
-          >
+          <Link href="/blog" className={`ml-2 text-gray-800 sm:ml-4 ${pathname === "/blog" ? "underline" : ""}`}>
             blog
           </Link>
-          <Link
-            href="/about"
-            className={`ml-2 text-gray-800 sm:ml-4 ${
-              pathname === "/about" ? "underline" : ""
-            }`}
-          >
+          <Link href="/about" className={`ml-2 text-gray-800 sm:ml-4 ${pathname === "/about" ? "underline" : ""}`}>
             about
           </Link>
-          <Link
-            href="/contact"
-            className={`ml-2 text-gray-800 sm:ml-4 ${
-              pathname === "/contact" ? "underline" : ""
-            }`}
-          >
+          <Link href="/contact" className={`ml-2 text-gray-800 sm:ml-4 ${pathname === "/contact" ? "underline" : ""}`}>
             contact
           </Link>
         </div>

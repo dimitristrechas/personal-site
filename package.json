@@ -12,11 +12,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check . && eslint .",
-    "lint:fix": "biome check --write . && eslint --fix .",
-    "format": "biome format --write .",
-    "format:check": "biome format --error-on-warnings .",
-    "outdated": "npx npm-check-updates"
+    "outdated": "npx npm-check-updates",
+    "biome:check": "biome check .",
+    "biome:check:fix": "biome check --write .",
+    "biome:format": "biome format --write .",
+    "biome:format:fix": "biome format .",
+    "biome:lint": "biome lint --write .",
+    "biome:lint:fix": "biome lint .",
+    "biome:ci": "biome ci .",
+    "postinstall": "git rev-parse --git-dir > /dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.18",

@@ -7,8 +7,7 @@ import "./global.css";
 
 export const metadata: Metadata = {
   title: "Dimitris Trechas",
-  description:
-    "Personal website of Dimitris Trechas, a Software Engineer from Greece.",
+  description: "Personal website of Dimitris Trechas, a Software Engineer from Greece.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

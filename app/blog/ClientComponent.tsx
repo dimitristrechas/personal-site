@@ -14,9 +14,7 @@ export default function ClientComponent({ posts }: Props) {
   const displayedPosts = useMemo(() => {
     if (!searchQuery) return posts;
     const normalizedQuery = normalizeText(searchQuery);
-    return posts.filter((p) =>
-      normalizeText(p.title).includes(normalizedQuery),
-    );
+    return posts.filter((p) => normalizeText(p.title).includes(normalizedQuery));
   }, [posts, searchQuery]);
 
   const resultsText = `${displayedPosts.length} ${displayedPosts.length === 1 ? "post" : "posts"} found`;
@@ -41,11 +39,7 @@ export default function ClientComponent({ posts }: Props) {
       </search>
       <section>
         {displayedPosts.map((post, idx) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            isLastPost={idx === displayedPosts.length - 1}
-          />
+          <PostCard key={post.id} post={post} isLastPost={idx === displayedPosts.length - 1} />
         ))}
       </section>
     </>

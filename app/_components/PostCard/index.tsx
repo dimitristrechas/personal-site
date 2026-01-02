@@ -12,14 +12,11 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
       <div className={`${isLastPost ? "" : "border-b-1"} cursor-pointer py-4`}>
         <div className="mb-1 text-gray-800 text-xl">{post.title}</div>
         <div className="text-sm">
-          {new Intl.DateTimeFormat(
-            Intl.DateTimeFormat().resolvedOptions().locale,
-            {
-              dateStyle: "medium",
-              timeStyle: "short",
-              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            },
-          ).format(new Date(post.createdAt))}
+          {new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale, {
+            dateStyle: "medium",
+            timeStyle: "short",
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          }).format(new Date(post.createdAt))}
         </div>
         <div className="mt-2">
           {post.tags?.length > 0
