@@ -3,7 +3,7 @@ import { marked } from "marked";
 import type { FC } from "react";
 
 async function fetchContactData() {
-  const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`);
+  const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`, { cache: "force-cache" });
   const contactData = await contactResponse.json();
   const contactParsedMarkdown = matter(contactData.data);
   const contactHtmlString = marked.parse(contactParsedMarkdown.content);
