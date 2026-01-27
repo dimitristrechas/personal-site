@@ -26,6 +26,7 @@ const Home: FC = async () => {
           width={128}
           height={128}
           style={{ width: "128px", height: "128px" }}
+          priority
         />
         <div className="ml-4 lg:ml-6">
           <h1 className="mb-2 text-2xl text-foreground">Welcome friend!</h1>
