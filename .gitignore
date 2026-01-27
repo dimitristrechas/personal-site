@@ -37,5 +37,8 @@ yarn-error.log*
 next-env.d.ts
 
 .idea
-/.sisyphus/
 /.secrets/
+
+.sisyphus/drafts/
+.sisyphus/boulder.json
+.sisyphus/evidence/

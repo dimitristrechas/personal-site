@@ -59,3 +59,7 @@ Global types in `globals.d.ts`: `Post`, `Tag`, `PageData`, `ContactPage`, `About
 - Node >= 22.0.0
 - Biome for linting + formatting
 - ESLint for Next.js-specific rules (next/core-web-vitals, next/typescript)
+
+## General Instructions
+
+- Do not commit any of your changes unless specifically instructed to do so.

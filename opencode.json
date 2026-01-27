@@ -1,0 +1,28 @@
+{
+  "agent": {},
+  "mcp": {
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": false,
+      "headers": {
+        "Authorization": "Bearer {file:./.secrets/github-mcp-token}"
+      }
+    },
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {file:./.secrets/linear-token}"
+      }
+    }
+  },
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash(git commit*)": "ask",
+    "bash(git push*)": "ask",
+    "bash(git reflog*)": "ask",
+    "bash(git reset*)": "ask"
+  }
+}
