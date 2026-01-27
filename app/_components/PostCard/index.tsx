@@ -9,9 +9,9 @@ type InputProps = {
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   return (
     <Link key={post.id} href={`/blog/${post.slug}`} prefetch={true}>
-      <div className={`${isLastPost ? "" : "border-b-1"} cursor-pointer py-4`}>
-        <div className="mb-1 text-gray-800 text-xl">{post.title}</div>
-        <div className="text-sm">
+      <div className={`${isLastPost ? "" : "border-border border-b"} cursor-pointer py-4`}>
+        <div className="mb-1 text-foreground text-xl">{post.title}</div>
+        <div className="text-muted-foreground text-sm">
           {new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale, {
             dateStyle: "medium",
             timeStyle: "short",

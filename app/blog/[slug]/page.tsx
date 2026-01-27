@@ -24,7 +24,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
 
   return (
     <>
-      <article className="prose max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
+      <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="mt-6 mb-4 text-right">
         <Link href="/blog">back to blog list</Link>
       </div>
