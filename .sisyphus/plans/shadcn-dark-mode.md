@@ -104,11 +104,11 @@ Only these 5 CSS tokens will be created and used:
 - All components updated to use semantic theme colors
 
 ### Definition of Done
-- [ ] `npm run build` succeeds
-- [ ] `npm run lint` passes
-- [ ] Dark mode persists across refresh (localStorage)
-- [ ] Zero FOUC on initial load
-- [ ] All pages render correctly in both themes
+- [x] `npm run build` succeeds
+- [x] `npm run lint` passes
+- [x] Dark mode persists across refresh (localStorage)
+- [x] Zero FOUC on initial load
+- [x] All pages render correctly in both themes
 
 ### Must Have
 - ShadCN two-step CSS pattern
@@ -162,7 +162,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ## TODOs
 
-- [ ] 0. Install next-themes dependency
+- [x] 0. Install next-themes dependency
 
   **What to do**:
   - Run `npm install next-themes`
@@ -200,7 +200,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ---
 
-- [ ] 1. Setup theme CSS variables in `app/global.css`
+- [x] 1. Setup theme CSS variables in `app/global.css`
 
   **What to do**:
   - Edit `app/global.css` (NOT `globals.css` - see note below)
@@ -326,7 +326,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ---
 
-- [ ] 2. Create ThemeProvider client component
+- [x] 2. Create ThemeProvider client component
 
   **What to do**:
   - Create `app/_components/ThemeProvider.tsx`
@@ -378,7 +378,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ---
 
-- [ ] 3. Create ThemeToggle component
+- [x] 3. Create ThemeToggle component
 
   **What to do**:
   - Create `app/_components/ThemeToggle.tsx`
@@ -461,7 +461,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ---
 
-- [ ] 4. Update layout.tsx with ThemeProvider and FOUC prevention
+- [x] 4. Update layout.tsx with ThemeProvider and FOUC prevention
 
   **What to do**:
   - Import ThemeProvider from `./_components/ThemeProvider`
@@ -581,7 +581,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ---
 
-- [ ] 5. Add ThemeToggle to Header
+- [x] 5. Add ThemeToggle to Header
 
   **What to do**:
   - Import ThemeToggle component
@@ -623,7 +623,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ---
 
-- [ ] 6. Update remaining components to use theme colors
+- [x] 6. Update remaining components to use theme colors
 
   **What to do**:
   - Footer: Update any hardcoded colors to semantic theme colors
@@ -672,7 +672,7 @@ Task 0 (dependency) → Task 1 (CSS) → Task 2 (ThemeProvider) → Task 3 (Them
 
 ---
 
-- [ ] 7. Manual QA verification
+- [x] 7. Manual QA verification
 
   **What to do**:
   - Start dev server: `npm run dev`
@@ -752,7 +752,7 @@ npm run dev    # Expected: server starts, test manually
 ```
 
 ### Final Checklist
-- [ ] All "Must Have" present (ShadCN CSS pattern, zero flash, native toggle, system preference)
-- [ ] All "Must NOT Have" absent (no @theme inline, no ShadCN components, no OKLCH, no tag changes)
-- [ ] Version bumped to 2.3.0
-- [ ] Both Linear issues (PERS-17, PERS-18) addressed
+- [x] All "Must Have" present (ShadCN CSS pattern, zero flash, native toggle, system preference)
+- [x] All "Must NOT Have" absent (no @theme inline, no ShadCN components, no OKLCH, no tag changes)
+- [x] Version bumped to 2.3.0
+- [x] Both Linear issues (PERS-17, PERS-18) addressed

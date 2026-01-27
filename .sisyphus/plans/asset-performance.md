@@ -29,10 +29,10 @@ Optimize hero image for LCP by adding priority and resizing source file.
 - Resized `public/headshot-compressed.jpg` (256×256 or 512×512 for retina)
 
 ### Definition of Done
-- [ ] Hero image loads with `priority` (no lazy loading)
-- [ ] Source image ≤20KB (currently 80KB)
-- [ ] No visual regression (same appearance, rounded, centered)
-- [ ] `npm run build` passes
+- [x] Hero image loads with `priority` (no lazy loading)
+- [x] Source image ≤20KB (currently 80KB)
+- [x] No visual regression (same appearance, rounded, centered)
+- [x] `npm run build` passes
 
 ### Must Have
 - `priority` prop on hero Image component
@@ -82,7 +82,7 @@ Tasks are independent but grouped in single commit.
 
 ## TODOs
 
-- [ ] 1. Add `priority` prop to hero image
+- [x] 1. Add `priority` prop to hero image
 
   **What to do**:
   - Open `app/page.tsx`
@@ -101,14 +101,14 @@ Tasks are independent but grouped in single commit.
   - Next.js docs: priority prop signals above-the-fold, disables lazy loading
 
   **Acceptance Criteria**:
-  - [ ] `priority` prop present on Image component
-  - [ ] `npm run build` passes
-  - [ ] `npm run dev` → inspect Network tab → image loads immediately (no lazy)
-  - [ ] Visual: hero image appears same as before
+  - [x] `priority` prop present on Image component
+  - [x] `npm run build` passes
+  - [x] `npm run dev` → inspect Network tab → image loads immediately (no lazy)
+  - [x] Visual: hero image appears same as before
 
   **Commit**: NO (groups with 2)
 
-- [ ] 2. Resize headshot image to 512×512
+- [x] 2. Resize headshot image to 512×512
 
   **What to do**:
   - Resize `public/headshot-compressed.jpg` from 3000×2000 to 512×512
@@ -130,11 +130,11 @@ Tasks are independent but grouped in single commit.
   - CSS: `rounded-full` requires square image for proper circle
 
   **Acceptance Criteria**:
-  - [ ] Image dimensions: 512×512px (or 256×256 acceptable)
-  - [ ] File size: ≤20KB
-  - [ ] `file public/headshot-compressed.jpg` → JPEG format confirmed
-  - [ ] `npm run dev` → hero displays correctly (no stretch/distortion)
-  - [ ] Visual: rounded-full circle appears correctly
+  - [x] Image dimensions: 512×512px (or 256×256 acceptable)
+  - [x] File size: ≤20KB
+  - [x] `file public/headshot-compressed.jpg` → JPEG format confirmed
+  - [x] `npm run dev` → hero displays correctly (no stretch/distortion)
+  - [x] Visual: rounded-full circle appears correctly
 
   **Commit**: YES (includes task 1)
   - Message: `perf: optimize hero image for LCP`
@@ -163,8 +163,8 @@ npm run dev            # Expected: site runs
 ```
 
 ### Final Checklist
-- [ ] `priority` prop on hero Image
-- [ ] Source image ≤20KB
-- [ ] No visual regression
-- [ ] Build passes
-- [ ] NO changes to fonts, other pages, or config files
+- [x] `priority` prop on hero Image
+- [x] Source image ≤20KB
+- [x] No visual regression
+- [x] Build passes
+- [x] NO changes to fonts, other pages, or config files

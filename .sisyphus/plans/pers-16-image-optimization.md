@@ -36,10 +36,10 @@ Optimize the hero headshot image for Lighthouse performance by enabling proper s
 - Removed redundant inline style
 
 ### Definition of Done
-- [ ] `npm run build` passes
-- [ ] Image component has `sizes="128px"` and `priority` props
-- [ ] Inline `style` prop removed from Image component
-- [ ] No Lighthouse "Properly size images" warning for headshot
+- [x] `npm run build` passes
+- [x] Image component has `sizes="128px"` and `priority` props
+- [x] Inline `style` prop removed from Image component
+- [x] No Lighthouse "Properly size images" warning for headshot
 
 ### Must Have
 - `sizes="128px"` prop on Image component
@@ -85,7 +85,7 @@ Task 1 (single task - atomic change)
 
 ## TODOs
 
-- [ ] 1. Optimize Image component props
+- [x] 1. Optimize Image component props
 
   **What to do**:
   - Add `sizes="128px"` prop to Image component
@@ -133,21 +133,21 @@ Task 1 (single task - atomic change)
   **Acceptance Criteria**:
 
   **Build Verification (REQUIRED)**:
-  - [ ] `npm run build` → exits with code 0, no errors
-  - [ ] No TypeScript errors related to Image component
+  - [x] `npm run build` → exits with code 0, no errors
+  - [x] No TypeScript errors related to Image component
 
   **Code Verification**:
-  - [ ] Image component has `sizes="128px"` prop
-  - [ ] Image component has `priority` prop (no value, boolean)
-  - [ ] No `style` prop on Image component
-  - [ ] All original props preserved (`className`, `src`, `alt`, `width`, `height`)
+  - [x] Image component has `sizes="128px"` prop
+  - [x] Image component has `priority` prop (no value, boolean)
+  - [x] No `style` prop on Image component
+  - [x] All original props preserved (`className`, `src`, `alt`, `width`, `height`)
 
   **Optional Lighthouse Verification**:
-  - [ ] `npm run dev` → server running on localhost:3000
-  - [ ] Using browser: Navigate to http://localhost:3000
-  - [ ] Run Lighthouse (DevTools > Lighthouse > Performance)
-  - [ ] Verify: No "Properly size images" warning for headshot
-  - [ ] Verify: LCP improved or unchanged
+  - [x] `npm run dev` → server running on localhost:3000
+  - [x] Using browser: Navigate to http://localhost:3000
+  - [x] Run Lighthouse (DevTools > Lighthouse > Performance)
+  - [x] Verify: No "Properly size images" warning for headshot
+  - [x] Verify: LCP improved or unchanged
 
   **Commit**: YES
   - Message: `perf(image): add srcset sizes and priority for lighthouse`
@@ -173,8 +173,8 @@ npm run lint   # Expected: no new warnings
 ```
 
 ### Final Checklist
-- [ ] `sizes="128px"` prop present
-- [ ] `priority` prop present
-- [ ] Inline `style` removed
-- [ ] Build passes
-- [ ] Only app/page.tsx modified
+- [x] `sizes="128px"` prop present
+- [x] `priority` prop present
+- [x] Inline `style` removed
+- [x] Build passes
+- [x] Only app/page.tsx modified
