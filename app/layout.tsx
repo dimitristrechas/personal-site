@@ -3,6 +3,7 @@ import Script from "next/script";
 import type { ReactNode } from "react";
 import Footer from "./_components/Footer";
 import Header from "./_components/Header";
+import { ThemeProvider } from "./_components/ThemeProvider";
 import "./global.css";
 
 export const metadata: Metadata = {
@@ -12,11 +13,28 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className="mx-auto flex h-screen max-w-2xl flex-col">
-        <Header />
-        <main className="m-2 flex-grow md:m-0">{children}</main>
-        <Footer />
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-background text-foreground mx-auto flex h-screen max-w-2xl flex-col">
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (theme === 'dark' || (!theme && systemDark)) {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
+        <ThemeProvider>
+          <Header />
+          <main className="m-2 flex-grow md:m-0">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
       {process.env.NODE_ENV === "production" && (
         <Script

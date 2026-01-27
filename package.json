@@ -1,6 +1,6 @@
 {
   "name": "personal-site",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": false,
   "description": "Personal website of Dimitris Trechas, a Software Engineer from Greece.",
   "author": {
@@ -9,7 +9,7 @@
   "homepage": "https://dimitristrechas.com",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 3001",
     "build": "next build",
     "start": "next start",
     "outdated": "npx npm-check-updates",
@@ -28,6 +28,7 @@
     "gray-matter": "^4.0.3",
     "marked": "^17.0.1",
     "next": "16.1.5",
+    "next-themes": "^0.4.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
