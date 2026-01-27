@@ -1,6 +1,5 @@
-import matter from "gray-matter";
-import { marked } from "marked";
 import Link from "next/link";
+import { parseMarkdown } from "@/lib/markdown";
 
 async function getPostData(slug: string) {
   const res = await fetch(`${process.env.API_ENDPOINT}/posts/?filters[slug][$eq]=${slug}`);
@@ -12,8 +11,7 @@ async function getPostData(slug: string) {
     return { htmlString: "", post: null };
   }
 
-  const parsedMarkdown = matter(post.content);
-  const htmlString = marked(parsedMarkdown.content);
+  const htmlString = await parseMarkdown(post.content);
 
   return { htmlString, post };
 }

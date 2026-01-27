@@ -1,12 +1,10 @@
-import matter from "gray-matter";
-import { marked } from "marked";
 import type { FC } from "react";
+import { parseMarkdown } from "@/lib/markdown";
 
 async function fetchContactData() {
   const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`, { cache: "force-cache" });
   const contactData = await contactResponse.json();
-  const contactParsedMarkdown = matter(contactData.data);
-  const contactHtmlString = marked.parse(contactParsedMarkdown.content);
+  const contactHtmlString = await parseMarkdown(contactData.data);
 
   return {
     contact: { contactHtmlString, contactData },

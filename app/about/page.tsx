@@ -1,12 +1,10 @@
-import matter from "gray-matter";
-import { marked } from "marked";
 import type { FC } from "react";
+import { parseMarkdown } from "@/lib/markdown";
 
 async function fetchAboutData() {
   const aboutResponse = await fetch(`${process.env.API_ENDPOINT}/about`);
   const aboutData = await aboutResponse.json();
-  const aboutParsedMarkdown = matter(aboutData.data);
-  const aboutHtmlString = marked.parse(aboutParsedMarkdown.content);
+  const aboutHtmlString = await parseMarkdown(aboutData.data);
 
   return {
     about: { aboutHtmlString, aboutData },
