@@ -3,31 +3,15 @@ import { marked } from "marked";
 
 marked.use({
   renderer: {
-    link(token) {
-      const href = token.href;
-      const text = this.parser.parseInline(token.tokens);
-      const title = token.title;
-
-      const isExternal = href.startsWith("http://") || href.startsWith("https://");
-
-      if (isExternal) {
-        let html = `<a href="${href}"`;
-        if (title) html += ` title="${title}"`;
-        html += ' target="_blank" rel="noopener noreferrer">';
-        html += `${text}↗<span class="sr-only"> (opens in new tab)</span></a>`;
-        return html;
-      }
-
-      let html = `<a href="${href}"`;
-      if (title) html += ` title="${title}"`;
-      html += `>${text}</a>`;
-      return html;
+    link({ href, title, tokens }) {
+      const text = this.parser.parseInline(tokens);
+      const titleAttr = title ? ` title="${title}"` : "";
+      const isExternal = href.startsWith("http");
+      return isExternal
+        ? `<a href="${href}"${titleAttr} target="_blank" rel="noopener noreferrer">${text} <span>↗</span><span class="sr-only"> (opens in new tab)</span></a>`
+        : `<a href="${href}"${titleAttr}>${text}</a>`;
     },
   },
 });
 
-export async function parseMarkdown(content: string): Promise<string> {
-  const { content: markdown } = matter(content);
-  const htmlString = await marked(markdown);
-  return htmlString;
-}
+export const parseMarkdown = (content: string) => marked(matter(content).content);
