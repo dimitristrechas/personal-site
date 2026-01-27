@@ -21,7 +21,7 @@ export default function ClientComponent({ posts }: Props) {
 
   return (
     <>
-      <div role="search">
+      <search>
         <h1 className="mb-8 font-bold text-2xl text-foreground">Blogposts</h1>
         <div className="flex flex-col">
           <label htmlFor="post-search" className="sr-only">
@@ -36,7 +36,7 @@ export default function ClientComponent({ posts }: Props) {
           />
           <small>{resultsText}</small>
         </div>
-      </div>
+      </search>
       <section>
         {displayedPosts.map((post, idx) => (
           <PostCard key={post.id} post={post} isLastPost={idx === displayedPosts.length - 1} />
