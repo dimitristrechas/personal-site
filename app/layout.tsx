@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-background text-foreground mx-auto flex h-screen max-w-2xl flex-col">
+      <body className="mx-auto flex h-screen max-w-2xl flex-col bg-background text-foreground">
         <Script
           id="theme-init"
           strategy="beforeInteractive"
@@ -31,8 +31,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
         <ThemeProvider>
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
           <Header />
-          <main className="m-2 flex-grow md:m-0">{children}</main>
+          <main id="main-content" className="m-2 flex-grow md:m-0">
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
       </body>

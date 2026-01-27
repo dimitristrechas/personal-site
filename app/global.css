@@ -33,3 +33,21 @@
     color: hsl(var(--foreground));
   }
 }
+
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 0.5rem 1rem;
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
+    text-decoration: none;
+    z-index: 9999;
+  }
+
+  .skip-link:focus {
+    left: 0;
+  }
+}
+
