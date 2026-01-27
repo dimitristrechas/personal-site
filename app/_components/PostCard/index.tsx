@@ -25,7 +25,7 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
                   <span
                     key={tag.id}
                     className="mr-2 rounded px-2 py-1 text-sm text-white"
-                    style={{ backgroundColor: tag.color }}
+                    style={{ backgroundColor: tag.color, textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
                   >
                     {tag.title}
                   </span>
