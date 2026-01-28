@@ -60,6 +60,14 @@ Global types in `globals.d.ts`: `Post`, `Tag`, `PageData`, `ContactPage`, `About
 - Biome for linting + formatting
 - ESLint for Next.js-specific rules (next/core-web-vitals, next/typescript)
 
+## Git Hooks
+
+Pre-commit auto-fixes and stages:
+- Biome: lint/format
+- ESLint: Next.js violations
+
+Commit-msg enforces Conventional Commits.
+
 ## General Instructions
 
 - Do not commit any of your changes unless specifically instructed to do so.

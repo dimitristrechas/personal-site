@@ -1,6 +1,6 @@
 {
   "name": "personal-site",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "private": false,
   "description": "Personal website of Dimitris Trechas, a Software Engineer from Greece.",
   "author": {
@@ -13,7 +13,8 @@
     "build": "next build",
     "start": "next start",
     "outdated": "npx npm-check-updates",
-    "lint": "eslint .",
+    "lint": "biome check . && eslint .",
+    "lint:fix": "biome check --write . && eslint --fix .",
     "biome:check": "biome check .",
     "biome:check:fix": "biome check --write .",
     "biome:format": "biome format --write .",
