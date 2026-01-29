@@ -30,7 +30,8 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
           {post.tags?.length > 0
             ? post.tags.map((tag) => {
                 return (
-                  <span key={tag.id} className="mr-2 rounded border border-foreground px-2 py-1 text-sm">
+                  <span key={tag.id} className="mr-4 inline-flex items-center gap-1 text-sm">
+                    <span className="mt-0.5 size-2.5 rounded-full" style={{ backgroundColor: tag.color }} />
                     {tag.title}
                   </span>
                 );
