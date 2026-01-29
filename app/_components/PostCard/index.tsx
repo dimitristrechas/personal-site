@@ -7,6 +7,8 @@ type InputProps = {
 };
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
+  const lastPostClass = isLastPost ? "" : "border-border border-b";
+
   return (
     <Link
       key={post.id}
@@ -16,7 +18,7 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
       aria-label={`Read blog post: ${post.title}`}
     >
       <div
-        className={`${isLastPost ? "" : "border-border border-b"} cursor-pointer rounded py-4 transition-colors group-hover:bg-muted group-focus-visible:bg-muted`}
+        className={`${lastPostClass} cursor-pointer rounded py-4 transition-colors group-hover:bg-muted group-focus-visible:bg-muted`}
       >
         <div className="mb-1 text-xl">{post.title}</div>
         <div className="text-muted-foreground text-sm">
