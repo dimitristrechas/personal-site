@@ -10,7 +10,7 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   return (
     <Link key={post.id} href={`/blog/${post.slug}`} prefetch={true}>
       <div className={`${isLastPost ? "" : "border-border border-b"} cursor-pointer py-4`}>
-        <div className="mb-1 text-foreground text-xl">{post.title}</div>
+        <div className="mb-1 text-xl">{post.title}</div>
         <div className="text-muted-foreground text-sm">
           {new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale, {
             dateStyle: "medium",
@@ -24,8 +24,8 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
                 return (
                   <span
                     key={tag.id}
-                    className="mr-2 rounded px-2 py-1 text-sm text-white"
-                    style={{ backgroundColor: tag.color, textShadow: "0 1px 2px rgba(0,0,0,0.6)" }}
+                    className="mr-2 rounded px-2 py-1 text-sm outline-1"
+                    style={{ outlineColor: tag.color }}
                   >
                     {tag.title}
                   </span>

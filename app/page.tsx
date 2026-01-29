@@ -20,7 +20,7 @@ const Home: FC = async () => {
     <>
       <section id="welcome" className="mb-16 flex items-center">
         <Image
-          className="rounded-full bg-red-200 object-cover p-0.25"
+          className="rounded-full bg-red-200 object-cover p-px"
           src="/headshot-compressed.jpg"
           alt="a headshot of the author"
           width={128}
@@ -29,7 +29,7 @@ const Home: FC = async () => {
           priority
         />
         <div className="ml-4 lg:ml-6">
-          <h1 className="mb-2 text-2xl text-foreground">Welcome friend!</h1>
+          <h1 className="mb-2 text-2xl">Welcome friend!</h1>
           <p>
             Read my blog if you are interested in JavaScript, React, or Frontend Development in general. <br />
             You can also learn more about me, the projects I work on, or contact me directly.
@@ -37,7 +37,7 @@ const Home: FC = async () => {
         </div>
       </section>
       <section id="blog" className="mb-16">
-        <h2 className="font-bold text-2xl text-foreground">Latest Posts</h2>
+        <h2 className="font-bold text-2xl">Latest Posts</h2>
         {posts.map((post: Post, idx: number) => (
           <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
         ))}

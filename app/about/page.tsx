@@ -16,7 +16,7 @@ const Page: FC = async () => {
 
   return (
     <section id="about" className="mb-16">
-      <h1 className="font-bold text-2xl text-foreground">{about.aboutData.data.title}</h1>
+      <h1 className="font-bold text-2xl">{about.aboutData.data.title}</h1>
       <p className="prose dark:prose-invert pt-4" dangerouslySetInnerHTML={{ __html: about.aboutHtmlString }} />
     </section>
   );

@@ -22,7 +22,7 @@ export default function ClientComponent({ posts }: Props) {
   return (
     <>
       <search>
-        <h1 className="mb-8 font-bold text-2xl text-foreground">Blogposts</h1>
+        <h1 className="mb-8 font-bold text-2xl">Blogposts</h1>
         <div className="flex flex-col">
           <label htmlFor="post-search" className="sr-only">
             Search posts

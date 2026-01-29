@@ -16,7 +16,7 @@ const Contact: FC = async () => {
 
   return (
     <section id="contact" className="mb-16">
-      <h1 className="font-bold text-2xl text-foreground">{contact.contactData.data.title}</h1>
+      <h1 className="font-bold text-2xl">{contact.contactData.data.title}</h1>
       <p className="prose dark:prose-invert pt-4" dangerouslySetInnerHTML={{ __html: contact.contactHtmlString }} />
     </section>
   );
