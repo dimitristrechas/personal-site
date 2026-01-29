@@ -7,7 +7,7 @@ const isExternalLink = (href: string, currentHost?: string): boolean => {
     return true;
   }
 
-  if (!href.startsWith("http://") && process.env.NODE_ENV === "production") {
+  if ((!href.startsWith("http://") || !href.startsWith("https://")) && process.env.NODE_ENV === "production") {
     return false;
   }
 
