@@ -8,8 +8,16 @@ type InputProps = {
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   return (
-    <Link key={post.id} href={`/blog/${post.slug}`} prefetch={true}>
-      <div className={`${isLastPost ? "" : "border-border border-b"} cursor-pointer py-4`}>
+    <Link
+      key={post.id}
+      href={`/blog/${post.slug}`}
+      prefetch={true}
+      className="group"
+      aria-label={`Read blog post: ${post.title}`}
+    >
+      <div
+        className={`${isLastPost ? "" : "border-border border-b"} cursor-pointer rounded py-4 transition-colors group-hover:bg-muted group-focus-visible:bg-muted`}
+      >
         <div className="mb-1 text-xl">{post.title}</div>
         <div className="text-muted-foreground text-sm">
           {new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale, {
@@ -22,11 +30,7 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
           {post.tags?.length > 0
             ? post.tags.map((tag) => {
                 return (
-                  <span
-                    key={tag.id}
-                    className="mr-2 rounded px-2 py-1 text-sm outline-1"
-                    style={{ outlineColor: tag.color }}
-                  >
+                  <span key={tag.id} className="mr-2 rounded border border-foreground px-2 py-1 text-sm">
                     {tag.title}
                   </span>
                 );
