@@ -11,27 +11,27 @@ const Header: FC = () => {
   return (
     <header className="mx-2 mt-2 mb-4 md:mx-0 md:mb-8">
       <nav className="flex items-end">
-        <Link href="/" className="text-xl" aria-current={pathname === "/" ? "page" : undefined}>
+        <Link href="/" className="text-[clamp(1rem,4vw,1.5rem)]" aria-current={pathname === "/" ? "page" : undefined}>
           Dimitris Trechas
         </Link>
-        <div className="ml-auto flex items-center text-lg">
+        <div className="ml-auto flex items-center text-[clamp(0.75rem,3.5vw,1.25rem)]">
           <Link
             href="/blog"
-            className={`ml-2 sm:ml-4 ${pathname === "/blog" ? "underline" : ""}`}
+            className={`ml-[clamp(0.75rem,2.5vw,1rem)] ${pathname === "/blog" ? "underline" : ""}`}
             aria-current={pathname === "/blog" ? "page" : undefined}
           >
             blog
           </Link>
           <Link
             href="/about"
-            className={`ml-2 sm:ml-4 ${pathname === "/about" ? "underline" : ""}`}
+            className={`ml-[clamp(0.75rem,2.5vw,1rem)] ${pathname === "/about" ? "underline" : ""}`}
             aria-current={pathname === "/about" ? "page" : undefined}
           >
             about
           </Link>
           <Link
             href="/contact"
-            className={`ml-2 sm:ml-4 ${pathname === "/contact" ? "underline" : ""}`}
+            className={`ml-[clamp(0.75rem,2.5vw,1rem)] ${pathname === "/contact" ? "underline" : ""}`}
             aria-current={pathname === "/contact" ? "page" : undefined}
           >
             contact

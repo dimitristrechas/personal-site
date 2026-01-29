@@ -18,7 +18,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="ml-4 cursor-pointer transition-colors hover:text-muted-foreground"
+      className="ml-4 cursor-pointer p-0.5 transition-colors hover:text-muted-foreground"
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
       {resolvedTheme === "dark" ? (
