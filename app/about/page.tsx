@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { parseMarkdown } from "@/lib/markdown";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 async function fetchAboutData() {
   const aboutResponse = await fetch(`${process.env.API_ENDPOINT}/about`);
