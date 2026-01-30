@@ -17,13 +17,13 @@ commit-msg:
         fi
 
 pre-commit:
-  parallel: true
+  parallel: false
   commands:
     biome-check:
-      glob: "*.{ts,js,mjs,json}"
+      glob: "*.{ts,tsx,js,mjs,json}"
       run: npx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
-    eslint:
+    eslint-next:
       glob: "*.{ts,tsx,js,mjs}"
       run: npx eslint --fix {staged_files}
       stage_fixed: true
