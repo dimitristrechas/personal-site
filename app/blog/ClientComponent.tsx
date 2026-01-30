@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import PostCard from "@/app/_components/PostCard";
+import type { Post } from "@/types/post";
 import { normalizeText } from "@/utils/helpers";
 
 type Props = {

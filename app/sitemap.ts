@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import type { Post } from "@/types/post";
 
 export const revalidate = 3600; // ISR: revalidate every 1 hour
 
@@ -24,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const res = await fetch(`${process.env.API_ENDPOINT}/posts?populate=%2A&sort[1]=createdAt%3Adesc`);
-    const posts: Post[] = await res.json().then((data) => data.data);
+    const posts = (await res.json().then((data) => data.data)) as Post[];
 
     const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
       url: `https://dimitristrechas.com/blog/${post.slug}`,

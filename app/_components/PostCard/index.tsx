@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { FC } from "react";
+import type { Post } from "@/types/post";
 
 type InputProps = {
   post: Post;
