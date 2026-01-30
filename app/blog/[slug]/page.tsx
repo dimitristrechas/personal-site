@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { parseMarkdown } from "@/lib/markdown";
 
+export const revalidate = 600;
+
 async function getPostData(slug: string) {
   const res = await fetch(`${process.env.API_ENDPOINT}/posts/?filters[slug][$eq]=${slug}`);
   const data = await res.json();

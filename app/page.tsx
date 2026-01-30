@@ -2,6 +2,8 @@ import Image from "next/image";
 import type { FC } from "react";
 import PostCard from "./_components/PostCard";
 
+export const revalidate = 3600;
+
 async function fetchData() {
   const postsResponse = await fetch(
     `${process.env.API_ENDPOINT}/posts?populate=%2A&pagination[limit]=5&sort[1]=createdAt%3Adesc`,

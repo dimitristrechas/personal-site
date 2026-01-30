@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import ClientComponent from "./ClientComponent";
 
+export const revalidate = 600;
+
 export const metadata: Metadata = {
   title: "Dimitris Trechas - Blog",
 };

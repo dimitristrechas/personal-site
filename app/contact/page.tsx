@@ -1,6 +1,8 @@
 import type { FC } from "react";
 import { parseMarkdown } from "@/lib/markdown";
 
+export const dynamic = 'force-static';
+
 async function fetchContactData() {
   const contactResponse = await fetch(`${process.env.API_ENDPOINT}/contact`, { cache: "force-cache" });
   const contactData = await contactResponse.json();
