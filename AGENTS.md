@@ -4,7 +4,7 @@ This file provides agent-specific guidance when working with code in this reposi
 
 ## Project Overview
 
-Next.js 15 personal site/blog. TypeScript, React 19, Tailwind CSS 4. Fetches blog posts from external CMS (Strapi) via API_ENDPOINT env var. Markdown rendering with gray-matter + marked.
+Next.js 16 personal site/blog. TypeScript, React 19, Tailwind CSS 4. Fetches blog posts from Ghost CMS via official Content API SDK. Content is pre-rendered HTML from Ghost, processed for external links.
 
 ## Commands
 
@@ -18,7 +18,7 @@ Next.js 15 personal site/blog. TypeScript, React 19, Tailwind CSS 4. Fetches blo
 ## Setup
 
 1. Copy `.env.example` to `.env`
-2. Set `API_ENDPOINT` to Strapi CMS URL (default: `http://localhost:1337/api`)
+2. Set `GHOST_URL` to Ghost CMS URL and `GHOST_CONTENT_API_KEY` to your Content API key
 3. `npm install && npm run dev`
 
 ## Architecture
@@ -34,11 +34,13 @@ Next.js App Router. Pages in `app/`:
 
 ### Data Flow
 
-All blog data from external Strapi API:
-- Server components fetch via `API_ENDPOINT` env var
-- Posts returned as `Post[]` (see `globals.d.ts` for types)
-- Blog posts are markdown in `content` field, parsed with gray-matter, rendered with marked
-- Client search filters by normalized title (see `utils/helpers.ts`)
+All blog data from Ghost CMS via official SDK:
+- Server components use `ghostClient` from `lib/ghost.ts`
+- Ghost API responses mapped via type adapters (no runtime validation)
+- Ghost types (`GhostPost`, `GhostPage`) mapped to domain types (`Post`, `Page`) via adapters in `types/`
+- HTML content processed with `processGhostHtml()` in `lib/markdown.ts` using node-html-parser
+- External links enhanced with target="_blank", rel="noopener noreferrer", visual indicator
+- Client search filters by normalized title (see `app/blog/ClientComponent.tsx`)
 
 ### Components
 
@@ -48,15 +50,17 @@ Reusable components in `app/_components/`:
 
 ### Styling
 
-Tailwind CSS 4. Global styles in `app/globals.css`. Only use Baseline CSS features.
+Tailwind CSS 4. Global styles in `app/global.css`. Only use Baseline CSS features.
 
 ### Types
 
-Global types in `globals.d.ts`: `Post`, `Tag`, `PageData`, `ContactPage`, `AboutPage`.
+Domain types in `types/`:
+- `types/post.ts` - `Post`, `Tag`, `GhostPost`, `GhostTag` + mappers
+- `types/page.ts` - `Page`, `GhostPage` + mappers
 
 ## Requirements
 
-- Node >= 22.0.0
+- Node >= 24.0.0
 - Biome for linting + formatting
 - ESLint for Next.js-specific rules (next/core-web-vitals, next/typescript)
 
@@ -70,4 +74,8 @@ Commit-msg enforces Conventional Commits.
 
 ## General Instructions
 
-- Do not commit any of your changes unless specifically instructed to do so.
+**CRITICAL: Never commit code unless explicitly instructed to do so in the prompt.**
+
+- Follow user's specific instructions exactly
+- Maintain existing code style and patterns
+- Test changes before considering them complete

@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
-import type { Post } from "@/types/post";
+import { ghostClient } from "@/lib/ghost";
+import type { GhostPost, Post } from "@/types/post";
+import { mapGhostPostToPost } from "@/types/post";
 
 export const revalidate = 3600; // ISR: revalidate every 1 hour
 
@@ -24,17 +26,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const res = await fetch(`${process.env.API_ENDPOINT}/posts?populate=%2A&sort[1]=createdAt%3Adesc`);
-    const posts = (await res.json().then((data) => data.data)) as Post[];
+    const response = await ghostClient.posts.browse({
+      limit: "all",
+      fields: ["slug", "updated_at"],
+      order: "created_at DESC",
+    });
 
-    const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
+    const posts = ((response || []) as GhostPost[]).map((p) => mapGhostPostToPost(p));
+
+    const blogRoutes: MetadataRoute.Sitemap = posts.map((post: Post) => ({
       url: `https://dimitristrechas.com/blog/${post.slug}`,
       lastModified: new Date(post.updatedAt),
     }));
 
     return [...staticRoutes, ...blogRoutes];
   } catch (error) {
-    // Fallback to static routes if Strapi is unreachable
+    // Fallback to static routes if Ghost is unreachable
     console.error("Failed to fetch blog posts for sitemap:", error);
     return staticRoutes;
   }
