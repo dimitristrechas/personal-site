@@ -19,7 +19,11 @@ Next.js 16 personal site/blog. TypeScript, React 19, Tailwind CSS 4. Fetches blo
 
 1. Copy `.env.example` to `.env`
 2. Set `GHOST_URL` to Ghost CMS URL and `GHOST_CONTENT_API_KEY` to your Content API key
-3. `npm install && npm run dev`
+3. Set MCP token environment variables in shell profile (~/.zshrc or ~/.bashrc):
+   - `export GITHUB_MCP_TOKEN=<your-token>`
+   - `export LINEAR_MCP_TOKEN=<your-token>`
+   - Reload shell: `source ~/.zshrc` or restart terminal
+4. `npm install && npm run dev`
 
 ## Architecture
 
