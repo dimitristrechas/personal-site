@@ -29,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const response = await ghostClient.posts.browse({
       limit: "all",
       fields: ["slug", "updated_at"],
-      order: "created_at DESC",
+      order: "published_at DESC",
     });
 
     const posts = ((response || []) as GhostPost[]).map((p) => mapGhostPostToPost(p));

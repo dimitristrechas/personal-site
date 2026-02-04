@@ -15,7 +15,7 @@ async function getPosts(): Promise<Post[]> {
     const response = await ghostClient.posts.browse({
       include: ["tags"],
       limit: "all",
-      order: "created_at DESC",
+      order: "published_at DESC",
     });
 
     return ((response || []) as GhostPost[]).map((p) => mapGhostPostToPost(p));

@@ -25,9 +25,8 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
         <div className="text-muted-foreground text-sm">
           {new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale, {
             dateStyle: "medium",
-            timeStyle: "short",
             timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          }).format(new Date(post.createdAt))}
+          }).format(new Date(post.publishedAt))}
         </div>
         <div className="mt-2">
           {post.tags?.length > 0

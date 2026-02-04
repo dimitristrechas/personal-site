@@ -12,7 +12,7 @@ async function fetchData() {
     const response = await ghostClient.posts.browse({
       include: ["tags"],
       limit: 5,
-      order: "created_at DESC",
+      order: "published_at DESC",
     });
 
     const posts = ((response || []) as GhostPost[]).map((p) => mapGhostPostToPost(p));
