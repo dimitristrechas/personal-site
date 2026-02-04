@@ -39,6 +39,4 @@ next-env.d.ts
 .idea
 /.secrets/
 
-.sisyphus/drafts/
-.sisyphus/boulder.json
-.sisyphus/evidence/
+/.sisyphus/
