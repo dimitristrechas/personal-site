@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/markdown";
@@ -54,6 +55,19 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
 
   return (
     <>
+      {post?.featuredImage && (
+        <div className="mb-6 max-h-[300px] overflow-hidden rounded-lg sm:max-h-[420px]">
+          <Image
+            src={post.featuredImage}
+            alt={post.title}
+            width={1600}
+            height={900}
+            className="h-full w-full object-cover object-center"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 85vw, 960px"
+            priority
+          />
+        </div>
+      )}
       {post && <h1 className="mb-6 font-bold text-3xl">{post.title}</h1>}
       <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="mt-6 mb-4 text-right">

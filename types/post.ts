@@ -8,6 +8,7 @@ export type Post = {
   createdAt: string;
   tags: Tag[];
   slug: string;
+  featuredImage?: string | null;
 };
 
 export type Tag = {
@@ -21,6 +22,7 @@ export type GhostPost = {
   title: string;
   html: string;
   custom_excerpt?: string | null;
+  feature_image?: string | null;
   published_at: string;
   updated_at: string;
   created_at: string;
@@ -56,5 +58,6 @@ export function mapGhostPostToPost(ghostPost: GhostPost): Post {
       color: tag.accent_color,
     })),
     slug: ghostPost.slug,
+    featuredImage: ghostPost.feature_image,
   };
 }
