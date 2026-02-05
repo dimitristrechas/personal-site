@@ -4,7 +4,7 @@ import { processGhostHtml } from "@/lib/markdown";
 import type { GhostPage, Page } from "@/types/page";
 import { mapGhostPageToPage } from "@/types/page";
 
-export const dynamic = "force-static";
+export const revalidate = 3600;
 
 async function fetchAboutData(): Promise<Page | null> {
   try {
