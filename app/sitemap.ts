@@ -3,7 +3,7 @@ import { ghostClient } from "@/lib/ghost";
 import type { GhostPost, Post } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
 
-export const revalidate = 3600; // ISR: revalidate every 1 hour
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
