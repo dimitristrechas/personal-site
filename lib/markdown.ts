@@ -1,42 +1,41 @@
-import matter from "gray-matter";
-import { marked, type RendererObject, type Tokens } from "marked";
-import { headers } from "next/headers";
+import { parse } from "node-html-parser";
 
-const isExternalLink = (href: string, currentHost?: string): boolean => {
-  if (!currentHost) {
-    return true;
-  }
+const isExternalLink = (href: string): boolean => {
+  if (!href.startsWith("http://") && !href.startsWith("https://")) return false;
 
-  if (!href.startsWith("http://") && !href.startsWith("https://")) {
-    return false;
-  }
+  const siteDomain = process.env.NEXT_PUBLIC_SITE_DOMAIN;
+  if (!siteDomain) return true;
 
   try {
     const url = new URL(href);
-    return url.hostname !== currentHost;
+    return !url.hostname.includes(siteDomain);
   } catch {
     return true;
   }
 };
 
-const createRenderer = (currentHost?: string): RendererObject => {
-  return {
-    link(token: Tokens.Link): string {
-      const text = token.text;
-      const titleAttr = token.title ? ` title="${token.title}"` : "";
-      const isExternal = isExternalLink(token.href, currentHost);
+export async function processGhostHtml(html: string): Promise<string> {
+  try {
+    const root = parse(html);
+    const links = root.querySelectorAll("a");
 
-      return isExternal
-        ? `<a href="${token.href}"${titleAttr} target="_blank" rel="noopener noreferrer">${text} <span>↗</span><span class="sr-only"> (opens in new tab)</span></a>`
-        : `<a href="${token.href}"${titleAttr}>${text}</a>`;
-    },
-  };
-};
+    for (const link of links) {
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("mailto:") || href.startsWith("tel:")) continue;
 
-export const parseMarkdown = async (content: string) => {
-  const headersList = await headers();
-  const currentHost = headersList.get("host")?.split(":")[0];
-  console.log("Current Host:", currentHost);
-  marked.use({ renderer: createRenderer(currentHost) });
-  return marked(matter(content).content);
-};
+      if (isExternalLink(href)) {
+        const existingRel = link.getAttribute("rel");
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", existingRel ? `${existingRel} noopener noreferrer` : "noopener noreferrer");
+
+        const currentHtml = link.innerHTML;
+        link.innerHTML = `${currentHtml} <span>↗</span><span class="sr-only"> (opens in new tab)</span>`;
+      }
+    }
+
+    return root.toString();
+  } catch (error) {
+    console.error("Error processing Ghost HTML:", error);
+    return html;
+  }
+}

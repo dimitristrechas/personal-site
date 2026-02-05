@@ -1,6 +1,6 @@
 {
   "name": "personal-site",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "private": false,
   "description": "Personal website of Dimitris Trechas, a Software Engineer from Greece.",
   "author": {
@@ -25,11 +25,10 @@
     "postinstall": "git rev-parse --git-dir > /dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.18",
-    "gray-matter": "^4.0.3",
-    "marked": "^17.0.1",
+    "@tryghost/content-api": "^1.12.3",
     "next": "16.1.5",
     "next-themes": "^0.4.6",
+    "node-html-parser": "^7.0.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },

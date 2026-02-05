@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import PostCard from "@/app/_components/PostCard";
 import type { Post } from "@/types/post";
-import { normalizeText } from "@/utils/helpers";
+import { createSearchMatcher } from "@/utils/helpers";
 
 type Props = {
   posts: Post[];
@@ -13,9 +13,10 @@ export default function ClientComponent({ posts }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const displayedPosts = useMemo(() => {
-    if (!searchQuery) return posts;
-    const normalizedQuery = normalizeText(searchQuery);
-    return posts.filter((p) => normalizeText(p.title).includes(normalizedQuery));
+    if (!searchQuery.trim()) return posts;
+
+    const matcher = createSearchMatcher(searchQuery);
+    return posts.filter(matcher);
   }, [posts, searchQuery]);
 
   const resultsText = `${displayedPosts.length} ${displayedPosts.length === 1 ? "post" : "posts"} found`;

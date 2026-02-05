@@ -1,39 +1,74 @@
+import Image from "next/image";
 import Link from "next/link";
-import { parseMarkdown } from "@/lib/markdown";
-import type { Post } from "@/types/post";
+import { ghostClient } from "@/lib/ghost";
+import { processGhostHtml } from "@/lib/markdown";
+import type { GhostPost, Post } from "@/types/post";
+import { mapGhostPostToPost } from "@/types/post";
 
 export const revalidate = 3600;
 
+// Build-time cache to avoid N+1 API calls
+let postsCache: Map<string, GhostPost> | null = null;
+
 export async function generateStaticParams() {
-  const response = await fetch(`${process.env.API_ENDPOINT}/posts?populate=%2A&sort[1]=createdAt%3Adesc`);
-  const data = await response.json();
-  const posts = (data.data || []) as Post[];
+  // Fetch all posts with full data (not just slugs)
+  const response = await ghostClient.posts.browse({
+    limit: "all",
+    include: ["tags"], // Include all needed data
+  });
+
+  const posts = (response || []) as GhostPost[];
+
+  // Cache posts for getPostData to use during build
+  postsCache = new Map(posts.map((p) => [p.slug, p]));
+
   return posts.map((post) => ({
     slug: post.slug,
   }));
 }
 
-async function getPostData(slug: string) {
-  const res = await fetch(`${process.env.API_ENDPOINT}/posts/?filters[slug][$eq]=${slug}`);
-  const data = await res.json();
+async function getPostData(slug: string): Promise<{ htmlString: string; post: Post | null }> {
+  try {
+    // Use cache if available (build time), otherwise fetch (runtime revalidation)
+    let ghostPost = postsCache?.get(slug);
 
-  const post = data.data ? (data.data[0] as Post) : null;
+    if (!ghostPost) {
+      const response = await ghostClient.posts.read({ slug }, { include: ["tags"] });
+      if (!response) {
+        return { htmlString: "", post: null };
+      }
+      ghostPost = response as GhostPost;
+    }
 
-  if (!post) {
+    const post = mapGhostPostToPost(ghostPost);
+    const processedHtml = await processGhostHtml(post.content);
+    return { htmlString: processedHtml, post };
+  } catch (error) {
+    console.error("Error fetching post:", error);
     return { htmlString: "", post: null };
   }
-
-  const htmlString = await parseMarkdown(post.content);
-
-  return { htmlString, post };
 }
 
 export default async function Page(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
-  const { htmlString } = await getPostData(params.slug);
+  const { htmlString, post } = await getPostData(params.slug);
 
   return (
     <>
+      {post?.featuredImage && (
+        <div className="mb-6 max-h-[300px] overflow-hidden rounded-lg sm:max-h-[420px]">
+          <Image
+            src={post.featuredImage}
+            alt={post.title}
+            width={1600}
+            height={900}
+            className="h-full w-full object-cover object-center"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 85vw, 960px"
+            priority
+          />
+        </div>
+      )}
+      {post && <h1 className="mb-6 font-bold text-3xl">{post.title}</h1>}
       <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="mt-6 mb-4 text-right">
         <Link href="/blog">back to blog list</Link>

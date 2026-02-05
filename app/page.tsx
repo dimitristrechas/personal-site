@@ -1,19 +1,31 @@
 import Image from "next/image";
 import type { FC } from "react";
-import type { Post } from "@/types/post";
+import { ghostClient } from "@/lib/ghost";
+import type { GhostPost, Post } from "@/types/post";
+import { mapGhostPostToPost } from "@/types/post";
 import PostCard from "./_components/PostCard";
 
 export const revalidate = 3600;
 
 async function fetchData() {
-  const postsResponse = await fetch(
-    `${process.env.API_ENDPOINT}/posts?populate=%2A&pagination[limit]=5&sort[1]=createdAt%3Adesc`,
-  );
-  const posts = (await postsResponse.json().then((data) => data.data)) as Post[];
+  try {
+    const response = await ghostClient.posts.browse({
+      include: ["tags"],
+      limit: 5,
+      order: "published_at DESC",
+    });
 
-  return {
-    posts,
-  };
+    const posts = ((response || []) as GhostPost[]).map((p) => mapGhostPostToPost(p));
+
+    return {
+      posts,
+    };
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return {
+      posts: [],
+    };
+  }
 }
 
 const Home: FC = async () => {
@@ -41,9 +53,13 @@ const Home: FC = async () => {
       </section>
       <section id="blog" className="mb-16">
         <h2 className="font-bold text-2xl">Latest Posts</h2>
-        {posts.map((post: Post, idx: number) => (
-          <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
-        ))}
+        {posts.length === 0 ? (
+          <p className="mt-4 text-muted-foreground">Posts temporarily unavailable. Please try again later.</p>
+        ) : (
+          posts.map((post: Post, idx: number) => (
+            <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
+          ))
+        )}
       </section>
     </>
   );
