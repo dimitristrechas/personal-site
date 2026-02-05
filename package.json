@@ -25,7 +25,6 @@
     "postinstall": "git rev-parse --git-dir > /dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.18",
     "@tryghost/content-api": "^1.12.3",
     "next": "16.1.5",
     "next-themes": "^0.4.6",

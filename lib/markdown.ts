@@ -8,7 +8,7 @@ const isExternalLink = (href: string): boolean => {
 
   try {
     const url = new URL(href);
-    return url.hostname.includes(siteDomain);
+    return !url.hostname.includes(siteDomain);
   } catch {
     return true;
   }
