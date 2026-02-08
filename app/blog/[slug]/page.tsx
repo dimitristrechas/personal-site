@@ -7,19 +7,15 @@ import { mapGhostPostToPost } from "@/types/post";
 
 export const revalidate = 3600;
 
-// Build-time cache to avoid N+1 API calls
 let postsCache: Map<string, GhostPost> | null = null;
 
 export async function generateStaticParams() {
-  // Fetch all posts with full data (not just slugs)
   const response = await ghostClient.posts.browse({
     limit: "all",
-    include: ["tags"], // Include all needed data
+    include: ["tags"],
   });
-
   const posts = (response || []) as GhostPost[];
 
-  // Cache posts for getPostData to use during build
   postsCache = new Map(posts.map((p) => [p.slug, p]));
 
   return posts.map((post) => ({
@@ -29,7 +25,6 @@ export async function generateStaticParams() {
 
 async function getPostData(slug: string): Promise<{ htmlString: string; post: Post | null }> {
   try {
-    // Use cache if available (build time), otherwise fetch (runtime revalidation)
     let ghostPost = postsCache?.get(slug);
 
     if (!ghostPost) {
@@ -56,7 +51,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
   return (
     <>
       {post?.featuredImage && (
-        <div className="mb-6 max-h-[300px] overflow-hidden rounded-lg sm:max-h-[420px]">
+        <div className="mb-6 max-h-[200px] overflow-hidden rounded-lg sm:max-h-[320px]">
           <Image
             src={post.featuredImage}
             alt={post.title}
