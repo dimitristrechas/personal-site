@@ -7,6 +7,10 @@ import { mapGhostPostToPost } from "@/types/post";
 
 export const revalidate = 3600;
 
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
+  dateStyle: "medium",
+});
+
 let postsCache: Map<string, GhostPost> | null = null;
 
 export async function generateStaticParams() {
@@ -63,7 +67,12 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
           />
         </div>
       )}
-      {post && <h1 className="mb-6 font-bold text-3xl">{post.title}</h1>}
+      {post && (
+        <>
+          <h1 className="mb-2 font-bold text-3xl">{post.title}</h1>
+          <div className="mb-6 text-muted-foreground text-sm">{dateFormatter.format(new Date(post.publishedAt))}</div>
+        </>
+      )}
       <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="mt-6 mb-4 text-right">
         <Link href="/blog">back to blog list</Link>
