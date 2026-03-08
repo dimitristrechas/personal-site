@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ghostClient } from "@/lib/ghost";
-import { processGhostHtml } from "@/lib/markdown";
+import { processGhostHtml } from "@/lib/html";
 import type { GhostPost, Post } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
 

@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { ghostClient } from "@/lib/ghost";
-import { processGhostHtml } from "@/lib/markdown";
+import { processGhostHtml } from "@/lib/html";
 import type { GhostPage, Page } from "@/types/page";
 import { mapGhostPageToPage } from "@/types/page";
 
