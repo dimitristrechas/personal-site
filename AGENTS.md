@@ -2,7 +2,7 @@
 
 ## Key Architectural Decisions
 
-- Blog content from Ghost CMS is **pre-rendered HTML**, not markdown. `lib/html.ts` processes it with node-html-parser.
+- Blog content from Ghost CMS is **pre-rendered HTML**, not Markdown. `lib/html.ts` processes it with node-html-parser.
 - Ghost API responses mapped to domain types via adapters in `types/` — **no runtime validation** (intentional; do not add Zod or similar).
 
 ## Instructions
