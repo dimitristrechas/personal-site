@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </body>
       {process.env.NODE_ENV === "production" && (
         <Script
-          src="https://analytics.dimitristrechas.com/script.js"
+          src="https://umami.dimitristrechas.com/script.js"
           data-website-id="d0e7f80d-e948-4821-95ce-6fcc3868120c"
         />
       )}
