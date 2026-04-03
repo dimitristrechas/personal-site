@@ -1,3 +1,7 @@
+# Dokploy: deploy from ghcr.io/<lowercase-owner>/personal-site:latest (or :sha-*).
+# Runtime env on the service: GHOST_URL, GHOST_CONTENT_API_KEY, NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_SITE_DOMAIN.
+# Build-time: same Ghost secrets as repo Actions secrets; optional NEXT_PUBLIC_* via repository Variables.
+
 name: CI/CD
 
 on:
@@ -7,8 +11,15 @@ on:
     branches: [master]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name == 'push' && github.ref_name || github.head_ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  DOCKER_CACHE_SCOPE: personal-site-image-arm64
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   lint:
@@ -23,8 +34,8 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: '24'
-          cache: 'yarn'
+          node-version: "24"
+          cache: yarn
 
       - run: yarn install --frozen-lockfile
 
@@ -82,3 +93,134 @@ jobs:
               fi
             fi
           done
+
+  docker-validate:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 25
+    needs: [lint, biome, commits]
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Validate application image build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm64
+          push: false
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
+            NEXT_PUBLIC_SITE_DOMAIN=${{ vars.NEXT_PUBLIC_SITE_DOMAIN }}
+          secrets: |
+            ghost_url=${{ secrets.GHOST_URL }}
+            ghost_content_api_key=${{ secrets.GHOST_CONTENT_API_KEY }}
+          cache-from: type=gha,scope=${{ env.DOCKER_CACHE_SCOPE }}
+          cache-to: type=gha,mode=max,scope=${{ env.DOCKER_CACHE_SCOPE }}
+
+  docker-publish:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 25
+    needs: [lint, biome, commits]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.name }}
+      digest: ${{ steps.build.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Normalize image name
+        id: image
+        env:
+          IMAGE_OWNER: ${{ github.repository_owner }}
+        run: echo "name=ghcr.io/${IMAGE_OWNER,,}/personal-site" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ steps.image.outputs.name }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=sha-
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push application image
+        id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
+            NEXT_PUBLIC_SITE_DOMAIN=${{ vars.NEXT_PUBLIC_SITE_DOMAIN }}
+          secrets: |
+            ghost_url=${{ secrets.GHOST_URL }}
+            ghost_content_api_key=${{ secrets.GHOST_CONTENT_API_KEY }}
+          cache-from: type=gha,scope=${{ env.DOCKER_CACHE_SCOPE }}
+          cache-to: type=gha,mode=max,scope=${{ env.DOCKER_CACHE_SCOPE }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [docker-publish]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - name: Trigger Dokploy deployment webhook
+        env:
+          DOKPLOY_WEBHOOK_KEY: ${{ secrets.DOKPLOY_WEBHOOK_KEY }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          IMAGE_NAME: ${{ needs.docker-publish.outputs.image }}
+          IMAGE_DIGEST: ${{ needs.docker-publish.outputs.digest }}
+        run: |
+          if [ -z "$DOKPLOY_WEBHOOK_KEY" ]; then
+            echo "DOKPLOY_WEBHOOK_KEY secret is not set"
+            exit 1
+          fi
+
+          dokploy_webhook_url="https://admin.dimitristrechas.com/api/deploy/$DOKPLOY_WEBHOOK_KEY"
+          short_sha="${GITHUB_SHA::7}"
+          echo "Triggering Dokploy deployment for ${IMAGE_NAME}:latest"
+          echo "Published image digest: ${IMAGE_DIGEST}"
+          payload="$(jq -n \
+            --arg ref "$GITHUB_REF" \
+            --arg id "$short_sha" \
+            --arg msg "$COMMIT_MESSAGE" \
+            '{ref: $ref, head_commit: {id: $id, message: $msg}}')"
+
+          response_body="$(mktemp)"
+          trap 'rm -f "$response_body"' EXIT
+
+          http_code="$(curl -sS -o "$response_body" -w "%{http_code}" -X POST \
+            "$dokploy_webhook_url" \
+            -H 'Content-Type: application/json' \
+            -H 'X-GitHub-Event: push' \
+            -d "$payload")"
+
+          if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+            echo "Dokploy deployment failed with HTTP status $http_code"
+            cat "$response_body"
+            exit 1
+          fi
+
+          echo "Dokploy deployment triggered successfully"
+          echo "Container health is now evaluated by the image HEALTHCHECK inside the app container."

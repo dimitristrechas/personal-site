@@ -10,6 +10,7 @@ const remotePatterns = [
 ];
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   images: {
     remotePatterns,
     ...(isDevelopment && { dangerouslyAllowLocalIP: true }),
