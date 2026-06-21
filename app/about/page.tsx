@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { CV_PDF_DOWNLOAD_URL } from "@/lib/cv";
 import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/html";
 import type { GhostPage, Page } from "@/types/page";
@@ -38,11 +39,13 @@ const AboutPage: FC = async () => {
       <h1 className="font-bold text-2xl">{about.title}</h1>
       <div className="prose dark:prose-invert pt-4" dangerouslySetInnerHTML={{ __html: processedHtml }} />
       <a
-        href="/dimitris-trechas-cv.pdf"
-        download="dimitris-trechas-cv.pdf"
-        className="inline-block pt-2 text-muted-foreground hover:underline"
+        href={CV_PDF_DOWNLOAD_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block pt-4 text-muted-foreground hover:underline"
       >
-        Download CV
+        Download CV <span>↗</span>
+        <span className="sr-only"> (opens in new tab)</span>
       </a>
     </section>
   );
