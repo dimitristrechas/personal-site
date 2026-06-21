@@ -37,6 +37,13 @@ const AboutPage: FC = async () => {
     <section id="about" className="mb-16">
       <h1 className="font-bold text-2xl">{about.title}</h1>
       <div className="prose dark:prose-invert pt-4" dangerouslySetInnerHTML={{ __html: processedHtml }} />
+      <a
+        href="/dimitris-trechas-cv.pdf"
+        download="dimitris-trechas-cv.pdf"
+        className="inline-block pt-2 text-muted-foreground hover:underline"
+      >
+        Download CV
+      </a>
     </section>
   );
 };
