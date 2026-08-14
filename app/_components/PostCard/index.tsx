@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { FC } from "react";
-import { isSeriesTagSlug } from "@/lib/series-tags";
+import { isPublicSeriesTag } from "@/lib/series-tags";
 import type { Post } from "@/types/post";
 
 type InputProps = {
@@ -14,7 +14,7 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   const lastPostClass = isLastPost ? "" : "border-border border-b";
-  const displayTags = post.tags?.filter((tag) => !isSeriesTagSlug(tag.slug)) ?? [];
+  const displayTags = post.tags?.filter((tag) => !isPublicSeriesTag(tag)) ?? [];
 
   return (
     <Link

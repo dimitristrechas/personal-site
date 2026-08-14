@@ -1,12 +1,18 @@
 import { parse } from "node-html-parser";
 import { cache } from "react";
 import { ghostClient } from "@/lib/ghost";
-import { isSeriesTagSlug, seriesRouteSlugFromTagSlug, seriesTagSlugFromRouteSlug } from "@/lib/series-tags";
+import {
+  isPublicSeriesTag,
+  isSeriesTagSlug,
+  seriesRouteSlugFromTagSlug,
+  seriesTagSlugFromRouteSlug,
+} from "@/lib/series-tags";
 import type { GhostPost, Post, Tag } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
 import type { Series } from "@/types/series";
 
 export {
+  isPublicSeriesTag,
   isSeriesTagSlug,
   SERIES_TAG_PREFIX,
   seriesRouteSlugFromTagSlug,
@@ -14,11 +20,11 @@ export {
 } from "@/lib/series-tags";
 
 export function getSeriesTagFromPost(post: Post): Tag | undefined {
-  return post.tags.find((tag) => isSeriesTagSlug(tag.slug));
+  return post.tags.find((tag) => isPublicSeriesTag(tag));
 }
 
 export function hasSeriesTag(post: Post): boolean {
-  return post.tags.some((tag) => isSeriesTagSlug(tag.slug));
+  return post.tags.some((tag) => isPublicSeriesTag(tag));
 }
 
 /** @deprecated Use {@link hasSeriesTag} */
@@ -158,7 +164,9 @@ export async function getSeriesHubPost(seriesSlug: string): Promise<Post | null>
     const posts = (response || []) as GhostPost[];
     if (posts.length === 0) return null;
 
-    return mapGhostPostToPost(posts[0]);
+    const post = mapGhostPostToPost(posts[0]);
+
+    return hasSeriesTag(post) ? post : null;
   } catch (error) {
     console.error(`Error fetching series hub post "${seriesSlug}":`, error);
     return null;
