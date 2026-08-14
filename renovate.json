@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    "group:monorepos",
+    "group:recommended",
+    ":maintainLockFilesWeekly"
+  ],
+  "labels": ["dependencies"],
+  "timezone": "Europe/Athens",
+  "schedule": ["before 6am on monday"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Group GitHub Actions updates",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions",
+      "commitMessageTopic": "GitHub Actions"
+    },
+    {
+      "description": "Group Docker base image updates",
+      "matchManagers": ["dockerfile"],
+      "groupName": "docker",
+      "commitMessageTopic": "Docker"
+    },
+    {
+      "description": "Keep Node.js on major version 24+",
+      "matchManagers": ["dockerfile"],
+      "matchPackageNames": ["node"],
+      "allowedVersions": ">=24"
+    },
+    {
+      "description": "Group Next.js ecosystem updates",
+      "matchPackageNames": ["next", "eslint-config-next"],
+      "groupName": "nextjs"
+    }
+  ]
+}
