@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound, permanentRedirect } from "next/navigation";
 import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/html";
+import { getSeriesTagFromPost, hasSeriesTag, seriesRouteSlugFromTagSlug } from "@/lib/series";
+import { isSeriesTagSlug } from "@/lib/series-tags";
 import { getSiteUrl } from "@/lib/site";
 import type { GhostPost, Post } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
@@ -19,10 +22,11 @@ export async function generateStaticParams() {
     include: ["tags"],
   });
   const posts = (response || []) as GhostPost[];
+  const blogPosts = posts.filter((post) => !(post.tags || []).some((tag) => isSeriesTagSlug(tag.slug)));
 
-  postsCache = new Map(posts.map((p) => [p.slug, p]));
+  postsCache = new Map(blogPosts.map((post) => [post.slug, post]));
 
-  return posts.map((post) => ({
+  return blogPosts.map((post) => ({
     slug: post.slug,
   }));
 }
@@ -91,6 +95,14 @@ async function getPostData(slug: string): Promise<{ htmlString: string; post: Po
 export default async function Page(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
   const { htmlString, post } = await getPostData(params.slug);
+
+  if (post && hasSeriesTag(post)) {
+    const seriesTag = getSeriesTagFromPost(post);
+    if (seriesTag) {
+      permanentRedirect(`/series/${seriesRouteSlugFromTagSlug(seriesTag.slug)}`);
+    }
+    notFound();
+  }
 
   return (
     <>
