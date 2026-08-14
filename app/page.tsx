@@ -1,35 +1,15 @@
 import Image from "next/image";
 import type { FC } from "react";
-import { ghostClient } from "@/lib/ghost";
-import type { GhostPost, Post } from "@/types/post";
-import { mapGhostPostToPost } from "@/types/post";
+import { getHomepageData } from "@/lib/series";
+import type { Post } from "@/types/post";
+import type { Series } from "@/types/series";
 import PostCard from "./_components/PostCard";
+import SeriesCard from "./_components/SeriesCard";
 
 export const revalidate = 3600;
 
-async function fetchData() {
-  try {
-    const response = await ghostClient.posts.browse({
-      include: ["tags"],
-      limit: 5,
-      order: "published_at DESC",
-    });
-
-    const posts = ((response || []) as GhostPost[]).map((p) => mapGhostPostToPost(p));
-
-    return {
-      posts,
-    };
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    return {
-      posts: [],
-    };
-  }
-}
-
 const Home: FC = async () => {
-  const { posts } = await fetchData();
+  const { posts, seriesList }: { posts: Post[]; seriesList: Series[] } = await getHomepageData(3);
 
   return (
     <>
@@ -61,6 +41,14 @@ const Home: FC = async () => {
           ))
         )}
       </section>
+      {seriesList.length > 0 ? (
+        <section id="series" className="mb-16">
+          <h2 className="font-bold text-2xl">Article Series</h2>
+          {seriesList.map((series, idx) => (
+            <SeriesCard key={series.id} series={series} isLastSeries={idx === seriesList.length - 1} />
+          ))}
+        </section>
+      ) : null}
     </>
   );
 };

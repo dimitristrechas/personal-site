@@ -14,6 +14,8 @@ export type Post = {
 export type Tag = {
   id: string;
   title: string;
+  slug: string;
+  visibility: string;
   color?: string | null;
 };
 
@@ -55,6 +57,8 @@ export function mapGhostPostToPost(ghostPost: GhostPost): Post {
     tags: (ghostPost.tags || []).map((tag) => ({
       id: tag.id,
       title: tag.name,
+      slug: tag.slug,
+      visibility: tag.visibility,
       color: tag.accent_color,
     })),
     slug: ghostPost.slug,

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound, permanentRedirect } from "next/navigation";
 import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/html";
+import { getSeriesTagFromPost, hasSeriesTag, seriesRouteSlugFromTagSlug } from "@/lib/series";
+import { isPublicSeriesTag } from "@/lib/series-tags";
 import { getSiteUrl } from "@/lib/site";
 import type { GhostPost, Post } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
@@ -19,10 +22,11 @@ export async function generateStaticParams() {
     include: ["tags"],
   });
   const posts = (response || []) as GhostPost[];
+  const blogPosts = posts.filter((post) => !(post.tags || []).some((tag) => isPublicSeriesTag(tag)));
 
-  postsCache = new Map(posts.map((p) => [p.slug, p]));
+  postsCache = new Map(blogPosts.map((post) => [post.slug, post]));
 
-  return posts.map((post) => ({
+  return blogPosts.map((post) => ({
     slug: post.slug,
   }));
 }
@@ -92,9 +96,21 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
   const params = await props.params;
   const { htmlString, post } = await getPostData(params.slug);
 
+  if (!post) {
+    notFound();
+  }
+
+  if (hasSeriesTag(post)) {
+    const seriesTag = getSeriesTagFromPost(post);
+    if (seriesTag) {
+      permanentRedirect(`/series/${seriesRouteSlugFromTagSlug(seriesTag.slug)}`);
+    }
+    notFound();
+  }
+
   return (
     <>
-      {post?.featuredImage && (
+      {post.featuredImage && (
         <div className="mb-6 max-h-50 overflow-hidden rounded-lg sm:max-h-80">
           <Image
             src={post.featuredImage}
@@ -107,12 +123,8 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
           />
         </div>
       )}
-      {post && (
-        <>
-          <h1 className="mb-2 font-bold text-3xl">{post.title}</h1>
-          <div className="mb-6 text-muted-foreground text-sm">{dateFormatter.format(new Date(post.publishedAt))}</div>
-        </>
-      )}
+      <h1 className="mb-2 font-bold text-3xl">{post.title}</h1>
+      <div className="mb-6 text-muted-foreground text-sm">{dateFormatter.format(new Date(post.publishedAt))}</div>
       <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="mt-6 mb-4 text-right">
         <Link href="/blog">back to blog list</Link>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { FC } from "react";
+import { isPublicSeriesTag } from "@/lib/series-tags";
 import type { Post } from "@/types/post";
 
 type InputProps = {
@@ -13,6 +14,7 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   const lastPostClass = isLastPost ? "" : "border-border border-b";
+  const displayTags = post.tags?.filter((tag) => !isPublicSeriesTag(tag)) ?? [];
 
   return (
     <Link
@@ -28,8 +30,8 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
         <div className="mb-1 text-xl">{post.title}</div>
         <div className="text-muted-foreground text-sm">{dateFormatter.format(new Date(post.publishedAt))}</div>
         <div className="mt-2">
-          {post.tags?.length > 0
-            ? post.tags.map((tag) => {
+          {displayTags.length > 0
+            ? displayTags.map((tag) => {
                 return (
                   <span key={tag.id} className="mr-4 inline-flex items-center gap-1 text-sm">
                     {tag.color && (

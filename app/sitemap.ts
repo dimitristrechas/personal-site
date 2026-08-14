@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { ghostClient } from "@/lib/ghost";
+import { getAllSeries, getPostsWithoutSeriesTag } from "@/lib/series";
 import { getSiteUrl } from "@/lib/site";
-import type { GhostPost, Post } from "@/types/post";
-import { mapGhostPostToPost } from "@/types/post";
+import type { Post } from "@/types/post";
+import type { Series } from "@/types/series";
 
 export const dynamic = "force-static";
 
@@ -29,20 +29,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const response = await ghostClient.posts.browse({
-      limit: "all",
-      fields: ["slug", "updated_at"],
-      order: "published_at DESC",
-    });
-
-    const posts = ((response || []) as GhostPost[]).map((p) => mapGhostPostToPost(p));
+    const [posts, seriesList] = await Promise.all([getPostsWithoutSeriesTag(), getAllSeries()]);
 
     const blogRoutes: MetadataRoute.Sitemap = posts.map((post: Post) => ({
       url: `${siteUrl}/blog/${post.slug}`,
       lastModified: new Date(post.updatedAt),
     }));
 
-    return [...staticRoutes, ...blogRoutes];
+    const seriesRoutes: MetadataRoute.Sitemap = seriesList.map((series: Series) => ({
+      url: `${siteUrl}/series/${series.slug}`,
+      lastModified: new Date(),
+    }));
+
+    return [...staticRoutes, ...blogRoutes, ...seriesRoutes];
   } catch (error) {
     console.error("Failed to fetch blog posts for sitemap:", error);
     return staticRoutes;
