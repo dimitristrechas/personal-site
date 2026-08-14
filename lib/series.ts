@@ -1,12 +1,7 @@
 import { parse } from "node-html-parser";
 import { cache } from "react";
 import { ghostClient } from "@/lib/ghost";
-import {
-  isPublicSeriesTag,
-  isSeriesTagSlug,
-  seriesRouteSlugFromTagSlug,
-  seriesTagSlugFromRouteSlug,
-} from "@/lib/series-tags";
+import { isPublicSeriesTag, seriesRouteSlugFromTagSlug, seriesTagSlugFromRouteSlug } from "@/lib/series-tags";
 import type { GhostPost, Post, Tag } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
 import type { Series } from "@/types/series";
