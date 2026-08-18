@@ -1,30 +1,38 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":semanticCommits",
-    "group:monorepos",
-    "group:recommended",
-    ":maintainLockFilesWeekly"
-  ],
-  "labels": ["dependencies"],
+  "extends": ["config:recommended", ":semanticCommits", "group:allNonMajor"],
   "timezone": "Europe/Athens",
-  "schedule": ["before 6am on monday"],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
+  "schedule": ["before 6am on Sunday"],
+  "labels": ["dependencies"],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 5,
   "packageRules": [
     {
-      "description": "Group GitHub Actions updates",
-      "matchManagers": ["github-actions"],
-      "groupName": "github-actions",
-      "commitMessageTopic": "GitHub Actions"
+      "description": "One weekly PR for all minor/patch/pin/digest updates across npm, Actions, and Docker",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-non-major"
     },
     {
-      "description": "Group Docker base image updates",
+      "description": "Group major npm updates",
+      "matchUpdateTypes": ["major"],
+      "matchManagers": ["npm", "nvm"],
+      "groupName": "npm packages (major)",
+      "groupSlug": "major-npm-packages"
+    },
+    {
+      "description": "Group major GitHub Actions updates",
+      "matchUpdateTypes": ["major"],
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions (major)",
+      "groupSlug": "major-github-actions"
+    },
+    {
+      "description": "Group major Docker image updates",
+      "matchUpdateTypes": ["major"],
       "matchManagers": ["dockerfile"],
-      "groupName": "docker",
-      "commitMessageTopic": "Docker"
+      "groupName": "Docker images (major)",
+      "groupSlug": "major-docker-images"
     },
     {
       "description": "Keep Node.js on major version 24+",
@@ -33,9 +41,8 @@
       "allowedVersions": ">=24"
     },
     {
-      "description": "Group Next.js ecosystem updates",
-      "matchPackageNames": ["next", "eslint-config-next"],
-      "groupName": "nextjs"
+      "matchPackageNames": ["renovatebot/github-action"],
+      "extends": ["schedule:weekly"]
     }
   ]
 }

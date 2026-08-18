@@ -1,43 +1,25 @@
-# Self-hosted Renovate via GitHub Actions.
-#
-# Setup (one-time):
-# 1. Create a classic PAT with `repo` and `workflow` scopes.
-# 2. Add it as repository secret RENOVATE_TOKEN.
-# 3. Enable "Allow GitHub Actions to create and approve pull requests"
-#    in repository Settings → Actions → General.
-
 name: Renovate
 
 on:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "0 0 * * 0"
   workflow_dispatch:
 
-concurrency:
-  group: renovate
-  cancel-in-progress: false
-
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   renovate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          persist-credentials: false
+      - uses: actions/checkout@v6
 
-      - name: Validate Renovate config
-        run: jq type renovate.json
-
-      - name: Self-hosted Renovate
-        uses: renovatebot/github-action@v46.2.2
+      - uses: renovatebot/github-action@v46.2.2
         with:
-          configurationFile: .github/renovate-config.js
+          configurationFile: .github/renovate-config.json5
           token: ${{ secrets.RENOVATE_TOKEN }}
+          renovate-version: 44.29.2
         env:
-          LOG_LEVEL: info
           RENOVATE_REPOSITORIES: ${{ github.repository }}
