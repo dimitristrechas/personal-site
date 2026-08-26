@@ -1,0 +1,16 @@
+# Approve postinstall scripts for trusted tooling:
+# - lefthook: installs git hooks (self-skips when CI env is set)
+# - unrs-resolver: verifies its napi prebuilt binding (used via eslint)
+allowBuilds:
+  lefthook: true
+  unrs-resolver: true
+
+# pnpm settings (read even though this is not a workspace).
+
+# pnpm 11 defaults minimumReleaseAge to 1440 (24h), which rejects installing
+# dependency versions published within the last 24 hours. This repo merges
+# Renovate updates shortly after upstream release (e.g. next@16.3.3), so the
+# default would fail `pnpm install --frozen-lockfile` in CI/Docker for up to
+# 24h after such merges. Set to 0 to keep the same behavior we had with yarn.
+# To opt into supply-chain hardening later, raise this (e.g. 1440).
+minimumReleaseAge: 0

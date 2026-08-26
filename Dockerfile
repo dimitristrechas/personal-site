@@ -3,12 +3,13 @@
 FROM node:24-bookworm-slim AS base
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN corepack enable
 
 FROM base AS deps
 RUN apt-get update -qq && apt-get install --no-install-recommends -y ca-certificates \
   && rm -rf /var/lib/apt/lists/*
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
 
 FROM base AS builder
 RUN apt-get update -qq && apt-get install --no-install-recommends -y ca-certificates \
@@ -25,7 +26,7 @@ RUN --mount=type=secret,id=ghost_url \
   --mount=type=secret,id=ghost_content_api_key \
   GHOST_URL="$(cat /run/secrets/ghost_url)" \
   GHOST_CONTENT_API_KEY="$(cat /run/secrets/ghost_content_api_key)" \
-  yarn build
+  pnpm build
 
 FROM base AS runner
 WORKDIR /app
