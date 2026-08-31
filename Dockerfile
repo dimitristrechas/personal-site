@@ -8,7 +8,7 @@ RUN corepack enable
 FROM base AS deps
 RUN apt-get update -qq && apt-get install --no-install-recommends -y ca-certificates \
   && rm -rf /var/lib/apt/lists/*
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .pnpmfile.cjs ./
 RUN pnpm install --frozen-lockfile
 
 FROM base AS builder
