@@ -14,3 +14,16 @@ allowBuilds:
 # 24h after such merges. Set to 0 to keep the same behavior we had with yarn.
 # To opt into supply-chain hardening later, raise this (e.g. 1440).
 minimumReleaseAge: 0
+
+# TypeScript 7 has no JS compiler API yet. Route typescript-eslint through the
+# TS 6 compatibility package while the root typescript package supplies TS 7.
+overrides:
+  "@typescript-eslint/eslint-plugin>typescript": npm:@typescript/typescript6@6.0.2
+  "@typescript-eslint/parser>typescript": npm:@typescript/typescript6@6.0.2
+  "@typescript-eslint/project-service>typescript": npm:@typescript/typescript6@6.0.2
+  "@typescript-eslint/tsconfig-utils>typescript": npm:@typescript/typescript6@6.0.2
+  "@typescript-eslint/type-utils>typescript": npm:@typescript/typescript6@6.0.2
+  "@typescript-eslint/typescript-estree>typescript": npm:@typescript/typescript6@6.0.2
+  "@typescript-eslint/utils>typescript": npm:@typescript/typescript6@6.0.2
+  "ts-api-utils>typescript": npm:@typescript/typescript6@6.0.2
+  "typescript-eslint>typescript": npm:@typescript/typescript6@6.0.2
