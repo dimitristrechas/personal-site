@@ -6,9 +6,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'push' && github.ref_name || github.head_ref }}
@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 25
     needs: [lint, biome, commits]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       contents: read
       packages: write
@@ -185,7 +185,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [docker-publish]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Trigger Dokploy deployment webhook
         env:
