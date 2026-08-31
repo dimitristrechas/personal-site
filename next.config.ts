@@ -11,6 +11,9 @@ const remotePatterns = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  experimental: {
+    useTypeScriptCli: true,
+  },
   images: {
     remotePatterns,
     ...(isDevelopment && { dangerouslyAllowLocalIP: true }),
