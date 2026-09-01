@@ -4,14 +4,21 @@
   "timezone": "Europe/Athens",
   "schedule": ["before 10am"],
   "labels": ["dependencies"],
+  "ignoreScripts": false,
   "prHourlyLimit": 0,
   "prConcurrentLimit": 5,
   "packageRules": [
     {
       "description": "One grouped PR per run for all minor/patch/pin/digest updates across npm, Actions, and Docker",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "excludePackageNames": ["pnpm"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-non-major"
+    },
+    {
+      "description": "pnpm updates in their own PR — lockfile checksum depends on .pnpmfile.cjs",
+      "matchPackageNames": ["pnpm"],
+      "groupName": null
     },
     {
       "description": "Group major npm updates",

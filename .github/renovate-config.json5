@@ -4,4 +4,7 @@
   requireConfig: "optional",
   platform: "github",
   semanticCommits: "enabled",
+  // Required so Renovate runs .pnpmfile.cjs during lockfile updates and keeps
+  // pnpmfileChecksum in sync with CI/Docker --frozen-lockfile installs.
+  allowScripts: true,
 }
