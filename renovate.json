@@ -9,11 +9,14 @@
   "prConcurrentLimit": 5,
   "packageRules": [
     {
-      "description": "One grouped PR per run for all minor/patch/pin/digest updates across npm, Actions, and Docker",
+      "description": "One grouped PR per run for all minor/patch/pin/digest updates across npm, Actions, and Docker (auto-merge when checks pass)",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "excludePackageNames": ["pnpm"],
       "groupName": "all non-major dependencies",
-      "groupSlug": "all-non-major"
+      "groupSlug": "all-non-major",
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
     },
     {
       "description": "pnpm updates in their own PR — lockfile checksum depends on .pnpmfile.cjs",
