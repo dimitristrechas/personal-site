@@ -1,21 +1,43 @@
 {
   "mcpServers": {
     "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_MCP_TOKEN}"
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${env:GITHUB_MCP_TOKEN}"
       }
     },
     "linear": {
+      "url": "https://mcp.linear.app/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:LINEAR_MCP_TOKEN}"
+      }
+    },
+    "exa": {
+      "url": "https://mcp.exa.ai/mcp"
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:CONTEXT7_API_KEY}"
+      }
+    },
+    "cloudflare-api": {
+      "url": "https://mcp.cloudflare.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:CLOUDFLARE_API_TOKEN}"
+      }
+    },
+    "cloudflare-docs": {
+      "url": "https://docs.mcp.cloudflare.com/mcp"
+    },
+    "dokploy": {
       "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.linear.app/mcp",
-        "--header",
-        "Authorization: Bearer ${env:LINEAR_MCP_TOKEN}"
-      ]
+      "args": ["-y", "@dokploy/mcp@latest"],
+      "env": {
+        "DOKPLOY_URL": "${env:DOKPLOY_URL}",
+        "DOKPLOY_API_KEY": "${env:DOKPLOY_API_KEY}",
+        "DOKPLOY_TOOL_PRESET": "deploy"
+      }
     }
   }
 }

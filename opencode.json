@@ -1,22 +1,71 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["AGENTS.md"],
-  "agent": {},
+  "agent": {
+    "frontend-architect": {
+      "description": "Frontend architecture for this Next.js site — component structure, App Router patterns, Ghost HTML pipeline, refactors. Use for feature design and architecture reviews.",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "prompt": "{file:./.claude/agents/frontend-architect.md}"
+    }
+  },
   "mcp": {
     "github": {
-      "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
-      "environment": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_MCP_TOKEN}"
-      },
-      "enabled": true
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_MCP_TOKEN}"
+      }
     },
     "linear": {
       "type": "remote",
       "url": "https://mcp.linear.app/mcp",
       "enabled": true,
+      "oauth": false,
       "headers": {
         "Authorization": "Bearer {env:LINEAR_MCP_TOKEN}"
+      }
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true,
+      "oauth": false
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:CONTEXT7_API_KEY}"
+      }
+    },
+    "cloudflare-api": {
+      "type": "remote",
+      "url": "https://mcp.cloudflare.com/mcp",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:CLOUDFLARE_API_TOKEN}"
+      }
+    },
+    "cloudflare-docs": {
+      "type": "remote",
+      "url": "https://docs.mcp.cloudflare.com/mcp",
+      "enabled": true,
+      "oauth": false
+    },
+    "dokploy": {
+      "type": "local",
+      "command": ["npx", "-y", "@dokploy/mcp@latest"],
+      "enabled": true,
+      "environment": {
+        "DOKPLOY_URL": "{env:DOKPLOY_URL}",
+        "DOKPLOY_API_KEY": "{env:DOKPLOY_API_KEY}",
+        "DOKPLOY_TOOL_PRESET": "deploy"
       }
     }
   },
@@ -24,6 +73,11 @@
     "bash(git commit*)": "ask",
     "bash(git push*)": "ask",
     "bash(git reflog*)": "ask",
-    "bash(git reset*)": "ask"
+    "bash(git reset*)": "ask",
+    "dokploy*": "ask",
+    "cloudflare-api*": "ask",
+    "skill": {
+      "*": "allow"
+    }
   }
 }
