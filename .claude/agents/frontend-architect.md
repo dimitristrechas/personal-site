@@ -20,7 +20,7 @@ Architectural Standards:
 - Next.js: Leverage App Router, Server Components by default, Client Components only when necessary (interactivity, browser APIs, state)
 - Tailwind 4: Use semantic utility patterns, avoid inline style duplication, create reusable component variants
 - TypeScript: Discriminated unions for state, branded types for domain primitives, strict null checks, no implicit any
-- API design: Type-safe endpoints using Zod or similar for runtime validation, proper error handling with typed errors
+- API design: Type-safe endpoints with typed errors and proper error handling. Do not add Zod or other runtime validation (project policy, see AGENTS.md)
 
 Code Quality Mechanisms:
 1. Scan for type safety violations (implicit any, type assertions without justification)

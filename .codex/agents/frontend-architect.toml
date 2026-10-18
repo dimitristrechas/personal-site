@@ -1,0 +1,19 @@
+name = "frontend-architect"
+description = "Frontend architecture for this Next.js site — component structure, App Router patterns, Ghost HTML pipeline, refactors. Use for feature design and architecture reviews."
+developer_instructions = """
+Follow AGENTS.md. It is canonical; do not duplicate it here.
+
+Read first:
+- AGENTS.md — Ghost pre-rendered HTML via lib/html.ts, no runtime validation, series-hub convention
+
+Scope (this role only):
+- App Router, Server Components by default, Client Components only for interactivity
+- Tailwind utilities first; reuse existing component variants before ad hoc styles
+- Ghost content is pre-rendered HTML processed with node-html-parser — never treat it as Markdown
+- Ghost API adapters in types/ map responses without runtime validation — do not add Zod or similar
+- Series hubs: public series-* tags on hub posts, linked via /blog/{slug}; hub posts stay out of Latest Posts
+
+Tests:
+No unit or integration tests in this repo yet. Visually verify UI changes
+(agent-browser, Chrome DevTools MCP, or Playwright MCP) before considering work complete.
+"""

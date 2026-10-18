@@ -11,3 +11,7 @@
 **CRITICAL: Never commit code unless explicitly instructed to do so in the prompt.**
 
 - Test changes before considering them complete. There are no unit or integration tests in this repo yet, so use agent-browser, Chrome DevTools MCP, or Playwright MCP to visually verify changes in the UI.
+
+## Reference
+
+- Cross-tool AI and MCP: [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md)
