@@ -18,7 +18,7 @@ export default async function Page() {
   if (posts.length === 0) {
     return (
       <section className="mb-16">
-        <h1 className="mb-8 font-bold text-2xl">Blogposts</h1>
+        <h1 className="mb-8 text-2xl font-bold">Blogposts</h1>
         <p className="text-muted-foreground">No posts available at the moment. Please try again later.</p>
       </section>
     );
