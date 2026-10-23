@@ -19,11 +19,11 @@ const SeriesCard: FC<SeriesCardProps> = ({ series, isLastSeries }) => {
       aria-label={`Read article series: ${series.title}`}
     >
       <div
-        className={`${lastSeriesClass} cursor-pointer rounded py-4 transition-colors group-hover:bg-muted group-focus-visible:bg-muted`}
+        className={`${lastSeriesClass} group-hover:bg-muted group-focus-visible:bg-muted cursor-pointer rounded py-4 transition-colors`}
       >
         <div className="mb-1 text-xl">{series.title}</div>
         <div className="text-muted-foreground text-sm">{articleCountLabel}</div>
-        {series.description ? <p className="mt-2 text-muted-foreground text-sm">{series.description}</p> : null}
+        {series.description ? <p className="text-muted-foreground mt-2 text-sm">{series.description}</p> : null}
       </div>
     </Link>
   );

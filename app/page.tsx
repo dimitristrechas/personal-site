@@ -32,9 +32,9 @@ const Home: FC = async () => {
         </div>
       </section>
       <section id="blog" className="mb-16">
-        <h2 className="font-bold text-2xl">Latest Posts</h2>
+        <h2 className="text-2xl font-bold">Latest Posts</h2>
         {posts.length === 0 ? (
-          <p className="mt-4 text-muted-foreground">Posts temporarily unavailable. Please try again later.</p>
+          <p className="text-muted-foreground mt-4">Posts temporarily unavailable. Please try again later.</p>
         ) : (
           posts.map((post: Post, idx: number) => (
             <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
@@ -43,7 +43,7 @@ const Home: FC = async () => {
       </section>
       {seriesList.length > 0 ? (
         <section id="series" className="mb-16">
-          <h2 className="font-bold text-2xl">Article Series</h2>
+          <h2 className="text-2xl font-bold">Article Series</h2>
           {seriesList.map((series, idx) => (
             <SeriesCard key={series.id} series={series} isLastSeries={idx === seriesList.length - 1} />
           ))}

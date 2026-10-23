@@ -25,7 +25,7 @@ const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
       aria-label={`Read blog post: ${post.title}`}
     >
       <div
-        className={`${lastPostClass} cursor-pointer rounded py-4 transition-colors group-hover:bg-muted group-focus-visible:bg-muted`}
+        className={`${lastPostClass} group-hover:bg-muted group-focus-visible:bg-muted cursor-pointer rounded py-4 transition-colors`}
       >
         <div className="mb-1 text-xl">{post.title}</div>
         <div className="text-muted-foreground text-sm">{dateFormatter.format(new Date(post.publishedAt))}</div>

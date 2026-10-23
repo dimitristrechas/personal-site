@@ -26,8 +26,8 @@ const AboutPage: FC = async () => {
   if (!about) {
     return (
       <section id="about" className="mb-16">
-        <h1 className="font-bold text-2xl">About</h1>
-        <p className="pt-4 text-muted-foreground">Content temporarily unavailable. Please try again later.</p>
+        <h1 className="text-2xl font-bold">About</h1>
+        <p className="text-muted-foreground pt-4">Content temporarily unavailable. Please try again later.</p>
       </section>
     );
   }
@@ -36,13 +36,13 @@ const AboutPage: FC = async () => {
 
   return (
     <section id="about" className="mb-16">
-      <h1 className="font-bold text-2xl">{about.title}</h1>
+      <h1 className="text-2xl font-bold">{about.title}</h1>
       <div className="prose dark:prose-invert pt-4" dangerouslySetInnerHTML={{ __html: processedHtml }} />
       <a
         href={CV_PDF_DOWNLOAD_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block pt-4 text-muted-foreground hover:underline"
+        className="text-muted-foreground inline-block pt-4 hover:underline"
       >
         Download CV <span>↗</span>
         <span className="sr-only"> (opens in new tab)</span>

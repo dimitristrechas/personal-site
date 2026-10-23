@@ -76,8 +76,8 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
           />
         </div>
       ) : null}
-      <h1 className="mb-2 font-bold text-3xl">{hubPost.title}</h1>
-      <div className="mb-6 text-muted-foreground text-sm">{dateFormatter.format(new Date(hubPost.publishedAt))}</div>
+      <h1 className="mb-2 text-3xl font-bold">{hubPost.title}</h1>
+      <div className="text-muted-foreground mb-6 text-sm">{dateFormatter.format(new Date(hubPost.publishedAt))}</div>
       <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <div className="mt-6 mb-4 text-right">
         <Link href="/">back to home</Link>

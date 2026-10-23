@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="mx-auto flex h-screen max-w-2xl flex-col bg-background text-foreground">
+      <body className="bg-background text-foreground mx-auto flex h-screen max-w-2xl flex-col">
         <Script
           id="theme-init"
           strategy="beforeInteractive"

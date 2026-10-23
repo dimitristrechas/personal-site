@@ -25,8 +25,8 @@ const ContactPage: FC = async () => {
   if (!contact) {
     return (
       <section id="contact" className="mb-16">
-        <h1 className="font-bold text-2xl">Contact</h1>
-        <p className="pt-4 text-muted-foreground">Content temporarily unavailable. Please try again later.</p>
+        <h1 className="text-2xl font-bold">Contact</h1>
+        <p className="text-muted-foreground pt-4">Content temporarily unavailable. Please try again later.</p>
       </section>
     );
   }
@@ -35,7 +35,7 @@ const ContactPage: FC = async () => {
 
   return (
     <section id="contact" className="mb-16">
-      <h1 className="font-bold text-2xl">{contact.title}</h1>
+      <h1 className="text-2xl font-bold">{contact.title}</h1>
       <div className="prose dark:prose-invert pt-4" dangerouslySetInnerHTML={{ __html: processedHtml }} />
     </section>
   );
