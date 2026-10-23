@@ -17,7 +17,7 @@
     {
       "description": "One grouped PR per run for all minor/patch/pin/digest updates across npm, Actions, and Docker (auto-merge when checks pass)",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "excludePackageNames": ["pnpm"],
+      "matchPackageNames": ["!pnpm"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-non-major",
       "automerge": true,
@@ -28,6 +28,19 @@
       "description": "pnpm updates in their own PR — lockfile checksum depends on .pnpmfile.cjs",
       "matchPackageNames": ["pnpm"],
       "groupName": null
+    },
+    {
+      "description": "Pin @biomejs/biome and auto-migrate config & formatting on updates",
+      "matchPackageNames": ["@biomejs/biome"],
+      "rangeStrategy": "pin",
+      "postUpgradeTasks": {
+        "commands": [
+          "npx --yes @biomejs/biome@{{{newVersion}}} migrate --write",
+          "npx --yes @biomejs/biome@{{{newVersion}}} check --write ."
+        ],
+        "fileFilters": ["biome.json", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", "**/*.json"],
+        "executionMode": "update"
+      }
     },
     {
       "description": "Group major npm updates",

@@ -199,7 +199,7 @@ importers:
         version: 19.3.1(react@19.3.1)
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.3.14
+        specifier: 2.6.2
         version: 2.6.2
       '@eslint/compat':
         specifier: ^2.1.0
