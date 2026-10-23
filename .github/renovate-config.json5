@@ -7,4 +7,9 @@
   // Required so Renovate runs .pnpmfile.cjs during lockfile updates and keeps
   // pnpmfileChecksum in sync with CI/Docker --frozen-lockfile installs.
   allowScripts: true,
+  // Allow post-upgrade tasks for Biome config migration and formatting fixes.
+  allowedCommands: [
+    "^npx --yes @biomejs/biome@[0-9.]+ migrate --write$",
+    "^npx --yes @biomejs/biome@[0-9.]+ check --write \\.$",
+  ],
 }
