@@ -14,6 +14,14 @@ const isExternalLink = (href: string): boolean => {
   }
 };
 
+const ghostOrigin = (() => {
+  try {
+    return process.env.GHOST_URL ? new URL(process.env.GHOST_URL).origin : null;
+  } catch {
+    return null;
+  }
+})();
+
 export async function processGhostHtml(html: string): Promise<string> {
   try {
     const root = parse(html);
@@ -22,6 +30,21 @@ export async function processGhostHtml(html: string): Promise<string> {
     for (const link of links) {
       const href = link.getAttribute("href");
       if (!href || href.startsWith("mailto:") || href.startsWith("tel:")) continue;
+
+      // Ghost absolutizes relative /blog/{slug} links to its own origin on
+      // save; point them back at the site so they don't 404 on Ghost itself.
+      // Image/content URLs are intentionally left untouched.
+      if (ghostOrigin && href.startsWith("http")) {
+        try {
+          const url = new URL(href);
+          if (url.origin === ghostOrigin && url.pathname.startsWith("/blog/")) {
+            link.setAttribute("href", `${url.pathname}${url.search}${url.hash}`);
+            continue;
+          }
+        } catch {
+          // keep original href
+        }
+      }
 
       if (isExternalLink(href)) {
         const existingRel = link.getAttribute("rel");
