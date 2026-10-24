@@ -32,3 +32,6 @@ coverage
 .claude
 .cursor
 .codex
+
+# dokploy compose configs (deployed by Dokploy from git, not part of web image)
+ghost/
