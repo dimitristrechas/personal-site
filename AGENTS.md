@@ -17,6 +17,7 @@
   `... down` stops; `... down -v` wipes local content. Local volumes (`ghost_ghost`, `ghost_db`) never touch prod (prod volumes live on the VPS).
 - `ghost/docker-compose.local.yml` is local-only: published port, `url: http://localhost:2368`, and a read-only mount of `ghost/config.local.json` (disables staff new-device email verification via a real JSON boolean — env strings stay truthy — and mirrors the image's `server.host: "::"` bind; without it the host port goes dead). Dokploy only loads `docker-compose.yml`, so this file can never affect prod. Do not add the mount or dev settings to the base file.
 - Seeded local admin: `local-dev@example.com` / `g_uaZR52mMfbLQGg`. The local Content API key lives in `.env` (`GHOST_CONTENT_API_KEY`) and under Settings → Integrations in the admin panel. Seed/manage content via the Admin API (`/ghost/api/admin/...` with a session cookie); tags endpoint accepts one tag per request; create posts with `?source=html`.
+- First run on a fresh machine (empty volumes): `ghost/.env` holds the local DB password (`MYSQL_ROOT_PASSWORD`, gitignored — create it from `ghost/.env.example` values if missing, otherwise compose fails fast); boot the stack, complete owner onboarding at http://localhost:2368/ghost, then create a custom integration (Settings → Integrations) and put its Content API key in `.env` as `GHOST_CONTENT_API_KEY`. The seeded credentials above exist only where the volume was seeded with them.
 - `ghost/` is excluded from the web image via `.dockerignore`.
 
 ## Ghost content gotcha
