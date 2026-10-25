@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { FC } from "react";
-import { isPublicSeriesTag } from "@/lib/series-tags";
+import { isSeriesTagSlug } from "@/lib/series-tags";
 import type { Post } from "@/types/post";
 
 type InputProps = {
@@ -14,7 +14,8 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 
 const PostCard: FC<InputProps> = ({ post, isLastPost }: InputProps) => {
   const lastPostClass = isLastPost ? "" : "border-border border-b";
-  const displayTags = post.tags?.filter((tag) => !isPublicSeriesTag(tag)) ?? [];
+  // Internal tags (`visibility !== "public"`) are never for display; series tags are navigation, not labels.
+  const displayTags = post.tags?.filter((tag) => tag.visibility === "public" && !isSeriesTagSlug(tag.slug)) ?? [];
 
   return (
     <Link

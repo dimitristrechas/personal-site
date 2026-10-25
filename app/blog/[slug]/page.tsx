@@ -4,8 +4,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/html";
-import { getSeriesTagFromPost, hasSeriesTag, seriesRouteSlugFromTagSlug } from "@/lib/series";
-import { isPublicSeriesTag } from "@/lib/series-tags";
+import { getSeriesHubPost, getSeriesTagFromPost, seriesRouteSlugFromTagSlug } from "@/lib/series";
 import { getSiteUrl } from "@/lib/site";
 import type { GhostPost, Post } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
@@ -22,11 +21,10 @@ export async function generateStaticParams() {
     include: ["tags"],
   });
   const posts = (response || []) as GhostPost[];
-  const blogPosts = posts.filter((post) => !(post.tags || []).some((tag) => isPublicSeriesTag(tag)));
 
-  postsCache = new Map(blogPosts.map((post) => [post.slug, post]));
+  postsCache = new Map(posts.map((post) => [post.slug, post]));
 
-  return blogPosts.map((post) => ({
+  return posts.map((post) => ({
     slug: post.slug,
   }));
 }
@@ -100,12 +98,13 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
     notFound();
   }
 
-  if (hasSeriesTag(post)) {
-    const seriesTag = getSeriesTagFromPost(post);
-    if (seriesTag) {
+  // Only the hub/intro post redirects to its series page; members stay readable as normal posts.
+  const seriesTag = getSeriesTagFromPost(post);
+  if (seriesTag) {
+    const hubPost = await getSeriesHubPost(seriesRouteSlugFromTagSlug(seriesTag.slug));
+    if (hubPost && hubPost.slug === post.slug) {
       permanentRedirect(`/series/${seriesRouteSlugFromTagSlug(seriesTag.slug)}`);
     }
-    notFound();
   }
 
   return (
