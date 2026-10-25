@@ -1,12 +1,13 @@
-import { parse } from "node-html-parser";
 import { cache } from "react";
 import { ghostClient } from "@/lib/ghost";
-import { isPublicSeriesTag, seriesRouteSlugFromTagSlug, seriesTagSlugFromRouteSlug } from "@/lib/series-tags";
+import { candidateSeriesTagSlugs, isSeriesTag, isSeriesTagSlug, seriesRouteSlugFromTagSlug } from "@/lib/series-tags";
 import type { GhostPost, Post, Tag } from "@/types/post";
 import { mapGhostPostToPost } from "@/types/post";
 import type { Series } from "@/types/series";
 
 export {
+  candidateSeriesTagSlugs,
+  INTERNAL_SERIES_TAG_PREFIX,
   isPublicSeriesTag,
   isSeriesTagSlug,
   SERIES_TAG_PREFIX,
@@ -14,84 +15,47 @@ export {
   seriesTagSlugFromRouteSlug,
 } from "@/lib/series-tags";
 
-export function getSeriesTagFromPost(post: Post): Tag | undefined {
-  return post.tags.find((tag) => isPublicSeriesTag(tag));
+type GhostSeriesTag = {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  feature_image?: string | null;
+  visibility: string;
+  count?: { posts: number };
+};
+
+function displayNameFromTagName(name: string): string {
+  return name.replace(/^#/, "").trim() || name;
 }
 
-export function hasSeriesTag(post: Post): boolean {
-  return post.tags.some((tag) => isPublicSeriesTag(tag));
-}
-
-/** @deprecated Use {@link hasSeriesTag} */
-export function isSeriesHubPost(post: Post): boolean {
-  return hasSeriesTag(post);
-}
-
-function blogSlugFromHref(href: string): string | null {
-  try {
-    const url =
-      href.startsWith("http://") || href.startsWith("https://") ? new URL(href) : new URL(href, "https://example.com");
-    const match = url.pathname.match(/^\/blog\/([^/]+)\/?$/);
-
-    return match?.[1] ?? null;
-  } catch {
-    return null;
-  }
-}
-
-export function extractBlogSlugsFromHtml(html: string, excludeSlug?: string): string[] {
-  const root = parse(html);
-  const slugs: string[] = [];
-  const seen = new Set<string>();
-
-  for (const link of root.querySelectorAll("a")) {
-    const href = link.getAttribute("href");
-    if (!href) continue;
-
-    const slug = blogSlugFromHref(href);
-    if (!slug || slug === excludeSlug || seen.has(slug)) continue;
-
-    seen.add(slug);
-    slugs.push(slug);
-  }
-
-  return slugs;
-}
-
-function mapHubPostToSeries(post: Post): Series | null {
-  const seriesTag = getSeriesTagFromPost(post);
-  if (!seriesTag) return null;
+function mapGhostTagToSeries(tag: GhostSeriesTag): Series {
+  const totalTagged = tag.count?.posts ?? 0;
+  // The earliest tagged post is the hub/intro; members are the rest.
+  const articleCount = totalTagged > 0 ? Math.max(0, totalTagged - 1) : 0;
 
   return {
-    id: post.id,
-    title: post.title,
-    slug: seriesRouteSlugFromTagSlug(seriesTag.slug),
-    description: post.description || null,
-    coverImage: post.featuredImage,
-    articleCount: extractBlogSlugsFromHtml(post.content, post.slug).length,
-    hubPostSlug: post.slug,
+    id: tag.id,
+    title: displayNameFromTagName(tag.name),
+    slug: seriesRouteSlugFromTagSlug(tag.slug),
+    description: tag.description || null,
+    coverImage: tag.feature_image || null,
+    articleCount,
+    tagSlug: tag.slug,
   };
 }
 
-function getSeriesListFromPosts(posts: Post[]): Series[] {
-  const hubPostsBySeriesSlug = new Map<string, Post>();
+export function getSeriesTagFromPost(post: Post): Tag | undefined {
+  return post.tags.find((tag) => isSeriesTag(tag));
+}
 
-  for (const post of posts) {
-    const seriesTag = getSeriesTagFromPost(post);
-    if (!seriesTag) continue;
+export function hasSeriesTag(post: Post): boolean {
+  return post.tags.some((tag) => isSeriesTag(tag));
+}
 
-    const routeSlug = seriesRouteSlugFromTagSlug(seriesTag.slug);
-    const existingHubPost = hubPostsBySeriesSlug.get(routeSlug);
-
-    if (!existingHubPost || new Date(post.publishedAt) < new Date(existingHubPost.publishedAt)) {
-      hubPostsBySeriesSlug.set(routeSlug, post);
-    }
-  }
-
-  return [...hubPostsBySeriesSlug.values()]
-    .map((post) => mapHubPostToSeries(post))
-    .filter((series): series is Series => series !== null)
-    .toSorted((a, b) => a.title.localeCompare(b.title));
+/** @deprecated Hub identity is now earliest-post-with-tag; use {@link hasSeriesTag} + hub comparison. */
+export function isSeriesHubPost(post: Post): boolean {
+  return hasSeriesTag(post);
 }
 
 const getAllGhostPosts = cache(async (): Promise<Post[]> => {
@@ -104,14 +68,57 @@ const getAllGhostPosts = cache(async (): Promise<Post[]> => {
   return ((response || []) as GhostPost[]).map((ghostPost) => mapGhostPostToPost(ghostPost));
 });
 
+/** Earliest tagged post per series route slug — the hub/intro post. */
+function getHubPostsBySeriesSlug(posts: Post[]): Map<string, Post> {
+  const hubs = new Map<string, Post>();
+
+  for (const post of posts) {
+    const seriesTag = getSeriesTagFromPost(post);
+    if (!seriesTag) continue;
+
+    const routeSlug = seriesRouteSlugFromTagSlug(seriesTag.slug);
+    const existing = hubs.get(routeSlug);
+
+    if (!existing || new Date(post.publishedAt) < new Date(existing.publishedAt)) {
+      hubs.set(routeSlug, post);
+    }
+  }
+
+  return hubs;
+}
+
+const getHubPostSlugs = cache(async (): Promise<Set<string>> => {
+  const hubs = getHubPostsBySeriesSlug(await getAllGhostPosts());
+  return new Set([...hubs.values()].map((post) => post.slug));
+});
+
+/** Blog-feed posts: everything except hub/intro posts (series members stay visible). */
+export async function getBlogPosts(limit?: number): Promise<Post[]> {
+  try {
+    const [allPosts, hubSlugs] = await Promise.all([getAllGhostPosts(), getHubPostSlugs()]);
+    const posts = allPosts.filter((post) => !hubSlugs.has(post.slug));
+
+    return limit ? posts.slice(0, limit) : posts;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
+}
+
+/** @deprecated Use {@link getBlogPosts} — now excludes only hubs, not all tagged posts. */
+export async function getPostsWithoutSeriesTag(limit?: number): Promise<Post[]> {
+  return getBlogPosts(limit);
+}
+
+export async function getLatestPosts(limit: number): Promise<Post[]> {
+  return getBlogPosts(limit);
+}
+
 export async function getHomepageData(latestLimit = 3): Promise<{ posts: Post[]; seriesList: Series[] }> {
   try {
-    const allPosts = await getAllGhostPosts();
+    const [posts, seriesList] = await Promise.all([getBlogPosts(latestLimit), getAllSeries()]);
 
-    return {
-      posts: allPosts.filter((post) => !hasSeriesTag(post)).slice(0, latestLimit),
-      seriesList: getSeriesListFromPosts(allPosts),
-    };
+    return { posts, seriesList };
   } catch (error) {
     console.error("Error fetching homepage data:", error);
     return {
@@ -121,36 +128,58 @@ export async function getHomepageData(latestLimit = 3): Promise<{ posts: Post[];
   }
 }
 
-export async function getPostsWithoutSeriesTag(limit?: number): Promise<Post[]> {
-  try {
-    const posts = (await getAllGhostPosts()).filter((post) => !hasSeriesTag(post));
-
-    return limit ? posts.slice(0, limit) : posts;
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    return [];
-  }
-}
-
-export async function getLatestPosts(limit: number): Promise<Post[]> {
-  return getPostsWithoutSeriesTag(limit);
-}
-
 export async function getAllSeries(): Promise<Series[]> {
   try {
-    return getSeriesListFromPosts(await getAllGhostPosts());
+    const response = await ghostClient.tags.browse({
+      limit: "all",
+      include: ["count.posts"],
+    });
+
+    const tags = (response || []) as GhostSeriesTag[];
+
+    return tags
+      .filter((tag) => isSeriesTagSlug(tag.slug))
+      .map(mapGhostTagToSeries)
+      .toSorted((a, b) => a.title.localeCompare(b.title));
   } catch (error) {
     console.error("Error fetching article series:", error);
     return [];
   }
 }
 
+async function getSeriesTag(seriesSlug: string): Promise<GhostSeriesTag | null> {
+  const [internalSlug, legacySlug] = candidateSeriesTagSlugs(seriesSlug);
+
+  // Prefer a direct read of the internal tag, fall back to legacy.
+  for (const slug of [internalSlug, legacySlug]) {
+    try {
+      const tag = (await ghostClient.tags.read({ slug }, { include: ["count.posts"] })) as GhostSeriesTag | null;
+      if (tag && isSeriesTagSlug(tag.slug)) return tag;
+    } catch {
+      // try next candidate
+    }
+  }
+
+  try {
+    const response = await ghostClient.tags.browse({
+      filter: `slug:[${internalSlug},${legacySlug}]`,
+      limit: "all",
+      include: ["count.posts"],
+    });
+    const tags = (response || []) as GhostSeriesTag[];
+    return tags.find((tag) => isSeriesTagSlug(tag.slug)) ?? null;
+  } catch (error) {
+    console.error(`Error fetching series tag "${seriesSlug}":`, error);
+    return null;
+  }
+}
+
 export async function getSeriesHubPost(seriesSlug: string): Promise<Post | null> {
-  const tagSlug = seriesTagSlugFromRouteSlug(seriesSlug);
+  const [internalSlug, legacySlug] = candidateSeriesTagSlugs(seriesSlug);
 
   try {
     const response = await ghostClient.posts.browse({
-      filter: `tag:${tagSlug}`,
+      filter: `tag:[${internalSlug},${legacySlug}]`,
       include: ["tags"],
       order: "published_at ASC",
       limit: 1,
@@ -168,9 +197,70 @@ export async function getSeriesHubPost(seriesSlug: string): Promise<Post | null>
   }
 }
 
-export async function getSeriesBySlug(seriesSlug: string): Promise<Series | null> {
-  const hubPost = await getSeriesHubPost(seriesSlug);
-  if (!hubPost) return null;
+export async function getSeriesMembers(seriesSlug: string, excludeSlug?: string): Promise<Post[]> {
+  const [internalSlug, legacySlug] = candidateSeriesTagSlugs(seriesSlug);
 
-  return mapHubPostToSeries(hubPost);
+  try {
+    const response = await ghostClient.posts.browse({
+      filter: `tag:[${internalSlug},${legacySlug}]`,
+      include: ["tags"],
+      order: "published_at ASC",
+      limit: "all",
+    });
+
+    const posts = ((response || []) as GhostPost[]).map(mapGhostPostToPost);
+
+    return excludeSlug ? posts.filter((post) => post.slug !== excludeSlug) : posts;
+  } catch (error) {
+    console.error(`Error fetching series members "${seriesSlug}":`, error);
+    return [];
+  }
+}
+
+export async function getSeriesBySlug(seriesSlug: string): Promise<Series | null> {
+  const tag = await getSeriesTag(seriesSlug);
+  if (!tag) {
+    // Fallback for tags API hiccups: derive from hub post grouping.
+    const hubPost = await getSeriesHubPost(seriesSlug);
+    if (!hubPost) return null;
+    const seriesTag = getSeriesTagFromPost(hubPost);
+    if (!seriesTag) return null;
+    return {
+      id: seriesTag.id,
+      title: hubPost.title,
+      slug: seriesSlug,
+      description: hubPost.description || null,
+      coverImage: hubPost.featuredImage,
+      articleCount: 0,
+      tagSlug: seriesTag.slug,
+    };
+  }
+
+  // Prefer hub excerpt/cover when the tag itself has no metadata yet.
+  if (!tag.description || !tag.feature_image) {
+    const hubPost = await getSeriesHubPost(seriesSlug);
+    return {
+      ...mapGhostTagToSeries(tag),
+      description: tag.description || hubPost?.description || null,
+      coverImage: tag.feature_image || hubPost?.featuredImage || null,
+    };
+  }
+
+  return mapGhostTagToSeries(tag);
+}
+
+export async function getSeriesPageData(seriesSlug: string): Promise<{
+  series: Series | null;
+  hubPost: Post | null;
+  members: Post[];
+}> {
+  const [series, hubPost] = await Promise.all([getSeriesBySlug(seriesSlug), getSeriesHubPost(seriesSlug)]);
+
+  if (!series || !hubPost) {
+    return { series, hubPost, members: [] };
+  }
+
+  const members = await getSeriesMembers(seriesSlug, hubPost.slug);
+
+  return { series, hubPost, members };
 }

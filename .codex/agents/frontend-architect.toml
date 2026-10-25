@@ -11,7 +11,7 @@ Scope (this role only):
 - Tailwind utilities first; reuse existing component variants before ad hoc styles
 - Ghost content is pre-rendered HTML processed with node-html-parser — never treat it as Markdown
 - Ghost API adapters in types/ map responses without runtime validation — do not add Zod or similar
-- Series hubs: public series-* tags on hub posts, linked via /blog/{slug}; hub posts stay out of Latest Posts
+- Series: internal hash-series-* tags (tag = definition), hub/intro + members tagged, members listed via API; hub posts stay out of Latest Posts
 
 Tests:
 No unit or integration tests in this repo yet. Visually verify UI changes

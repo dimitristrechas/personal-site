@@ -5,5 +5,5 @@ export type Series = {
   description?: string | null;
   coverImage?: string | null;
   articleCount: number;
-  hubPostSlug: string;
+  tagSlug: string;
 };

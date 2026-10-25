@@ -8,7 +8,7 @@ alwaysApply: true
 - **`AGENTS.md` is canonical** for instructions and architecture decisions (Ghost pre-rendered HTML via `lib/html.ts`, adapter-only `types/` with no runtime validation, `series-*` hub-post convention, no-commit policy). This rule file applies those decisions in Cursor; read `AGENTS.md` before acting.
 - **Blog content is pre-rendered HTML, not Markdown.** Ghost HTML is processed with node-html-parser (`lib/html.ts`). Never treat post bodies as Markdown.
 - **No runtime validation.** Ghost API responses are mapped via adapters in `types/` — do not add Zod or similar.
-- **Series hubs:** one hub post per series with a public `series-*` tag, linking members via `/blog/{slug}`. Series tags stay hidden from post tag chips; hub posts stay out of Latest Posts.
+- **Series:** internal `hash-series-*` tag per series (tag = definition), hub/intro + all members tagged, members listed via API not link-parsing. Series tags stay hidden from post tag chips; hub posts stay out of Latest Posts.
 - **Subagent prompts:** `.claude/agents/*.md` are the canonical role prompts (shared with Claude Code and OpenCode). `.cursor/agents/` contains symlinks to those files for Cursor discovery; `.codex/agents/*.toml` mirrors their descriptions for Codex (TOML-required); edit `.claude/agents/`, not the symlinks.
 - **Skills:** `.claude/skills/*/SKILL.md` is the canonical skill format. `.cursor/skills/` and `.agents/skills/` (Codex) contain symlinks for discovery; keep content consistent with `AGENTS.md`.
 - **Cross-tool MCP:** When changing MCP integration, keep `opencode.json`, `.mcp.json`, `.cursor/mcp.json`, and `.codex/config.toml` aligned. See [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md) for env placeholder differences.
