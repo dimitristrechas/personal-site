@@ -71,3 +71,141 @@
   }
 }
 
+@keyframes timeline-rail {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes timeline-entry {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes timeline-dot {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* About page: vertical career timeline. Each h2 section from the Ghost
+   "about" page becomes a timeline node on an animated left rail.
+   NOTE: intentionally unlayered — the typography plugin's styles are also
+   unlayered, and unlayered author CSS beats layered CSS, so keeping these
+   rules here lets margin: 0 etc. win over .prose img defaults. */
+#about .timeline {
+  position: relative;
+  margin-left: 0.375rem;
+  padding-left: 1.75rem;
+}
+
+/* The rail draws itself top-to-bottom on page load */
+#about .timeline::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background-color: hsl(var(--border));
+  transform-origin: top;
+  animation: timeline-rail 1.2s ease-out both;
+}
+
+#about .timeline > h2 {
+  position: relative;
+  animation: timeline-entry 0.5s ease-out backwards;
+}
+
+#about .timeline > h2::before {
+  content: "";
+  position: absolute;
+  top: 0.4em;
+  left: calc(-1.75rem - 7px);
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--background));
+  border: 2px solid hsl(var(--muted-foreground));
+  animation: timeline-dot 0.4s ease-out backwards;
+  animation-delay: inherit;
+}
+
+/* Staggered entrance, oldest role first */
+#about .timeline > h2:nth-of-type(1) {
+  animation-delay: 0.3s;
+}
+#about .timeline > h2:nth-of-type(2) {
+  animation-delay: 0.5s;
+}
+#about .timeline > h2:nth-of-type(3) {
+  animation-delay: 0.7s;
+}
+#about .timeline > h2:nth-of-type(4) {
+  animation-delay: 0.9s;
+}
+
+/* Filled marker for the most recent (current) position */
+#about .timeline > h2:last-of-type::before {
+  background-color: hsl(var(--foreground));
+  border-color: hsl(var(--foreground));
+}
+
+/* Company logo badges replace the dot markers on the rail */
+#about .timeline > h2:has(.timeline-logo)::before {
+  display: none;
+}
+
+#about .timeline > h2 .timeline-logo {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: calc(-1.75rem - 19px);
+  transform: translateY(-50%);
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0;
+  object-fit: contain;
+  padding: 0.3rem;
+  border-radius: 9999px;
+  background-color: #fff;
+  box-shadow: 0 0 0 2px hsl(var(--border));
+  animation: timeline-dot 0.4s ease-out backwards;
+  animation-delay: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #about .timeline::after,
+  #about .timeline > h2,
+  #about .timeline > h2::before,
+  #about .timeline > h2 .timeline-logo {
+    animation: none;
+  }
+}
+
+/* Period subtitle under each timeline heading, injected by lib/timeline.ts */
+#about .timeline > .timeline-period {
+  margin-top: -1rem;
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+}
+
+
+/* Trailing about sections (e.g. projects) sit outside the timeline rail. */
+#about .about-sections {
+  margin-top: 1rem;
+}
