@@ -33,11 +33,12 @@ export async function processGhostHtml(html: string): Promise<string> {
 
       // Ghost absolutizes relative /blog/{slug} links to its own origin on
       // save; point them back at the site so they don't 404 on Ghost itself.
-      // Image/content URLs are intentionally left untouched.
+      // The same applies to the homepage (/). Other Ghost-origin links and
+      // image/content URLs are intentionally left untouched.
       if (ghostOrigin && href.startsWith("http")) {
         try {
           const url = new URL(href);
-          if (url.origin === ghostOrigin && url.pathname.startsWith("/blog/")) {
+          if (url.origin === ghostOrigin && (url.pathname === "/" || url.pathname.startsWith("/blog/"))) {
             link.setAttribute("href", `${url.pathname}${url.search}${url.hash}`);
             continue;
           }

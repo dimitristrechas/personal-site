@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { CV_PDF_DOWNLOAD_URL } from "@/lib/cv";
 import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/html";
+import { enhanceTimelineHtml } from "@/lib/timeline";
 import type { GhostPage, Page } from "@/types/page";
 import { mapGhostPageToPage } from "@/types/page";
 
@@ -32,21 +32,12 @@ const AboutPage: FC = async () => {
     );
   }
 
-  const processedHtml = await processGhostHtml(about.content);
+  const processedHtml = enhanceTimelineHtml(await processGhostHtml(about.content));
 
   return (
     <section id="about" className="mb-16">
       <h1 className="text-2xl font-bold">{about.title}</h1>
       <div className="prose dark:prose-invert pt-4" dangerouslySetInnerHTML={{ __html: processedHtml }} />
-      <a
-        href={CV_PDF_DOWNLOAD_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-muted-foreground inline-block pt-4 hover:underline"
-      >
-        Download CV <span>↗</span>
-        <span className="sr-only"> (opens in new tab)</span>
-      </a>
     </section>
   );
 };
