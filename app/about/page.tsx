@@ -1,4 +1,5 @@
-import type { FC } from "react";
+import type { Metadata } from "next";
+import { cache, type FC } from "react";
 import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/html";
 import { enhanceTimelineHtml } from "@/lib/timeline";
@@ -7,7 +8,7 @@ import { mapGhostPageToPage } from "@/types/page";
 
 export const revalidate = 3600;
 
-async function fetchAboutData(): Promise<Page | null> {
+const fetchAboutData = cache(async (): Promise<Page | null> => {
   try {
     const response = await ghostClient.pages.read({ slug: "about" });
     if (!response) {
@@ -18,6 +19,16 @@ async function fetchAboutData(): Promise<Page | null> {
     console.error("Error fetching about page:", error);
     return null;
   }
+});
+
+export async function generateMetadata(): Promise<Metadata> {
+  const about = await fetchAboutData();
+  return {
+    title: about?.metaTitle || "About | Dimitris Trechas",
+    description:
+      about?.metaDescription ||
+      "About Dimitris Trechas — Lead Frontend Engineer with 12 years of experience across e-commerce, online delivery, and telecommunications.",
+  };
 }
 
 const AboutPage: FC = async () => {

@@ -18,6 +18,8 @@ export type Page = {
   id: string;
   title: string;
   content: string;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
 };
 
 export function mapGhostPageToPage(ghostPage: GhostPage): Page {
@@ -25,5 +27,7 @@ export function mapGhostPageToPage(ghostPage: GhostPage): Page {
     id: ghostPage.id,
     title: ghostPage.title,
     content: ghostPage.html,
+    metaTitle: ghostPage.meta_title ?? ghostPage.custom_excerpt,
+    metaDescription: ghostPage.meta_description ?? ghostPage.custom_excerpt,
   };
 }

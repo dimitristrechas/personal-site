@@ -94,11 +94,11 @@
 @keyframes timeline-dot {
   from {
     opacity: 0;
-    transform: scale(0);
+    transform: translateY(-50%) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(-50%) scale(1);
   }
 }
 
@@ -108,8 +108,9 @@
    unlayered, and unlayered author CSS beats layered CSS, so keeping these
    rules here lets margin: 0 etc. win over .prose img defaults. */
 #about .timeline {
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
-  margin-left: 0.375rem;
+  margin-left: 1.25rem;
   padding-left: 1.75rem;
 }
 
@@ -117,63 +118,58 @@
 #about .timeline::after {
   content: "";
   position: absolute;
-  top: 0;
+  top: 0.5rem;
   bottom: 0;
   left: 0;
   width: 2px;
   background-color: hsl(var(--border));
   transform-origin: top;
-  animation: timeline-rail 1.2s ease-out both;
+  animation: timeline-rail 600ms var(--ease-out-strong) both;
 }
 
-#about .timeline > h2 {
+#about .timeline-item {
+  animation: timeline-entry 350ms var(--ease-out-strong) backwards;
+  animation-delay: calc(var(--item-index, 0) * 70ms + 120ms);
+}
+
+#about .timeline-item:first-of-type > h2 {
+  margin-top: 2rem;
+}
+
+#about .timeline-item > h2 {
   position: relative;
-  animation: timeline-entry 0.5s ease-out backwards;
 }
 
-#about .timeline > h2::before {
+#about .timeline-item > h2::before {
   content: "";
   position: absolute;
-  top: 0.4em;
+  top: 1rem;
   left: calc(-1.75rem - 7px);
+  transform: translateY(-50%);
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 9999px;
   background-color: hsl(var(--background));
   border: 2px solid hsl(var(--muted-foreground));
-  animation: timeline-dot 0.4s ease-out backwards;
+  animation: timeline-dot 300ms var(--ease-out-strong) backwards;
   animation-delay: inherit;
 }
 
-/* Staggered entrance, oldest role first */
-#about .timeline > h2:nth-of-type(1) {
-  animation-delay: 0.3s;
-}
-#about .timeline > h2:nth-of-type(2) {
-  animation-delay: 0.5s;
-}
-#about .timeline > h2:nth-of-type(3) {
-  animation-delay: 0.7s;
-}
-#about .timeline > h2:nth-of-type(4) {
-  animation-delay: 0.9s;
-}
-
-/* Filled marker for the most recent (current) position */
-#about .timeline > h2:last-of-type::before {
+/* Filled marker for the most recent (current) position when no logo is present */
+#about .timeline-item:first-of-type > h2::before {
   background-color: hsl(var(--foreground));
   border-color: hsl(var(--foreground));
 }
 
 /* Company logo badges replace the dot markers on the rail */
-#about .timeline > h2:has(.timeline-logo)::before {
+#about .timeline-item > h2:has(.timeline-logo)::before {
   display: none;
 }
 
-#about .timeline > h2 .timeline-logo {
+#about .timeline-item > h2 .timeline-logo {
   position: absolute;
   z-index: 1;
-  top: 50%;
+  top: 1rem;
   left: calc(-1.75rem - 19px);
   transform: translateY(-50%);
   width: 2.5rem;
@@ -184,21 +180,21 @@
   border-radius: 9999px;
   background-color: #fff;
   box-shadow: 0 0 0 2px hsl(var(--border));
-  animation: timeline-dot 0.4s ease-out backwards;
+  animation: timeline-dot 300ms var(--ease-out-strong) backwards;
   animation-delay: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
   #about .timeline::after,
-  #about .timeline > h2,
-  #about .timeline > h2::before,
-  #about .timeline > h2 .timeline-logo {
+  #about .timeline-item,
+  #about .timeline-item > h2::before,
+  #about .timeline-item > h2 .timeline-logo {
     animation: none;
   }
 }
 
 /* Period subtitle under each timeline heading, injected by lib/timeline.ts */
-#about .timeline > .timeline-period {
+#about .timeline-item > .timeline-period {
   margin-top: -1rem;
   font-size: 0.875rem;
   color: hsl(var(--muted-foreground));

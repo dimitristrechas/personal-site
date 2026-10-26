@@ -22,6 +22,12 @@ const ghostOrigin = (() => {
   }
 })();
 
+const INTERNAL_PATH_PREFIXES = ["/blog", "/about", "/contact", "/series/"];
+
+const isInternalSitePath = (pathname: string): boolean =>
+  pathname === "/" ||
+  INTERNAL_PATH_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix.replace(/\/$/, "")}/`));
+
 export async function processGhostHtml(html: string): Promise<string> {
   try {
     const root = parse(html);
@@ -33,14 +39,18 @@ export async function processGhostHtml(html: string): Promise<string> {
 
       // Ghost absolutizes relative /blog/{slug} links to its own origin on
       // save; point them back at the site so they don't 404 on Ghost itself.
-      // The same applies to the homepage (/). Other Ghost-origin links and
-      // image/content URLs are intentionally left untouched.
+      // The same applies to the homepage (/) and other site routes. Other
+      // Ghost-origin links and image/content URLs are intentionally left untouched.
       if (ghostOrigin && href.startsWith("http")) {
         try {
           const url = new URL(href);
-          if (url.origin === ghostOrigin && (url.pathname === "/" || url.pathname.startsWith("/blog/"))) {
+          if (url.origin === ghostOrigin && isInternalSitePath(url.pathname)) {
             link.setAttribute("href", `${url.pathname}${url.search}${url.hash}`);
             continue;
+          }
+          if (url.searchParams.get("ref") === "localhost") {
+            url.searchParams.delete("ref");
+            link.setAttribute("href", url.toString());
           }
         } catch {
           // keep original href
