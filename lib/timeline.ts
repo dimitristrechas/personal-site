@@ -47,14 +47,19 @@ export function enhanceTimelineHtml(html: string): string {
   try {
     const root = parse(html);
     for (const heading of root.querySelectorAll("h2")) {
-      const text = heading.text.toLowerCase();
-      const company = COMPANY_LOGOS.find((c) => c.keywords.some((k) => text.includes(k)));
-      if (!company) continue;
-      heading.innerHTML = `<img src="${company.src}" alt="${company.alt}" aria-hidden="true" class="timeline-logo" />${heading.innerHTML}`;
       const periodMatch = heading.innerHTML.match(PERIOD_PATTERN);
       if (periodMatch) {
         heading.innerHTML = heading.innerHTML.replace(PERIOD_PATTERN, "");
         heading.insertAdjacentHTML("afterend", `<p class="timeline-period">${periodMatch[1]}</p>`);
+      }
+
+      const text = heading.text.toLowerCase();
+      const company = COMPANY_LOGOS.find((c) => c.keywords.some((k) => text.includes(k)));
+      if (company) {
+        heading.insertAdjacentHTML(
+          "afterbegin",
+          `<img src="${company.src}" alt="${company.alt}" aria-hidden="true" class="timeline-logo" />`,
+        );
       }
     }
     const children = root.childNodes;
@@ -78,9 +83,25 @@ export function enhanceTimelineHtml(html: string): string {
       const intro = children.slice(0, firstRoleIndex);
       const timelineNodes = children.slice(firstRoleIndex, splitAt === -1 ? undefined : splitAt);
       const extraNodes = splitAt === -1 ? [] : children.slice(splitAt);
+
+      const items: string[] = [];
+      let currentGroup: typeof children = [];
+      for (const node of timelineNodes) {
+        if (isRole(node) && currentGroup.length > 0) {
+          items.push(
+            `<div class="timeline-item" style="--item-index: ${items.length}">${serialize(currentGroup)}</div>`,
+          );
+          currentGroup = [];
+        }
+        currentGroup.push(node);
+      }
+      if (currentGroup.length > 0) {
+        items.push(`<div class="timeline-item" style="--item-index: ${items.length}">${serialize(currentGroup)}</div>`);
+      }
+
       root.innerHTML =
         serialize(intro) +
-        `<div class="timeline">${serialize(timelineNodes)}</div>` +
+        `<div class="timeline">${items.join("")}</div>` +
         (extraNodes.length > 0 ? `<div class="about-sections">${serialize(extraNodes)}</div>` : "");
     }
     return root.toString();

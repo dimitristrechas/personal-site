@@ -14,22 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-background text-foreground mx-auto flex h-screen max-w-2xl flex-col">
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                const theme = localStorage.getItem('theme');
-                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && systemDark)) {
-                  document.documentElement.classList.add('dark');
-                }
-              })();
-            `,
-          }}
-        />
+      <body className="bg-background text-foreground mx-auto flex min-h-dvh max-w-2xl flex-col">
         <ThemeProvider>
           <a href="#main-content" className="skip-link">
             Skip to main content
