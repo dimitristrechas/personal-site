@@ -1,0 +1,3 @@
+# Ghost CMS stack (compose, config) — direct prod-outage risk (see mysql:26
+# incident, PR #127). Changes here need owner review even with green checks.
+/ghost/ @dimitristrechas
