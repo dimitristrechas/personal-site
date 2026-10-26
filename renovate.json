@@ -9,6 +9,13 @@
   "prConcurrentLimit": 5,
   "packageRules": [
     {
+      "description": "Freeze MySQL in Ghost compose — upgrades need manual backup-backed migration (8.4 broke prod via 26.10)",
+      "matchManagers": ["docker-compose"],
+      "matchFileNames": ["ghost/docker-compose.yml"],
+      "matchPackageNames": ["mysql"],
+      "enabled": false
+    },
+    {
       "description": "Mirror pnpm minimumReleaseAge (24h): hold npm updates until packages are a day old",
       "matchDatasources": ["npm"],
       "minimumReleaseAge": "1 day",
