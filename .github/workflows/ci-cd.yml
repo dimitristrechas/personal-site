@@ -121,6 +121,72 @@ jobs:
           cache-from: type=gha,scope=${{ env.DOCKER_CACHE_SCOPE }}
           cache-to: type=gha,mode=max,scope=${{ env.DOCKER_CACHE_SCOPE }}
 
+  ghost-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [lint, biome, commits]
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Boot Ghost stack from PR compose file
+        env:
+          MYSQL_ROOT_PASSWORD: ci-ghost-validate
+        run: |
+          cat > /tmp/ghost-ci.override.yml <<'EOF'
+          services:
+            ghost:
+              ports:
+                - "2368:2368"
+              environment:
+                # Serve on localhost in CI: the repo compose pins the prod
+                # URL, which makes Ghost 301-redirect localhost to prod.
+                url: http://localhost:2368
+          EOF
+          docker compose -p ghostci -f ghost/docker-compose.yml -f /tmp/ghost-ci.override.yml up -d
+          docker compose -p ghostci ps
+
+      - name: Wait for MySQL, fail on crash-loop
+        env:
+          MYSQL_ROOT_PASSWORD: ci-ghost-validate
+        run: |
+          db=$(docker compose -p ghostci ps -q db)
+          for i in $(seq 1 36); do
+            status=$(docker inspect --format '{{.State.Status}}' "$db")
+            restarts=$(docker inspect --format '{{.RestartCount}}' "$db")
+            if [ "$status" = "running" ] && docker exec "$db" mysqladmin ping -h127.0.0.1 -uroot -p"$MYSQL_ROOT_PASSWORD" --silent; then
+              echo "MySQL is up"
+              exit 0
+            fi
+            if [ "$status" = "restarting" ]; then
+              echo "db container is crash-looping (restarts=$restarts)"
+              docker logs "$db" --tail 20
+              exit 1
+            fi
+            sleep 10
+          done
+          echo "MySQL never became ready"
+          docker logs "$db" --tail 30
+          exit 1
+
+      - name: Wait for Ghost frontend (proves Ghost <-> MySQL work)
+        run: |
+          for i in $(seq 1 60); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://localhost:2368/ || true)
+            if [ "$code" = "200" ]; then
+              echo "Ghost is serving traffic"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Ghost never served 200"
+          docker compose -p ghostci logs --tail 30
+          exit 1
+
+      - name: Tear down test stack
+        if: always()
+        run: docker compose -p ghostci down -v
+
   docker-publish:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 25
