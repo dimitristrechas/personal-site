@@ -1,6 +1,6 @@
 services:
   ghost:
-    image: ghost:6.72
+    image: ghost:6.73
     restart: always
     environment:
       database__client: mysql
