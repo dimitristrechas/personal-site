@@ -1,9 +1,11 @@
 # syntax=docker/dockerfile:1
 
-FROM node:24-bookworm-slim AS base
+FROM node:26-bookworm-slim AS base
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN corepack enable
+# Node 25+ images no longer bundle corepack (deprecated upstream), so install
+# pnpm directly. Keep the version in sync with package.json's packageManager.
+RUN npm install -g pnpm@12.15.0
 
 FROM base AS deps
 RUN apt-get update -qq && apt-get install --no-install-recommends -y ca-certificates \
