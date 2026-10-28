@@ -71,10 +71,17 @@
       "groupSlug": "major-docker-images"
     },
     {
-      "description": "Keep Node.js on major version 24+",
-      "matchManagers": ["dockerfile"],
+      "description": "Freeze Node.js runtime — all updates done manually (Dockerfile, setup-node, .nvmrc)",
+      "matchManagers": ["dockerfile", "github-actions", "nvm", "node-version"],
       "matchPackageNames": ["node"],
-      "allowedVersions": ">=24"
+      "enabled": false
+    },
+    {
+      "description": "Freeze @types/node major — updated manually with the Node.js runtime",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@types/node"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     },
     {
       "matchPackageNames": ["renovatebot/github-action"],
