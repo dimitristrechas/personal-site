@@ -190,7 +190,7 @@ importers:
         version: 0.4.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       node-html-parser:
         specifier: ^9.0.0
-        version: 9.0.6
+        version: 9.0.7
       react:
         specifier: ^19.2.4
         version: 19.3.1
@@ -2098,8 +2098,8 @@ packages:
       sass:
         optional: true
 
-  node-html-parser@9.0.6:
-    resolution: {integrity: sha512-q3ETJ2gU+VlERyYbiJ5JQ6+mMVV1Bc6mZQ7MdJ30moq+h3oN0kQGj3rWDORaSX1SOLSkPbY/bN+sBzDlliVOBA==}
+  node-html-parser@9.0.7:
+    resolution: {integrity: sha512-0Io6nKYNN2e+QSoJFxU991Z8kX4H2Ogy3l14Ow0XxR2Wonk9l5qBonx1dYO97UyVfYJ1U9H0WHZOIZW6q5KPrA==}
 
   node-releases@2.0.63:
     resolution: {integrity: sha512-6li2QanLsAXpIH2R6j77MzRyvOyrvdTqlKtO4CgBdHGNvN99ZZfyxszHc5o5+IZBWD5u6Hzwg83JoGXmqZNG9Q==}
@@ -4371,7 +4371,7 @@ snapshots:
       - '@types/node'
       - babel-plugin-macros
 
-  node-html-parser@9.0.6:
+  node-html-parser@9.0.7:
     dependencies:
       css-select: 5.2.2
       entities: 8.0.0
