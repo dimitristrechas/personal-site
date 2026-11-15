@@ -1,20 +1,36 @@
+name: personal-ghost
+
 # Local-only overrides for Ghost development.
 # NEVER auto-loaded by Dokploy (composePath points at docker-compose.yml only).
 # Usage:
 #   docker compose -f ghost/docker-compose.yml -f ghost/docker-compose.local.yml up -d
 #   docker compose -f ghost/docker-compose.yml -f ghost/docker-compose.local.yml down
-# Data persists in local volumes (`ghost_ghost`, `ghost_db`); `down -v` wipes it.
+# Runs as its own compose project (`personal-ghost`) on port 2369 so it can run
+# alongside the Ghost monorepo dev stack (project `ghost-dev`, port 2368).
+# Data persists in local volumes (`ghost_ghost`, `ghost_db`, pinned below so the
+# project rename keeps existing content); `down -v` wipes it.
 # Volumes are local to this machine — prod volumes live on the VPS, so prod
-# content is never touched. Ghost admin: http://localhost:2368/ghost
+# content is never touched. Ghost admin: http://localhost:2369/ghost
 services:
   ghost:
     ports:
-      - "127.0.0.1:2368:2368"
+      - "127.0.0.1:2369:2368"
     environment:
-      url: http://localhost:2368
+      url: http://localhost:2369
     # Local-only Ghost config: disables staff new-device email verification
     # (no mail server locally). Real boolean via file mount — env strings
     # would stay truthy. Prod keeps verification ON; this file never
     # touches prod (Dokploy only loads docker-compose.yml).
     volumes:
       - ./config.local.json:/var/lib/ghost/config.production.json:ro
+
+# Keep the pre-rename volume names so existing local content and the database
+# survive switching the compose project from `ghost` to `personal-ghost`.
+# Compose warns that these volumes were created for project "ghost"; that is
+# expected and the data is reused (the volumes are deliberately not `external`
+# so a fresh machine still initializes them).
+volumes:
+  ghost:
+    name: ghost_ghost
+  db:
+    name: ghost_db
