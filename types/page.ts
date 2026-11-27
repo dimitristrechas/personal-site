@@ -27,7 +27,7 @@ export function mapGhostPageToPage(ghostPage: GhostPage): Page {
     id: ghostPage.id,
     title: ghostPage.title,
     content: ghostPage.html,
-    metaTitle: ghostPage.meta_title ?? ghostPage.custom_excerpt,
+    metaTitle: ghostPage.meta_title ?? null,
     metaDescription: ghostPage.meta_description ?? ghostPage.custom_excerpt,
   };
 }

@@ -10,19 +10,13 @@
   "license": "MIT",
   "packageManager": "pnpm@12.21.0",
   "scripts": {
-    "dev": "next dev --turbopack -p 3001",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
     "outdated": "npx npm-check-updates",
     "lint": "biome check . && eslint .",
     "lint:fix": "biome check --write . && eslint --fix .",
-    "biome:check": "biome check .",
-    "biome:check:fix": "biome check --write .",
-    "biome:format": "biome format --write .",
-    "biome:format:fix": "biome format .",
-    "biome:lint": "biome lint --write .",
-    "biome:lint:fix": "biome lint .",
-    "biome:ci": "biome ci .",
+    "agents:sync": "node scripts/sync-agent-config.mjs",
+    "agents:check": "node scripts/sync-agent-config.mjs --check",
     "postinstall": "git rev-parse --git-dir > /dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {

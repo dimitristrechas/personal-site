@@ -1,4 +1,6 @@
 /** @type {import('pnpm').Hooks} */
+// TypeScript 7 has no JS compiler API yet: route typescript-eslint through the
+// TS 6 compatibility package while the root typescript package supplies TS 7.
 module.exports = {
   hooks: {
     readPackage(pkg) {

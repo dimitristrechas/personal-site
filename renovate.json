@@ -9,7 +9,7 @@
   "prConcurrentLimit": 5,
   "packageRules": [
     {
-      "description": "Freeze MySQL in Ghost compose — upgrades need manual backup-backed migration (8.4 broke prod via 26.10)",
+      "description": "Freeze MySQL in Ghost compose — mysql 26.x broke prod (#127); upgrades need a manual backup-backed migration",
       "matchManagers": ["docker-compose"],
       "matchFileNames": ["ghost/docker-compose.yml"],
       "matchPackageNames": ["mysql"],

@@ -1,30 +1,15 @@
 import type { Metadata } from "next";
-import { cache, type FC } from "react";
-import { ghostClient } from "@/lib/ghost";
+import type { FC } from "react";
 import { processGhostHtml } from "@/lib/html";
+import { getPage } from "@/lib/pages";
 import { enhanceTimelineHtml } from "@/lib/timeline";
-import type { GhostPage, Page } from "@/types/page";
-import { mapGhostPageToPage } from "@/types/page";
 
 export const revalidate = 3600;
 
-const fetchAboutData = cache(async (): Promise<Page | null> => {
-  try {
-    const response = await ghostClient.pages.read({ slug: "about" });
-    if (!response) {
-      return null;
-    }
-    return mapGhostPageToPage(response as GhostPage);
-  } catch (error) {
-    console.error("Error fetching about page:", error);
-    return null;
-  }
-});
-
 export async function generateMetadata(): Promise<Metadata> {
-  const about = await fetchAboutData();
+  const about = await getPage("about");
   return {
-    title: about?.metaTitle || "About | Dimitris Trechas",
+    title: about?.metaTitle ? { absolute: about.metaTitle } : "About",
     description:
       about?.metaDescription ||
       "About Dimitris Trechas — Lead Frontend Engineer with 12 years of experience across e-commerce, online delivery, and telecommunications.",
@@ -32,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const AboutPage: FC = async () => {
-  const about = await fetchAboutData();
+  const about = await getPage("about");
 
   if (!about) {
     return (
@@ -43,7 +28,7 @@ const AboutPage: FC = async () => {
     );
   }
 
-  const processedHtml = enhanceTimelineHtml(await processGhostHtml(about.content));
+  const processedHtml = enhanceTimelineHtml(processGhostHtml(about.content));
 
   return (
     <section id="about" className="mb-16">

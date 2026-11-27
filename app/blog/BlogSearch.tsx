@@ -3,23 +3,16 @@
 import { useMemo, useState } from "react";
 import PostCard from "@/app/_components/PostCard";
 import type { Post } from "@/types/post";
-import { createSearchMatcher } from "@/utils/helpers";
+import { createSearchMatcher, pluralize } from "@/utils/helpers";
 
 type Props = {
   posts: Post[];
 };
 
-export default function ClientComponent({ posts }: Props) {
+export default function BlogSearch({ posts }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const displayedPosts = useMemo(() => {
-    if (!searchQuery.trim()) return posts;
-
-    const matcher = createSearchMatcher(searchQuery);
-    return posts.filter(matcher);
-  }, [posts, searchQuery]);
-
-  const resultsText = `${displayedPosts.length} ${displayedPosts.length === 1 ? "post" : "posts"} found`;
+  const displayedPosts = useMemo(() => posts.filter(createSearchMatcher(searchQuery)), [posts, searchQuery]);
 
   return (
     <>
@@ -31,12 +24,13 @@ export default function ClientComponent({ posts }: Props) {
           </label>
           <input
             id="post-search"
-            className="mb-1 max-w-sm rounded border-2 border-gray-300 p-1"
+            type="search"
+            className="border-border mb-1 max-w-sm rounded border-2 p-1"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <small>{resultsText}</small>
+          <small>{`${pluralize(displayedPosts.length, "post")} found`}</small>
         </div>
       </search>
       <section>

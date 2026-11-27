@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { getPostsWithoutSeriesTag } from "@/lib/series";
-import ClientComponent from "./ClientComponent";
+import { getBlogPosts } from "@/lib/series";
+import BlogSearch from "./BlogSearch";
 
 export const revalidate = 600;
 
 export const metadata: Metadata = {
-  title: "Dimitris Trechas - Blog",
+  title: "Blog",
 };
 
-async function getPosts() {
-  return getPostsWithoutSeriesTag();
-}
-
 export default async function Page() {
-  const posts = await getPosts();
+  const posts = await getBlogPosts();
 
   if (posts.length === 0) {
     return (
@@ -24,5 +20,5 @@ export default async function Page() {
     );
   }
 
-  return <ClientComponent posts={posts} />;
+  return <BlogSearch posts={posts} />;
 }

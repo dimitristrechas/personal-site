@@ -1,15 +1,13 @@
 import Image from "next/image";
 import type { FC } from "react";
 import { getHomepageData } from "@/lib/series";
-import type { Post } from "@/types/post";
-import type { Series } from "@/types/series";
 import PostCard from "./_components/PostCard";
 import SeriesCard from "./_components/SeriesCard";
 
 export const revalidate = 3600;
 
 const Home: FC = async () => {
-  const { posts, seriesList }: { posts: Post[]; seriesList: Series[] } = await getHomepageData(3);
+  const { posts, seriesList } = await getHomepageData(3);
 
   return (
     <>
@@ -36,9 +34,7 @@ const Home: FC = async () => {
         {posts.length === 0 ? (
           <p className="text-muted-foreground mt-4">Posts temporarily unavailable. Please try again later.</p>
         ) : (
-          posts.map((post: Post, idx: number) => (
-            <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />
-          ))
+          posts.map((post, idx) => <PostCard key={post.id} post={post} isLastPost={idx === posts.length - 1} />)
         )}
       </section>
       {seriesList.length > 0 ? (

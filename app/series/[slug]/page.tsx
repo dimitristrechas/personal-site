@@ -1,23 +1,17 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import CoverImage from "@/app/_components/CoverImage";
 import { processGhostHtml } from "@/lib/html";
 import { getAllSeries, getSeriesPageData } from "@/lib/series";
-import { getSiteUrl } from "@/lib/site";
+import { buildArticleMetadata } from "@/lib/site";
+import { formatDate, pluralize } from "@/utils/helpers";
 
 export const revalidate = 600;
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "medium",
-});
-
 export async function generateStaticParams() {
   const seriesList = await getAllSeries();
-
-  return seriesList.map((series) => ({
-    slug: series.slug,
-  }));
+  return seriesList.map((series) => ({ slug: series.slug }));
 }
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -28,27 +22,12 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     return { title: "Article series" };
   }
 
-  const canonicalUrl = `${getSiteUrl()}/series/${series.slug}`;
-  const description = series.description?.trim() || undefined;
-
-  return {
-    title: `${series.title} - Article series`,
-    description,
-    alternates: { canonical: canonicalUrl },
-    openGraph: {
-      title: series.title,
-      description,
-      type: "article",
-      url: canonicalUrl,
-      ...(series.coverImage ? { images: [{ url: series.coverImage }] } : {}),
-    },
-    twitter: {
-      card: series.coverImage ? "summary_large_image" : "summary",
-      title: series.title,
-      description,
-      ...(series.coverImage ? { images: [series.coverImage] } : {}),
-    },
-  };
+  return buildArticleMetadata({
+    title: `${series.title} (series)`,
+    description: series.description,
+    path: `/series/${series.slug}`,
+    image: series.coverImage,
+  });
 }
 
 export default async function Page(props: { params: Promise<{ slug: string }> }) {
@@ -59,26 +38,13 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
     notFound();
   }
 
-  const htmlString = await processGhostHtml(hubPost.content);
-  const articleLabel = members.length === 1 ? "1 article" : `${members.length} articles`;
+  const htmlString = processGhostHtml(hubPost.content);
 
   return (
     <>
-      {series.coverImage || hubPost.featuredImage ? (
-        <div className="mb-6 max-h-50 overflow-hidden rounded-lg sm:max-h-80">
-          <Image
-            src={series.coverImage ?? hubPost.featuredImage ?? ""}
-            alt={series.title}
-            width={1600}
-            height={900}
-            className="h-full w-full object-cover object-center"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 85vw, 960px"
-            priority
-          />
-        </div>
-      ) : null}
+      {series.coverImage && <CoverImage src={series.coverImage} alt={series.title} />}
       <h1 className="mb-2 text-3xl font-bold">{series.title}</h1>
-      <div className="text-muted-foreground mb-6 text-sm">{articleLabel}</div>
+      <div className="text-muted-foreground mb-6 text-sm">{pluralize(members.length, "article")}</div>
       <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />
       <section className="mt-10">
         <h2 className="mb-2 text-xl font-semibold">In this series</h2>
@@ -99,9 +65,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
                   <span className="text-muted-foreground w-6 shrink-0 text-sm tabular-nums">{idx + 1}</span>
                   <span>
                     <span className="block font-medium group-hover:underline">{member.title}</span>
-                    <span className="text-muted-foreground text-sm">
-                      {dateFormatter.format(new Date(member.publishedAt))}
-                    </span>
+                    <span className="text-muted-foreground text-sm">{formatDate(member.publishedAt)}</span>
                   </span>
                 </Link>
               </li>

@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { FC } from "react";
-import { ThemeToggle } from "../ThemeToggle";
+import ThemeToggle from "../ThemeToggle";
+
+const NAV_LINKS = [
+  { href: "/blog", label: "blog" },
+  { href: "/about", label: "about" },
+  { href: "/contact", label: "contact" },
+] as const;
 
 const Header: FC = () => {
   const pathname = usePathname();
@@ -15,27 +21,19 @@ const Header: FC = () => {
           Dimitris Trechas
         </Link>
         <div className="ml-auto flex items-center text-[clamp(0.75rem,3.5vw,1.25rem)]">
-          <Link
-            href="/blog"
-            className={`ml-[clamp(0.75rem,2.5vw,1rem)] ${pathname === "/blog" ? "underline" : ""}`}
-            aria-current={pathname === "/blog" ? "page" : undefined}
-          >
-            blog
-          </Link>
-          <Link
-            href="/about"
-            className={`ml-[clamp(0.75rem,2.5vw,1rem)] ${pathname === "/about" ? "underline" : ""}`}
-            aria-current={pathname === "/about" ? "page" : undefined}
-          >
-            about
-          </Link>
-          <Link
-            href="/contact"
-            className={`ml-[clamp(0.75rem,2.5vw,1rem)] ${pathname === "/contact" ? "underline" : ""}`}
-            aria-current={pathname === "/contact" ? "page" : undefined}
-          >
-            contact
-          </Link>
+          {NAV_LINKS.map(({ href, label }) => {
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`ml-[clamp(0.75rem,2.5vw,1rem)] ${isActive ? "underline" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {label}
+              </Link>
+            );
+          })}
           <ThemeToggle />
         </div>
       </nav>

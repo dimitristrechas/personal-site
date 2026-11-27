@@ -1,26 +1,20 @@
+import type { Metadata } from "next";
 import type { FC } from "react";
-import { ghostClient } from "@/lib/ghost";
 import { processGhostHtml } from "@/lib/html";
-import type { GhostPage, Page } from "@/types/page";
-import { mapGhostPageToPage } from "@/types/page";
+import { getPage } from "@/lib/pages";
 
 export const revalidate = 3600;
 
-async function fetchContactData(): Promise<Page | null> {
-  try {
-    const response = await ghostClient.pages.read({ slug: "contact" });
-    if (!response) {
-      return null;
-    }
-    return mapGhostPageToPage(response as GhostPage);
-  } catch (error) {
-    console.error("Error fetching contact page:", error);
-    return null;
-  }
+export async function generateMetadata(): Promise<Metadata> {
+  const contact = await getPage("contact");
+  return {
+    title: contact?.metaTitle ? { absolute: contact.metaTitle } : "Contact",
+    description: contact?.metaDescription || undefined,
+  };
 }
 
 const ContactPage: FC = async () => {
-  const contact = await fetchContactData();
+  const contact = await getPage("contact");
 
   if (!contact) {
     return (
@@ -31,7 +25,7 @@ const ContactPage: FC = async () => {
     );
   }
 
-  const processedHtml = await processGhostHtml(contact.content);
+  const processedHtml = processGhostHtml(contact.content);
 
   return (
     <section id="contact" className="mb-16">

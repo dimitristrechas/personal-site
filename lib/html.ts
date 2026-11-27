@@ -1,14 +1,14 @@
 import { parse } from "node-html-parser";
+import { getSiteHostname } from "@/lib/site";
+
+const siteHostname = getSiteHostname();
 
 const isExternalLink = (href: string): boolean => {
   if (!href.startsWith("http://") && !href.startsWith("https://")) return false;
 
-  const siteDomain = process.env.NEXT_PUBLIC_SITE_DOMAIN;
-  if (!siteDomain) return true;
-
   try {
-    const url = new URL(href);
-    return !url.hostname.includes(siteDomain);
+    const { hostname } = new URL(href);
+    return hostname !== siteHostname && !hostname.endsWith(`.${siteHostname}`);
   } catch {
     return true;
   }
@@ -22,13 +22,12 @@ const ghostOrigin = (() => {
   }
 })();
 
-const INTERNAL_PATH_PREFIXES = ["/blog", "/about", "/contact", "/series/"];
+const INTERNAL_PATH_PREFIXES = ["/blog", "/about", "/contact", "/series"];
 
 const isInternalSitePath = (pathname: string): boolean =>
-  pathname === "/" ||
-  INTERNAL_PATH_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix.replace(/\/$/, "")}/`));
+  pathname === "/" || INTERNAL_PATH_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 
-export async function processGhostHtml(html: string): Promise<string> {
+export function processGhostHtml(html: string): string {
   try {
     const root = parse(html);
     const links = root.querySelectorAll("a");
@@ -48,6 +47,8 @@ export async function processGhostHtml(html: string): Promise<string> {
             link.setAttribute("href", `${url.pathname}${url.search}${url.hash}`);
             continue;
           }
+          // Ghost's outbound link tagging appends `?ref=<site host>`; posts
+          // authored on a local Ghost carry `ref=localhost` into prod.
           if (url.searchParams.get("ref") === "localhost") {
             url.searchParams.delete("ref");
             link.setAttribute("href", url.toString());

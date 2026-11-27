@@ -1,9 +1,9 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useLayoutEffect, useState } from "react";
+import { type FC, useLayoutEffect, useState } from "react";
 
-export function ThemeToggle() {
+const ThemeToggle: FC = () => {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -48,4 +48,6 @@ export function ThemeToggle() {
       )}
     </button>
   );
-}
+};
+
+export default ThemeToggle;

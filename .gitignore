@@ -36,3 +36,7 @@ next-env.d.ts
 /.secrets/
 
 /.sisyphus/
+
+# AI tools (personal settings)
+.claude/settings.local.json
+CLAUDE.local.md

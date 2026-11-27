@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { FC } from "react";
 import type { Series } from "@/types/series";
+import { pluralize } from "@/utils/helpers";
 
 type SeriesCardProps = {
   series: Series;
@@ -9,7 +10,6 @@ type SeriesCardProps = {
 
 const SeriesCard: FC<SeriesCardProps> = ({ series, isLastSeries }) => {
   const lastSeriesClass = isLastSeries ? "" : "border-border border-b";
-  const articleCountLabel = series.articleCount === 1 ? "1 article" : `${series.articleCount} articles`;
 
   return (
     <Link
@@ -22,7 +22,7 @@ const SeriesCard: FC<SeriesCardProps> = ({ series, isLastSeries }) => {
         className={`${lastSeriesClass} group-hover:bg-muted group-focus-visible:bg-muted cursor-pointer rounded py-4 transition-colors`}
       >
         <div className="mb-1 text-xl">{series.title}</div>
-        <div className="text-muted-foreground text-sm">{articleCountLabel}</div>
+        <div className="text-muted-foreground text-sm">{pluralize(series.articleCount, "article")}</div>
         {series.description ? <p className="text-muted-foreground mt-2 text-sm">{series.description}</p> : null}
       </div>
     </Link>
