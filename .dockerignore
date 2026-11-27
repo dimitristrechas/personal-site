@@ -34,7 +34,6 @@ coverage
 .codex
 .opencode
 opencode.json
-scripts
 
 # dokploy compose configs (deployed by Dokploy from git, not part of web image)
 ghost/

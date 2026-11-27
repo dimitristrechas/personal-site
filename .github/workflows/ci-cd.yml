@@ -44,9 +44,6 @@ jobs:
       - name: ESLint
         run: pnpm exec eslint .
 
-      - name: AI tool config in sync
-        run: pnpm agents:check
-
   biome:
     runs-on: ubuntu-latest
     timeout-minutes: 2

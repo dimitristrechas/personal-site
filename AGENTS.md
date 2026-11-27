@@ -55,7 +55,7 @@ There are no unit or integration tests yet. Before considering a change complete
 
 ## AI tool config
 
-- Claude Code, Codex, and OpenCode share one setup (Cursor is not supported). Edit only the canonical sources (`AGENTS.md`, `.claude/agents/`, `.claude/skills/`, `.agent-docs/agent-config.json`), then run `pnpm agents:sync`. Never hand-edit generated files (`.mcp.json`, `.codex/**`, `.claude/settings.json`, `opencode.json`, agent/skill symlinks). Details: [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md).
+- Claude Code, Codex, and OpenCode share one setup (Cursor is not supported). Their config files are kept aligned by hand: when you change an MCP server, approval gate, subagent, or skill, update every tool's file in the same change, following [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md).
 - Approval gates (`git commit`/`push`/`reset`/`reflog`, `dokploy` and `cloudflare-api` MCP tools) are enforced by each tool's config. Do not try to bypass them.
 
 <!-- BEGIN:nextjs-agent-rules -->

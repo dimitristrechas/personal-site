@@ -64,7 +64,6 @@ To stop Ghost, run the same compose command with `down`. `down -v` also deletes 
 | `pnpm build`       | Production build (standalone) |
 | `pnpm lint`        | Biome + ESLint                |
 | `pnpm lint:fix`    | Biome + ESLint with auto-fix  |
-| `pnpm agents:sync` | Regenerate AI tool config     |
 
 Commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/). A git hook and CI both check this.
 
@@ -98,7 +97,7 @@ All three tools share the same instructions (`AGENTS.md`), subagents, skills, MC
 - **Codex:** trust the project when prompted; otherwise `.codex/` is ignored.
 - **OpenCode:** nothing to do.
 
-To change MCP servers, agents or skills, edit the canonical files and run `pnpm agents:sync`; see [`.agent-docs/ai-tooling.md`](.agent-docs/ai-tooling.md).
+To change MCP servers, agents or skills, ask a coding agent to update all three tools' config together; the mapping is in [`.agent-docs/ai-tooling.md`](.agent-docs/ai-tooling.md).
 
 ## License
 

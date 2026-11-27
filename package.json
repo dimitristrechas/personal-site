@@ -15,8 +15,6 @@
     "outdated": "npx npm-check-updates",
     "lint": "biome check . && eslint .",
     "lint:fix": "biome check --write . && eslint --fix .",
-    "agents:sync": "node scripts/sync-agent-config.mjs",
-    "agents:check": "node scripts/sync-agent-config.mjs --check",
     "postinstall": "git rev-parse --git-dir > /dev/null 2>&1 && lefthook install || true"
   },
   "dependencies": {
