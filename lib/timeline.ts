@@ -3,26 +3,22 @@ import { parse } from "node-html-parser";
 // Company logos (public-domain text logos from Wikimedia Commons,
 // self-hosted under public/logos). Matched against Ghost "about" page
 // h2 headings by keyword; headings without a match are left untouched.
-export const COMPANY_LOGOS = [
+const COMPANY_LOGOS = [
   {
     keywords: ["clickdelivery", "efood"],
     src: "/logos/efood.svg",
-    alt: "",
   },
   {
     keywords: ["singularlogic"],
     src: "/logos/singularlogic.svg",
-    alt: "",
   },
   {
     keywords: ["skroutz"],
     src: "/logos/skroutz.svg",
-    alt: "",
   },
   {
     keywords: ["deutsche telekom", "telekom"],
     src: "/logos/deutsche-telekom.svg",
-    alt: "",
   },
 ] as const;
 
@@ -58,7 +54,7 @@ export function enhanceTimelineHtml(html: string): string {
       if (company) {
         heading.insertAdjacentHTML(
           "afterbegin",
-          `<img src="${company.src}" alt="${company.alt}" aria-hidden="true" class="timeline-logo" />`,
+          `<img src="${company.src}" alt="" aria-hidden="true" class="timeline-logo" />`,
         );
       }
     }

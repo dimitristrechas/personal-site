@@ -1,0 +1,23 @@
+prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "prompt",
+    justification = "Requires explicit user approval (AGENTS.md hard rules)",
+)
+
+prefix_rule(
+    pattern = ["git", "push"],
+    decision = "prompt",
+    justification = "Requires explicit user approval (AGENTS.md hard rules)",
+)
+
+prefix_rule(
+    pattern = ["git", "reset"],
+    decision = "prompt",
+    justification = "Requires explicit user approval (AGENTS.md hard rules)",
+)
+
+prefix_rule(
+    pattern = ["git", "reflog"],
+    decision = "prompt",
+    justification = "Requires explicit user approval (AGENTS.md hard rules)",
+)

@@ -18,9 +18,9 @@ services:
     environment:
       url: http://localhost:2369
     # Local-only Ghost config: disables staff new-device email verification
-    # (no mail server locally). Real boolean via file mount — env strings
-    # would stay truthy. Prod keeps verification ON; this file never
-    # touches prod (Dokploy only loads docker-compose.yml).
+    # (no mail server locally) with a real boolean via file mount. Prod
+    # disables it separately via env in docker-compose.yml until SMTP exists;
+    # this file never touches prod (Dokploy only loads docker-compose.yml).
     volumes:
       - ./config.local.json:/var/lib/ghost/config.production.json:ro
 

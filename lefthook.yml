@@ -21,9 +21,9 @@ pre-commit:
   commands:
     biome-check:
       glob: "*.{ts,tsx,js,mjs,json}"
-      run: npx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      run: pnpm exec biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
     eslint-next:
       glob: "*.{ts,tsx,js,mjs}"
-      run: npx eslint --fix {staged_files}
+      run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true

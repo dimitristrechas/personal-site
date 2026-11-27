@@ -1,83 +1,90 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": ["AGENTS.md"],
-  "agent": {
-    "frontend-architect": {
-      "description": "Frontend architecture for this Next.js site — component structure, App Router patterns, Ghost HTML pipeline, refactors. Use for feature design and architecture reviews.",
-      "mode": "subagent",
-      "temperature": 0.1,
-      "prompt": "{file:./.claude/agents/frontend-architect.md}"
+  "permissions": [
+    {
+      "action": "shell",
+      "resource": "git commit *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git push *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git reset *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git reflog *",
+      "effect": "ask"
+    },
+    {
+      "action": "cloudflare?api_*",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "dokploy_*",
+      "resource": "*",
+      "effect": "ask"
     }
-  },
+  ],
   "mcp": {
-    "github": {
-      "type": "remote",
-      "url": "https://api.githubcopilot.com/mcp/",
-      "enabled": true,
-      "oauth": false,
-      "headers": {
-        "Authorization": "Bearer {env:GITHUB_MCP_TOKEN}"
+    "servers": {
+      "github": {
+        "type": "remote",
+        "url": "https://api.githubcopilot.com/mcp/",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Bearer {env:GITHUB_MCP_TOKEN}"
+        }
+      },
+      "linear": {
+        "type": "remote",
+        "url": "https://mcp.linear.app/mcp",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Bearer {env:LINEAR_MCP_TOKEN}"
+        }
+      },
+      "exa": {
+        "type": "remote",
+        "url": "https://mcp.exa.ai/mcp",
+        "oauth": false
+      },
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Bearer {env:CONTEXT7_API_KEY}"
+        }
+      },
+      "cloudflare-api": {
+        "type": "remote",
+        "url": "https://mcp.cloudflare.com/mcp",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Bearer {env:CLOUDFLARE_API_TOKEN}"
+        }
+      },
+      "cloudflare-docs": {
+        "type": "remote",
+        "url": "https://docs.mcp.cloudflare.com/mcp",
+        "oauth": false
+      },
+      "dokploy": {
+        "type": "local",
+        "command": ["npx", "-y", "@dokploy/mcp@latest"],
+        "environment": {
+          "DOKPLOY_URL": "{env:DOKPLOY_URL}",
+          "DOKPLOY_API_KEY": "{env:DOKPLOY_API_KEY}",
+          "DOKPLOY_TOOL_PRESET": "deploy"
+        }
       }
-    },
-    "linear": {
-      "type": "remote",
-      "url": "https://mcp.linear.app/mcp",
-      "enabled": true,
-      "oauth": false,
-      "headers": {
-        "Authorization": "Bearer {env:LINEAR_MCP_TOKEN}"
-      }
-    },
-    "exa": {
-      "type": "remote",
-      "url": "https://mcp.exa.ai/mcp",
-      "enabled": true,
-      "oauth": false
-    },
-    "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "enabled": true,
-      "oauth": false,
-      "headers": {
-        "Authorization": "Bearer {env:CONTEXT7_API_KEY}"
-      }
-    },
-    "cloudflare-api": {
-      "type": "remote",
-      "url": "https://mcp.cloudflare.com/mcp",
-      "enabled": true,
-      "oauth": false,
-      "headers": {
-        "Authorization": "Bearer {env:CLOUDFLARE_API_TOKEN}"
-      }
-    },
-    "cloudflare-docs": {
-      "type": "remote",
-      "url": "https://docs.mcp.cloudflare.com/mcp",
-      "enabled": true,
-      "oauth": false
-    },
-    "dokploy": {
-      "type": "local",
-      "command": ["npx", "-y", "@dokploy/mcp@latest"],
-      "enabled": true,
-      "environment": {
-        "DOKPLOY_URL": "{env:DOKPLOY_URL}",
-        "DOKPLOY_API_KEY": "{env:DOKPLOY_API_KEY}",
-        "DOKPLOY_TOOL_PRESET": "deploy"
-      }
-    }
-  },
-  "permission": {
-    "bash(git commit*)": "ask",
-    "bash(git push*)": "ask",
-    "bash(git reflog*)": "ask",
-    "bash(git reset*)": "ask",
-    "dokploy*": "ask",
-    "cloudflare-api*": "ask",
-    "skill": {
-      "*": "allow"
     }
   }
 }

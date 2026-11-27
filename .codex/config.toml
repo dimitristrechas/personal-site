@@ -1,8 +1,4 @@
-# Project-scoped Codex configuration (trusted projects only).
-# Keep the same servers and env var names as opencode.json, .mcp.json,
-# and .cursor/mcp.json. See .agent-docs/ai-tooling.md.
-# Required env vars: GITHUB_MCP_TOKEN, LINEAR_MCP_TOKEN, CONTEXT7_API_KEY,
-# CLOUDFLARE_API_TOKEN, DOKPLOY_URL, DOKPLOY_API_KEY.
+# Codex loads this project layer only after you trust the project.
 
 [mcp_servers.github]
 url = "https://api.githubcopilot.com/mcp/"
@@ -22,6 +18,7 @@ bearer_token_env_var = "CONTEXT7_API_KEY"
 [mcp_servers.cloudflare-api]
 url = "https://mcp.cloudflare.com/mcp"
 bearer_token_env_var = "CLOUDFLARE_API_TOKEN"
+default_tools_approval_mode = "prompt"
 
 [mcp_servers.cloudflare-docs]
 url = "https://docs.mcp.cloudflare.com/mcp"
@@ -30,6 +27,7 @@ url = "https://docs.mcp.cloudflare.com/mcp"
 command = "npx"
 args = ["-y", "@dokploy/mcp@latest"]
 env_vars = ["DOKPLOY_URL", "DOKPLOY_API_KEY"]
+default_tools_approval_mode = "prompt"
 
 [mcp_servers.dokploy.env]
 DOKPLOY_TOOL_PRESET = "deploy"

@@ -1,6 +1,6 @@
 # Dokploy: deploy from ghcr.io/<lowercase-owner>/personal-site:latest (or :sha-*).
-# Runtime env on the service: GHOST_URL, GHOST_CONTENT_API_KEY, NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_SITE_DOMAIN.
-# Build-time: same Ghost secrets as repo Actions secrets; optional NEXT_PUBLIC_* via repository Variables.
+# Runtime env on the service: GHOST_URL, GHOST_CONTENT_API_KEY, NEXT_PUBLIC_SITE_URL.
+# Build-time: same Ghost secrets as repo Actions secrets; optional NEXT_PUBLIC_SITE_URL via repository Variables.
 
 name: CI/CD
 
@@ -42,7 +42,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: ESLint
-        run: pnpm lint
+        run: pnpm exec eslint .
 
   biome:
     runs-on: ubuntu-latest
@@ -114,7 +114,6 @@ jobs:
           push: false
           build-args: |
             NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
-            NEXT_PUBLIC_SITE_DOMAIN=${{ vars.NEXT_PUBLIC_SITE_DOMAIN }}
           secrets: |
             ghost_url=${{ secrets.GHOST_URL }}
             ghost_content_api_key=${{ secrets.GHOST_CONTENT_API_KEY }}
@@ -246,7 +245,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
-            NEXT_PUBLIC_SITE_DOMAIN=${{ vars.NEXT_PUBLIC_SITE_DOMAIN }}
           secrets: |
             ghost_url=${{ secrets.GHOST_URL }}
             ghost_content_api_key=${{ secrets.GHOST_CONTENT_API_KEY }}

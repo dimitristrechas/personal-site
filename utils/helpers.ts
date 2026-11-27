@@ -1,21 +1,16 @@
 import type { Post } from "@/types/post";
 
-export const normalizeText = (input: string | null | undefined): string => {
-  if (!input) return "";
+const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
 
-  try {
-    return input
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toUpperCase();
-  } catch (error) {
-    console.error("normalizeText error:", error);
-    return "";
-  }
-};
+export const formatDate = (isoDate: string): string => dateFormatter.format(new Date(isoDate));
+
+export const pluralize = (count: number, noun: string): string => `${count} ${count === 1 ? noun : `${noun}s`}`;
+
+export const normalizeText = (input: string | null | undefined): string =>
+  input ? input.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase() : "";
 
 export const createSearchMatcher = (query: string) => {
-  const normalized = normalizeText(query);
+  const normalized = normalizeText(query.trim());
 
   return (post: Post): boolean => {
     if (!normalized) return true;

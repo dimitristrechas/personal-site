@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllSeries, getPostsWithoutSeriesTag } from "@/lib/series";
+import { getAllSeries, getBlogPosts } from "@/lib/series";
 import { getSiteUrl } from "@/lib/site";
 import type { Post } from "@/types/post";
 import type { Series } from "@/types/series";
@@ -29,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const [posts, seriesList] = await Promise.all([getPostsWithoutSeriesTag(), getAllSeries()]);
+    const [posts, seriesList] = await Promise.all([getBlogPosts(), getAllSeries()]);
 
     const blogRoutes: MetadataRoute.Sitemap = posts.map((post: Post) => ({
       url: `${siteUrl}/blog/${post.slug}`,

@@ -29,9 +29,11 @@ coverage
 
 # agents / tooling not needed in image
 .agents
+.agent-docs
 .claude
-.cursor
 .codex
+.opencode
+opencode.json
 
 # dokploy compose configs (deployed by Dokploy from git, not part of web image)
 ghost/

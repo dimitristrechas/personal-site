@@ -1,39 +1,62 @@
 # AGENTS.md
 
-## Key Architectural Decisions
+Instructions for AI coding agents working in this repo. Human-facing docs live in `README.md`.
 
-- Blog content from Ghost CMS is **pre-rendered HTML**, not Markdown. `lib/html.ts` processes it with node-html-parser: external links get `target="_blank"` + `noopener`, and links Ghost absolutized to its own origin with a `/blog/` path are rewritten back to site-relative (Ghost rewrites relative `/blog/{slug}` hrefs to absolute on save — see [Ghost content gotcha](#ghost-content-gotcha) below).
-- Ghost API responses mapped to domain types via adapters in `types/` — **no runtime validation** (intentional; do not add Zod or similar).
-- Article series are **Ghost tags, not link lists**. Create one **internal** tag per series (name starts with `#`, e.g. `#React Patterns` → slug `hash-series-react-patterns`); tag metadata (`name`, `description`, `feature_image`) is the series definition and `include=count.posts` is the article count — no `/404/` archive or sitemap entry is generated for internal tags. Tag **every** member post plus one **hub/intro post** with it (hub = earliest-published; it redirects from `/blog/{slug}` to `/series/{slug}` while members stay readable). `lib/series.ts` resolves the tag via the Content API, renders the hub HTML as intro, and lists members (`published_at ASC`, hub excluded) — never parse hub links for membership. Series/internal tags are hidden from tag chips in `app/_components/PostCard/index.tsx`; only hub posts are excluded from Latest Posts/blog feeds. Legacy `series-*` **public** tags still resolve (internal slug tried first), but new series must use `hash-series-*`.
-- Ghost CMS itself is Git-backed in this repo under `ghost/`. Dokploy resource `ghost` (`dimitristrechas` project) deploys `./ghost/docker-compose.yml` from `main` with `watchPaths: ["ghost/**"]`. Same `composeId`/`appName` as before, so volumes, R2 backups, and `ghost.dimitristrechas.com` are preserved. Pinned images: `ghost:6.72`, `mysql:8.0` (MySQL 8.0 is EoL — upgrading to 8.4 LTS is a separate, backup-backed job; do not bundle it with other changes). Staff device verification is currently **disabled in prod** via `security__staffDeviceVerification` in the compose file (Ghost checks `config !== true`) because there is no working SMTP — transactional mail was never wired (Direct is blocked from the VPS). Proper fix: configure SMTP (Mailgun/SES/etc.), then remove that line to re-enable verification.
-- `.env` is **always local** (points at local Ghost). Prod values live in the Dokploy UI env and GitHub Actions secrets, with a gitignored backup in `.env.prod.local`. Never point `.env` at production, never commit it.
-- `pnpm dev` serves the site on `:3001`. `next.config.ts` allows `http://localhost/**` images via `next/image` in development only.
+## Hard rules
 
-## Local development (agents: follow this exactly)
+- **Never commit code unless explicitly instructed to do so in the prompt.**
+- **Never write credentials (local or prod) into tracked files.** Secrets belong in the gitignored `.env` / `ghost/.env`; docs reference variable names only.
+- `.env` is **always local** (points at local Ghost). Never point it at production and never commit it. Prod values live in the Dokploy UI env and GitHub Actions secrets (gitignored backup: `.env.prod.local`).
+- Dokploy writes (`compose-update`, deploys) change production and need explicit user confirmation. Switching a resource's source does not redeploy by itself, but the next matching push to `main` auto-deploys.
+- Do not add Zod or any other runtime validation.
+- Do not bundle a MySQL major upgrade with other changes. `mysql:8.4` is frozen in `renovate.json` (26.x broke prod, PR #127); upgrading needs a separate, backup-backed migration.
+
+## Architecture
+
+- **Ghost content is pre-rendered HTML, not Markdown.** `lib/html.ts` processes it with node-html-parser: external links (host not equal to, or a subdomain of, `NEXT_PUBLIC_SITE_URL`'s host) get `target="_blank"` + `noopener`, and Ghost-origin links to site routes are rewritten back to site-relative (see [Ghost content gotcha](#ghost-content-gotcha)). `lib/timeline.ts` turns the About page into a career timeline.
+- **Adapters, no validation.** Ghost API responses map to domain types via adapters in `types/`.
+- **Data access:** `lib/posts.ts` (posts), `lib/pages.ts` (Ghost pages), `lib/series.ts` (series + blog feed). Wrap every fetcher in React `cache` so `generateMetadata` and the page share requests. Routes use ISR (`revalidate`); there is no client-side fetching.
+- **Page titles:** the root layout sets `title.template` (`%s | Dimitris Trechas`). Pages return bare titles; a Ghost `meta_title` is used as `{ absolute }`.
+- **Components:** `app/_components/<Name>/index.tsx` with a default export.
+- **Series are Ghost tags, not link lists.**
+  - One **internal** tag per series (name starts with `#`, e.g. `#React Patterns`; the slug must be set manually to `hash-series-react-patterns`, because Ghost's default `hash-react-patterns` is not recognised). Tag metadata (`name`, `description`, `feature_image`) is the series definition; `include=count.posts` gives the count. Internal tags get no Ghost archive or sitemap entry.
+  - Every member post plus one **hub/intro post** carries the tag. Hub = earliest-published tagged post; `/blog/{hub}` permanently redirects to `/series/{slug}`, members stay readable.
+  - `lib/series.ts` resolves the tag via the Content API, renders the hub HTML as intro, and lists members (`published_at ASC`, hub excluded). Never parse hub links for membership.
+  - Series tags are hidden from tag chips (`app/_components/PostCard`). Only hub posts are excluded from Latest Posts / blog feeds.
+  - Legacy public `series-*` tags still resolve (internal slug tried first). New series must use `hash-series-*`.
+- **Ghost CMS is Git-backed under `ghost/`.** Dokploy resource `ghost` (`dimitristrechas` project) deploys `./ghost/docker-compose.yml` from `main` with `watchPaths: ["ghost/**"]`. Do not change its `composeId`/`appName`: volumes, R2 backups, and `ghost.dimitristrechas.com` depend on them. `ghost/` is excluded from the web image via `.dockerignore`.
+- **Prod staff device verification is disabled** via `security__staffDeviceVerification` in `ghost/docker-compose.yml` (Ghost checks `config !== true`), because there is no working SMTP (Direct is blocked from the VPS). Proper fix: configure SMTP (Mailgun/SES/etc.), then remove that line.
+- `next.config.ts` allows `http://localhost/**` images via `next/image` in development only.
+
+## Local development
+
+Follow this exactly.
 
 - Site: `pnpm dev` → http://localhost:3001 (reads `.env`; no inline env overrides needed).
-- Ghost: **always include the override file** — never run the base file alone locally (it has no published ports and carries the prod URL):
-  `docker compose -f ghost/docker-compose.yml -f ghost/docker-compose.local.yml up -d` → http://localhost:2369, admin at http://localhost:2369/ghost
-  `... down` stops; `... down -v` wipes local content. Local volumes (`ghost_ghost`, `ghost_db`) never touch prod (prod volumes live on the VPS).
-- `ghost/docker-compose.local.yml` is local-only: compose project `personal-ghost`, loopback-bound port 2369 (`127.0.0.1:2369:2368`), `url: http://localhost:2369`, and a read-only mount of `ghost/config.local.json` (disables staff new-device email verification and mirrors the image's `server.host: "::"` bind; without the bind the host port goes dead). The distinct project and port let it run alongside the Ghost monorepo dev stack (`ghost-dev`, port 2368) without colliding; the volume names are pinned to `ghost_ghost`/`ghost_db` so the project rename keeps existing local data. Dokploy only loads `docker-compose.yml`, so this file can never affect prod. Do not add the mount or dev settings to the base file.
-- Seeded local admin: `local-dev@example.com` / `g_uaZR52mMfbLQGg`. The local Content API key lives in `.env` (`GHOST_CONTENT_API_KEY`) and under Settings → Integrations in the admin panel. Seed/manage content via the Admin API (`/ghost/api/admin/...` with a session cookie); tags endpoint accepts one tag per request; create posts with `?source=html`.
-- First run on a fresh machine (empty volumes): `ghost/.env` holds the local DB password (`MYSQL_ROOT_PASSWORD`, gitignored — create it from `ghost/.env.example` values if missing, otherwise compose fails fast); boot the stack, complete owner onboarding at http://localhost:2369/ghost, then create a custom integration (Settings → Integrations) and put its Content API key in `.env` as `GHOST_CONTENT_API_KEY`. The seeded credentials above exist only where the volume was seeded with them.
-- `ghost/` is excluded from the web image via `.dockerignore`.
+- Ghost: **always include the override file**. Never run the base file alone locally (it has no published ports and carries the prod URL):
+  `docker compose -f ghost/docker-compose.yml -f ghost/docker-compose.local.yml up -d` → http://localhost:2369, admin at http://localhost:2369/ghost.
+  `... down` stops; `... down -v` wipes local content. Local volumes (`ghost_ghost`, `ghost_db`) never touch prod.
+- `ghost/docker-compose.local.yml` is local-only: compose project `personal-ghost`, loopback port `127.0.0.1:2369:2368`, `url: http://localhost:2369`, and a read-only mount of `ghost/config.local.json` (disables staff device verification and keeps the image's `server.host: "::"` bind; without the bind the host port goes dead). The distinct project/port avoid colliding with the Ghost monorepo dev stack (`ghost-dev`, port 2368); volume names are pinned so existing local data survives the project rename. Dokploy only loads `docker-compose.yml`. Do not add the mount or dev settings to the base file.
+- Credentials: admin login in `.env` (`GHOST_ADMIN_EMAIL`, `GHOST_ADMIN_PASSWORD`); Content API key in `.env` (`GHOST_CONTENT_API_KEY`, also under Settings → Integrations).
+- Seeding content: use the Admin API (`/ghost/api/admin/...` with a session cookie from `POST /ghost/api/admin/session/`). The tags endpoint accepts one tag per request; create posts with `?source=html`.
+- Fresh machine (empty volumes): ensure `ghost/.env` exists with `MYSQL_ROOT_PASSWORD` (copy `ghost/.env.example`; compose fails fast without it), boot the stack, and ask the user to complete owner onboarding and create a custom integration. The resulting values go into `.env` as above.
 
 ## Ghost content gotcha
 
-Ghost absolutizes relative links to its own origin when saving. Author series-hub links as `/blog/{slug}` (the site rewrites Ghost-origin `/blog/` links to relative at render), and always verify rendered hrefs on `/series/{slug}` — links pointing at the Ghost origin 404 on Ghost's own theme.
+Ghost absolutizes relative links to its own origin when saving. Author series-hub links as `/blog/{slug}` (the site rewrites Ghost-origin site links to relative at render), and always verify rendered hrefs on `/series/{slug}`: links pointing at the Ghost origin 404 on Ghost's own theme.
 
-## Instructions
+## Verification
 
-**CRITICAL: Never commit code unless explicitly instructed to do so in the prompt.**
+There are no unit or integration tests yet. Before considering a change complete:
 
-- Test changes before considering them complete. There are no unit or integration tests in this repo yet, so verify with `curl` against the dev server and local Ghost, and use agent-browser, Chrome DevTools MCP, or Playwright MCP to visually verify changes in the UI.
-- Dokploy writes (`compose-update`, deploys) change production and need explicit user confirmation; switching a resource's source does not redeploy by itself, but the next matching push auto-deploys.
+- Run `pnpm lint` and `pnpm exec tsc --noEmit`.
+- `curl` the affected routes against `pnpm dev` and local Ghost.
+- Check UI changes visually with agent-browser, Chrome DevTools MCP, or Playwright MCP.
 
-## Reference
+## AI tool config
 
-- Cross-tool AI and MCP: [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md)
+- Claude Code, Codex, and OpenCode share one setup (Cursor is not supported). Their config files are kept aligned by hand: when you change an MCP server, approval gate, subagent, or skill, update every tool's file in the same change, following [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md).
+- Approval gates (`git commit`/`push`/`reset`/`reflog`, `dokploy` and `cloudflare-api` MCP tools) are enforced by each tool's config. Do not try to bypass them.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
