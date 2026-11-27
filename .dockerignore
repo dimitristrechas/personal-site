@@ -31,7 +31,6 @@ coverage
 .agents
 .agent-docs
 .claude
-.cursor
 .codex
 .opencode
 opencode.json

@@ -1,5 +1,5 @@
 {
-  "$comment": "Canonical AI-tool config. Edit this file, then run `pnpm agents:sync`. Generated files: .mcp.json, .cursor/mcp.json, .cursor/hooks.json, .codex/config.toml, .codex/rules/project.rules, .codex/agents/*.toml, .claude/settings.json, opencode.json, plus agent/skill symlinks.",
+  "$comment": "Canonical AI-tool config. Edit this file, then run `pnpm agents:sync`. Generated files: .mcp.json, .codex/config.toml, .codex/rules/project.rules, .codex/agents/*.toml, .claude/settings.json, opencode.json, plus agent/skill symlinks.",
   "mcpServers": {
     "github": {
       "url": "https://api.githubcopilot.com/mcp/",

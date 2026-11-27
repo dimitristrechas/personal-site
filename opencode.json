@@ -22,7 +22,7 @@
       "effect": "ask"
     },
     {
-      "action": "cloudflare_api_*",
+      "action": "cloudflare?api_*",
       "resource": "*",
       "effect": "ask"
     },

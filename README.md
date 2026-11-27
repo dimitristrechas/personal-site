@@ -72,14 +72,14 @@ Commit messages must follow [Conventional Commits](https://www.conventionalcommi
 
 - **Posts and pages** are written in Ghost. The About and Contact pages are Ghost pages with the slugs `about` and `contact`.
 - **Article series** are Ghost tags:
-  1. Create an internal tag whose name starts with `#`, e.g. `#React Patterns`. Its description and feature image become the series description and cover.
+  1. Create an internal tag whose name starts with `#`, e.g. `#React Patterns`, and **set its slug by hand** to `hash-series-<name>`, e.g. `hash-series-react-patterns` (Ghost's default slug, `hash-react-patterns`, isn't recognised). The part after `hash-series-` becomes the URL: `/series/react-patterns`. The tag's description and feature image become the series description and cover.
   2. Write an intro post and tag it. The earliest-published tagged post is the series intro and is shown at `/series/<name>`.
   3. Tag every article in the series with the same tag. They're listed on the series page in publish order.
 - **Links between posts**: write them as `/blog/<slug>`. Ghost turns relative links into absolute ones when saving, and the site rewrites them back.
 
 ## AI coding tools
 
-The repo includes shared config for Claude Code, Cursor, Codex and OpenCode (agents, skills, MCP servers). To use the MCP servers, export these in your shell profile:
+The repo includes shared config for Claude Code, Codex and OpenCode (agents, skills, MCP servers). To use the MCP servers, export these in your shell profile:
 
 ```sh
 export GITHUB_MCP_TOKEN=<token>
@@ -92,10 +92,9 @@ export DOKPLOY_API_KEY=<token>
 
 Exa and Cloudflare Docs need no auth.
 
-All four tools share the same instructions (`AGENTS.md`), subagents, skills, MCP servers, and approval prompts for commits, pushes and production-changing MCP tools. Some of that only activates once you trust the repo in each tool:
+All three tools share the same instructions (`AGENTS.md`), subagents, skills, MCP servers, and approval prompts for commits, pushes and production-changing MCP tools. Some of that only activates once you trust the repo in each tool:
 
 - **Claude Code:** approve the project MCP servers when prompted.
-- **Cursor:** trust the workspace (project hooks only run in trusted workspaces).
 - **Codex:** trust the project when prompted; otherwise `.codex/` is ignored.
 - **OpenCode:** nothing to do.
 

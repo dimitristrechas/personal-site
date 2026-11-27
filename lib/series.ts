@@ -101,7 +101,9 @@ export const getAllSeries = cache(async (): Promise<Series[]> => {
   }
 });
 
-const getSeriesTag = cache(async (seriesSlug: string): Promise<GhostSeriesTag | null> => {
+type SeriesTagLookup = { tag: GhostSeriesTag | null; failed: boolean };
+
+const getSeriesTag = cache(async (seriesSlug: string): Promise<SeriesTagLookup> => {
   const candidates = candidateSeriesTagSlugs(seriesSlug);
 
   try {
@@ -114,12 +116,12 @@ const getSeriesTag = cache(async (seriesSlug: string): Promise<GhostSeriesTag | 
 
     for (const slug of candidates) {
       const tag = tags.find((candidate) => candidate.slug === slug);
-      if (tag) return tag;
+      if (tag) return { tag, failed: false };
     }
-    return null;
+    return { tag: null, failed: false };
   } catch (error) {
     console.error(`Error fetching series tag "${seriesSlug}":`, error);
-    return null;
+    return { tag: null, failed: true };
   }
 });
 
@@ -152,12 +154,27 @@ export const getSeriesPageData = cache(
     hubPost: Post | null;
     members: Post[];
   }> => {
-    const [tag, [hubPost = null, ...members]] = await Promise.all([
+    const [{ tag, failed }, [hubPost = null, ...members]] = await Promise.all([
       getSeriesTag(seriesSlug),
       getSeriesPosts(seriesSlug),
     ]);
 
-    if (!tag) return { series: null, hubPost, members: [] };
+    if (!tag) {
+      // A failed tags request should not hide a series whose posts loaded; derive it from the hub.
+      const hubTag = failed && hubPost ? getSeriesTagFromPost(hubPost) : undefined;
+      if (!hubPost || !hubTag) return { series: null, hubPost, members: [] };
+
+      const series: Series = {
+        id: hubTag.id,
+        title: displayNameFromTagName(hubTag.title),
+        slug: seriesSlug,
+        description: hubPost.description || null,
+        coverImage: hubPost.featuredImage || null,
+        articleCount: members.length,
+        tagSlug: hubTag.slug,
+      };
+      return { series, hubPost, members };
+    }
 
     const series: Series = {
       ...mapGhostTagToSeries(tag),

@@ -19,7 +19,7 @@ Instructions for AI coding agents working in this repo. Human-facing docs live i
 - **Page titles:** the root layout sets `title.template` (`%s | Dimitris Trechas`). Pages return bare titles; a Ghost `meta_title` is used as `{ absolute }`.
 - **Components:** `app/_components/<Name>/index.tsx` with a default export.
 - **Series are Ghost tags, not link lists.**
-  - One **internal** tag per series (name starts with `#`, e.g. `#React Patterns` → slug `hash-series-react-patterns`). Tag metadata (`name`, `description`, `feature_image`) is the series definition; `include=count.posts` gives the count. Internal tags get no Ghost archive or sitemap entry.
+  - One **internal** tag per series (name starts with `#`, e.g. `#React Patterns`; the slug must be set manually to `hash-series-react-patterns`, because Ghost's default `hash-react-patterns` is not recognised). Tag metadata (`name`, `description`, `feature_image`) is the series definition; `include=count.posts` gives the count. Internal tags get no Ghost archive or sitemap entry.
   - Every member post plus one **hub/intro post** carries the tag. Hub = earliest-published tagged post; `/blog/{hub}` permanently redirects to `/series/{slug}`, members stay readable.
   - `lib/series.ts` resolves the tag via the Content API, renders the hub HTML as intro, and lists members (`published_at ASC`, hub excluded). Never parse hub links for membership.
   - Series tags are hidden from tag chips (`app/_components/PostCard`). Only hub posts are excluded from Latest Posts / blog feeds.
@@ -55,7 +55,7 @@ There are no unit or integration tests yet. Before considering a change complete
 
 ## AI tool config
 
-- Claude Code, Cursor, Codex, and OpenCode share one setup. Edit only the canonical sources (`AGENTS.md`, `.claude/agents/`, `.claude/skills/`, `.agent-docs/agent-config.json`), then run `pnpm agents:sync`. Never hand-edit generated files (`.mcp.json`, `.cursor/mcp.json`, `.cursor/hooks.json`, `.codex/**`, `.claude/settings.json`, `opencode.json`, agent/skill symlinks). Details: [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md).
+- Claude Code, Codex, and OpenCode share one setup (Cursor is not supported). Edit only the canonical sources (`AGENTS.md`, `.claude/agents/`, `.claude/skills/`, `.agent-docs/agent-config.json`), then run `pnpm agents:sync`. Never hand-edit generated files (`.mcp.json`, `.codex/**`, `.claude/settings.json`, `opencode.json`, agent/skill symlinks). Details: [.agent-docs/ai-tooling.md](.agent-docs/ai-tooling.md).
 - Approval gates (`git commit`/`push`/`reset`/`reflog`, `dokploy` and `cloudflare-api` MCP tools) are enforced by each tool's config. Do not try to bypass them.
 
 <!-- BEGIN:nextjs-agent-rules -->

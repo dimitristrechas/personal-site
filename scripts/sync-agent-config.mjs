@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generates every AI tool's project config (Claude Code, Cursor, Codex, OpenCode)
+// Generates every AI tool's project config (Claude Code, Codex, OpenCode)
 // from the canonical sources:
 //   .agent-docs/agent-config.json  MCP servers + actions that require approval
 //   .claude/agents/*.md            subagents
@@ -127,31 +127,6 @@ emit(
   }),
 );
 
-// MCP: Cursor
-emit(
-  ".cursor/mcp.json",
-  formatJson(".cursor/mcp.json", {
-    mcpServers: Object.fromEntries(
-      servers.map(([name, server]) => [
-        name,
-        server.url
-          ? {
-              url: server.url,
-              ...(server.bearerTokenEnv && { headers: { Authorization: `Bearer \${env:${server.bearerTokenEnv}}` } }),
-            }
-          : {
-              command: server.command,
-              args: server.args,
-              env: {
-                ...Object.fromEntries((server.envFromShell ?? []).map((name) => [name, `\${env:${name}}`])),
-                ...server.env,
-              },
-            },
-      ]),
-    ),
-  }),
-);
-
 // MCP + MCP approval: Codex
 const codexServers = servers.map(([name, server]) => {
   const lines = [`[mcp_servers.${tomlKey(name)}]`];
@@ -199,23 +174,6 @@ emit(
   }),
 );
 
-// Shell + MCP approval: Cursor (hook reads .agent-docs/agent-config.json at runtime)
-emit(
-  ".cursor/hooks.json",
-  formatJson(".cursor/hooks.json", {
-    version: 1,
-    hooks: {
-      beforeShellExecution: [
-        {
-          command: "node .cursor/hooks/approval-gate.mjs shell",
-          matcher: `\\b(${gatedCommands.map((pattern) => pattern.join("\\s+")).join("|")})\\b`,
-        },
-      ],
-      beforeMCPExecution: [{ command: "node .cursor/hooks/approval-gate.mjs mcp", failClosed: true }],
-    },
-  }),
-);
-
 // MCP + approval: OpenCode
 emit(
   "opencode.json",
@@ -224,7 +182,7 @@ emit(
     permissions: [
       ...gatedCommands.map((pattern) => ({ action: "shell", resource: `${pattern.join(" ")} *`, effect: "ask" })),
       ...gatedServers.map((name) => ({
-        action: `${name.replace(/[^A-Za-z0-9_]/g, "_")}_*`,
+        action: `${name.replace(/[^A-Za-z0-9_]/g, "?")}_*`,
         resource: "*",
         effect: "ask",
       })),
@@ -274,10 +232,9 @@ for (const file of existsSync(codexAgentsDir) ? readdirSync(codexAgentsDir) : []
 }
 
 const agentLinks = Object.fromEntries(agents.map(({ name }) => [`${name}.md`, `.claude/agents/${name}.md`]));
-emitSymlinks(".cursor/agents", agentLinks);
 emitSymlinks(".opencode/agents", agentLinks);
 
-// Skills (Claude Code, Cursor and OpenCode read .claude/skills; Codex needs .agents/skills)
+// Skills (Claude Code and OpenCode read .claude/skills; Codex needs .agents/skills)
 const skills = readdirSync(join(root, ".claude/skills")).filter((entry) =>
   existsSync(join(root, ".claude/skills", entry, "SKILL.md")),
 );
