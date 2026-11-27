@@ -161,7 +161,8 @@ export const getSeriesPageData = cache(
 
     if (!tag) {
       // A failed tags request should not hide a series whose posts loaded; derive it from the hub.
-      const hubTag = failed && hubPost ? getSeriesTagFromPost(hubPost) : undefined;
+      const candidates = candidateSeriesTagSlugs(seriesSlug);
+      const hubTag = failed ? hubPost?.tags.find((t) => candidates.includes(t.slug)) : undefined;
       if (!hubPost || !hubTag) return { series: null, hubPost, members: [] };
 
       const series: Series = {
